@@ -378,26 +378,31 @@ This is because those members are `extension`s that are globally available.
 ### Universe
 
 ```scala
+package timehybrids.specification
 
-import specification.{VirtualTopology, Sets, Category, FunctionActedUpOn, Functor}
+import specification.{
+  VirtualTopology,
+  Sets,
+  Category,
+  ActingUponFunction,
+  Functor
+}
 
 trait Universe[
     Collection[_]: Sets,
-    Morphism[_, _]: Category: FunctionActedUpOn,
+    Morphism[_, _]: Category: ActingUponFunction,
     Moment: [_] =>> Time[
       Moment
     ],
-    State: [_] =>> Function[
-      Moment,
-      State
-    ]: [_] =>> Functor[
-      [_, _] =>> Option[Tuple2[Moment, Moment]],
+    State: [_] =>> Functor[
+      [_, _] =>> Tuple2[Moment, Moment],
       Morphism,
       [_] =>> State
-    ]: [_] =>> VirtualVirtualTopology[
+    ]: [_] =>> VirtualTopology[
       Collection,
       State
     ]
+]:
 
   // ...
 ```
@@ -407,14 +412,11 @@ Using the `type` definitions below you can read the `Universe` definition above 
 ```scala
 trait Universe[
     Collection[_]: Sets,
-    Morphism[_, _]: Category: FunctionActedUpOn,
+    Morphism[_, _]: Category: ActingUponFunction,
     Moment: [_] =>> Time[
       Moment
     ],
-    State: [_] =>> Function[
-      Moment,
-      State
-    ]: [_] =>> Functor[
+    State: [_] =>> Functor[
       [_, _] =>> MomentMorphism,
       Morphism,
       [_] =>> State
@@ -438,22 +440,20 @@ Mathematically this is not a set.
 Programmatically it is a constructive set (recall that, programmatically, a set is implicitly denoted by a type).
 
 `Universe` also has a foundational parameter `Morphism` that is required to be a `Category` binary type constructor and
-a `FunctionActedUpOn` binary type constructor.
+a `ActingUponFunction` binary type constructor.
 
 `Category` is fully explained in [Category](#category).
 
-`FunctionActedUpOn` is fully explained in [FunctionActedUpOn](#functionactingupon).
+`ActingUponFunction` is fully explained in [ActingUponFunction](#actinguponfunction).
 
 `Universe` also has a domain parameter `Moment` that is required to be a `Time` type.
 
-Type `Option[Tuple2[T, T]]`, somewhat abusively, denotes an ordered set implicitly denoted by type `T`
+Type `Tuple2[T, T]`, somewhat abusively, denotes an ordered set implicitly denoted by type `T`.
 
-- A value `Some(l, r)` denotes ``{ l `<=` r } `=` { true }``,
-- `None` denotes ``{ l `<=` r } `=` { false }``.
+- A value `(l, r)`, somewhat abusively, denotes ``{ l `<=` r } `=` { true }``.
 
 Using the `type` definitions below the requirements for `State` to be a `Universe` type are
 
-- `State` is a `Function[Moment, State]` type,
 - `State` is a `Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State]` type,
 - `State` is a `VirtualTopology[Collection, State]` type.
 
@@ -468,7 +468,7 @@ Using the `type` definitions below the requirements for `State` to be a `Univers
 
   val mc: Category[Morphism] = summon[Category[Morphism]]
 
-  val mfa: FunctionActedUpOn[Morphism] = summon[FunctionActedUpOn[Morphism]]
+  val mfa: ActingUponFunction[Morphism] = summon[ActingUponFunction[Morphism]]
 
   // ...
 ```
@@ -488,7 +488,7 @@ Foundational delegates are defined.
 ```scala
   // ...
 
-  type MomentMorphism = Option[Tuple2[Moment, Moment]]
+  type MomentMorphism = Tuple2[Moment, Moment]
 
   // ...
 ```
@@ -497,8 +497,6 @@ Foundational delegates are defined.
 
 ```scala
   // ...
-
-  val mφs: Function[Moment, State] = summon[Function[Moment, State]]
 
   val mmΦst: Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State] =
     summon[Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State]]
@@ -532,19 +530,6 @@ Foundational delegates are defined.
 ```
 
 `Universe` related foundational members using members of `Universe` related foundational delegates are defined.
-
-```scala
-  // ...
-
-  import mm.{am}
-
-  val as: State = mφs(am)
-
-  // ...
-```
-
-`Universe` related foundational members using `Time` related foundational members and `Universe` related foundational
-members are defined
 
 ### NestedComposition
 
@@ -595,7 +580,7 @@ import specification.{
   Ordered,
   Sets,
   Category,
-  FunctionActingUpon,
+  ActingUponFunction,
   Functor,
   Transformation
 }
@@ -618,11 +603,11 @@ trait PreThings[
         ]
       ]
     ]: [_] =>> Functor[
-      [_, _] =>> Option[Tuple2[Moment, Moment]],
+      [_, _] =>> Tuple2[Moment, Moment],
       Function,
       [_] =>> Collection[NestedComposition[Collection, PreObject]]
     ]: [_] =>> Transformation[
-      [_, _] =>> Option[Tuple2[Moment, Moment]],
+      [_, _] =>> Tuple2[Moment, Moment],
       Function,
       [_] =>> Collection[
         Collection[
@@ -801,7 +786,7 @@ Using the `type` definitions below the requirements for `PreObject` to be a `Pre
 
   given Category[Morphism] = mc
 
-  given FunctionActingUpon[Morphism] = mfa
+  given ActingUponFunction[Morphism] = mfa
 ```
 
 Foundational `given`s using `import`ed foundational delegates are defined.
@@ -1118,29 +1103,21 @@ This law refers to the following excerpt from the paper, where [2] refers to the
         }
 
     val immobileOnInterval: MomentMorphism => PreThingsCollection => L[State] =
-      case Some((bm, em)) =>
+      case (bm, em) =>
         import cs.{Interval, interval, all}
         import su.{mmφst}
-        val mi: Interval[Moment] = interval apply Some((bm, em))
+        val mi: Interval[Moment] = interval apply ((bm, em))
         ptc =>
           all apply {
             for {
               m <- mi
             } yield {
               {
-                (ptcφs `o` mmφptcf(Some(bm, m)))(ptc)
+                (ptcφs `o` mmφptcf((bm, m)))(ptc)
               } `=` {
-                (mmφst(Some(bm, m)) `a` ptcφs)(ptc)
+                (mmφst((bm, m)) `a` ptcφs)(ptc)
               }
             }
-          }
-      case _ =>
-        import su.{as}
-        ptc =>
-          {
-            as
-          } `=` {
-            as
           }
 ```
 
@@ -1760,7 +1737,7 @@ Back to [Universe](#universe)
 
 Back to [Functor](#functor)
 
-Back to [ActedUpOn](#actingupon)
+Back to [ActingUpon](#actingupon)
 
 Back to [Triple](#triple)
 
@@ -1789,7 +1766,7 @@ Back to [NaturalTransformation](#naturaltransformation)
 
 Back to [Triple](#triple)
 
-Back to [ActedUpOn](#actingupon)
+Back to [ActingUpon](#actingupon)
 
 Back to [Functor](#functor)
 
@@ -1847,37 +1824,37 @@ trait BtcUnit[BTC[_, _]]:
 
 Back to [Category](#category)
 
-### FunctionActedUpOn
+### ActingUponFunction
 
 Back to [Universe](#universe)
 
 ```scala
 package specification
 
-type FunctionActedUpOn = [BTC[_, _]] =>> ActedUpOn[Function, BTC]
+type ActingUponFunction = [BTC[_, _]] =>> ActingUpon[Function, BTC]
 ```
 
-`ActedUpOn` is fully explained in [ActedUpOn](#actingupon).
+`ActingUpon` is fully explained in [ActingUpon](#actingupon).
 
 Back to [Universe](#universe)
 
-### ActedUpOn
+### ActingUpon
 
-Back to [FunctionActedUpOn](#functionactingupon)
+Back to [ActingUponFunction](#actinguponfunction)
 
 Back to [ActingUponNaturalTransformation](#actinguponnaturaltransformation)
 
 ```scala
 package specification
 
-trait ActedUpOn[LBTC[_, _], RBTC[_, _]: Category]:
+trait ActingUpon[LBTC[_, _], RBTC[_, _]: Category]:
 
   // ...
 ```
 
-`ActedUpOn` is a binary type constructor class for `LBTC`.
+`ActingUpon` is a binary type constructor class for `LBTC`.
 
-`ActedUpOn` has a parameter that is required to be a `Category`binary type constructor.
+`ActingUpon` has a parameter that is required to be a `Category`binary type constructor.
 
 `Category` is fully explained in [Category](#category).
 
@@ -1891,7 +1868,7 @@ trait ActedUpOn[LBTC[_, _], RBTC[_, _]: Category]:
   // ...
 ```
 
-`ActedUpOn` features are declared.
+`ActingUpon` features are declared.
 
 ```scala
   // ...
@@ -1904,13 +1881,13 @@ trait ActedUpOn[LBTC[_, _], RBTC[_, _]: Category]:
   // ...
 ```
 
-`ActedUpOn` members are defined.
+`ActingUpon` members are defined.
 
 `Functor` is fully explained in [Functor](#functor).
 
 Back to [ActingUponNaturalTransformation](#actinguponnaturaltransformation)
 
-Back to [FunctionActedUpOn](#functionactingupon)
+Back to [ActingUponFunction](#actinguponfunction)
 
 ### CompositionNaturalTransformation
 
@@ -2897,7 +2874,6 @@ given functionValuedFunctor2[
 
 Back to [PreThings](#prethings)
 
-
 ### orderedCategory
 
 Back to [PreThings](#prethings)
@@ -2908,22 +2884,20 @@ package implementation
 import specification.{Arbitrary, Ordered, Sets, Category}
 
 given orderedCategory[Collection[_]: Sets, T: Arbitrary: Ordered]
-    : Category[[_, _] =>> Option[Tuple2[T, T]]] with
+    : Category[[_, _] =>> Tuple2[T, T]] with
 
-  type BTC = [_, _] =>> Option[Tuple2[T, T]]
+  type BTC = [_, _] =>> Tuple2[T, T]
 
   extension [Z, Y, X](yμx: BTC[Y, X])
     def `o`(zμy: BTC[Z, Y]): BTC[Z, X] =
       (yμx, zμy) match
-        case (Some((llt, lrt)), Some((rlt, rrt))) =>
-          require(lrt == rlt)
-          Some((llt, rrt))
-        case _ =>
-          None
+        case ((llt, lrt), (rlt, rrt)) =>
+          require(llt `<=` lrt && lrt == rlt && rlt `<=` rrt)
+          (llt, rrt)
 
   def ι[Z]: BTC[Z, Z] =
     val at = summon[Arbitrary[T]].arbitrary
-    Some((at, at))
+    (at, at)
 ```
 
 Back to [PreThings](#prethings)
@@ -2935,7 +2909,7 @@ Back to [PreThings](#prethings)
 ```scala
 package implementation
 
-import specification.{Category, FunctionActingUpon, Functor}
+import specification.{Category, ActingUponFunction, Functor}
 
 given functionCategory: Category[Function] with
 
@@ -2946,7 +2920,7 @@ given functionCategory: Category[Function] with
 
   def ι[Z]: BTC[Z, Z] = z => z
 
-given functionFunctionActingUpon: FunctionActingUpon[Function] with
+given functionFunctionActingUpon: ActingUponFunction[Function] with
 
   type BTC = [Z, Y] =>> Function[Z, Y]
 

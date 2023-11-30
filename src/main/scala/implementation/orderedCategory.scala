@@ -3,22 +3,20 @@ package implementation
 import specification.{Arbitrary, Ordered, Sets, Category}
 
 given orderedCategory[Collection[_]: Sets, T: Arbitrary: Ordered]
-    : Category[[_, _] =>> Option[Tuple2[T, T]]] with
+    : Category[[_, _] =>> Tuple2[T, T]] with
 
-  type BTC = [_, _] =>> Option[Tuple2[T, T]]
+  type BTC = [_, _] =>> Tuple2[T, T]
 
   extension [Z, Y, X](yμx: BTC[Y, X])
     def `o`(zμy: BTC[Z, Y]): BTC[Z, X] =
       (yμx, zμy) match
-        case (Some((llt, lrt)), Some((rlt, rrt))) =>
-          require(lrt == rlt)
-          Some((llt, rrt))
-        case _ =>
-          None
+        case ((llt, lrt), (rlt, rrt)) =>
+          require(llt `<=` lrt && lrt == rlt && rlt `<=` rrt)
+          (llt, rrt)
 
   def ι[Z]: BTC[Z, Z] =
     val at = summon[Arbitrary[T]].arbitrary
-    Some((at, at))
+    (at, at)
 
 // ............................
 

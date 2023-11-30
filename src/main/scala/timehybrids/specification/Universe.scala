@@ -1,18 +1,21 @@
 package timehybrids.specification
 
-import specification.{VirtualTopology, Sets, Category, FunctionActingUpon, Functor}
+import specification.{
+  VirtualTopology,
+  Sets,
+  Category,
+  ActingUponFunction,
+  Functor
+}
 
 trait Universe[
     Collection[_]: Sets,
-    Morphism[_, _]: Category: FunctionActingUpon,
+    Morphism[_, _]: Category: ActingUponFunction,
     Moment: [_] =>> Time[
       Moment
     ],
-    State: [_] =>> Function[
-      Moment,
-      State
-    ]: [_] =>> Functor[
-      [_, _] =>> Option[Tuple2[Moment, Moment]],
+    State: [_] =>> Functor[
+      [_, _] =>> Tuple2[Moment, Moment],
       Morphism,
       [_] =>> State
     ]: [_] =>> VirtualTopology[
@@ -27,7 +30,7 @@ trait Universe[
 
   val mc: Category[Morphism] = summon[Category[Morphism]]
 
-  val mfa: FunctionActingUpon[Morphism] = summon[FunctionActingUpon[Morphism]]
+  val mfa: ActingUponFunction[Morphism] = summon[ActingUponFunction[Morphism]]
 
   // `Time` related domain delegates are defined
 
@@ -35,11 +38,9 @@ trait Universe[
 
   // `Time` related domain types are defined
 
-  type MomentMorphism = Option[Tuple2[Moment, Moment]]
+  type MomentMorphism = Tuple2[Moment, Moment]
 
-  // `Universe` related foundational delegates are defined
-
-  val mφs: Function[Moment, State] = summon[Function[Moment, State]]
+  // `Universe` related foundational delegates are defined.
 
   val mmΦst: Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State] =
     summon[Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State]]
@@ -58,10 +59,3 @@ trait Universe[
 
   val ss: Function[Collection[State], State] = svt.sup
 
-  // `Universe` related foundational members
-  // using `Time` foundational related members
-  // and `Universe` related foundational members are defined
-
-  import mm.{am}
-
-  val as: State = mφs(am)

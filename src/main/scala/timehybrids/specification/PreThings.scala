@@ -7,7 +7,7 @@ import specification.{
   Ordered,
   Sets,
   Category,
-  FunctionActingUpon,
+  ActingUponFunction,
   Functor,
   Transformation
 }
@@ -30,11 +30,11 @@ trait PreThings[
         ]
       ]
     ]: [_] =>> Functor[
-      [_, _] =>> Option[Tuple2[Moment, Moment]],
+      [_, _] =>> Tuple2[Moment, Moment],
       Function,
       [_] =>> Collection[NestedComposition[Collection, PreObject]]
     ]: [_] =>> Transformation[
-      [_, _] =>> Option[Tuple2[Moment, Moment]],
+      [_, _] =>> Tuple2[Moment, Moment],
       Function,
       [_] =>> Collection[
         Collection[
@@ -131,7 +131,7 @@ trait PreThings[
 
   given Category[Morphism] = mc
 
-  given FunctionActingUpon[Morphism] = mfa
+  given ActingUponFunction[Morphism] = mfa
 
   // `Time` related foundational `given`s are defined
 
@@ -318,27 +318,19 @@ trait PreThings[
         }
 
     val immobileOnInterval: MomentMorphism => PreThingsCollection => L[State] =
-      case Some((bm, em)) =>
+      case (bm, em) =>
         import cs.{Interval, interval, all}
         import su.{mmφst}
-        val mi: Interval[Moment] = interval apply Some((bm, em))
+        val mi: Interval[Moment] = interval apply ((bm, em))
         ptc =>
           all apply {
             for {
               m <- mi
             } yield {
               {
-                (ptcφs `o` mmφptcf(Some(bm, m)))(ptc)
+                (ptcφs `o` mmφptcf((bm, m)))(ptc)
               } `=` {
-                (mmφst(Some(bm, m)) `a` ptcφs)(ptc)
+                (mmφst((bm, m)) `a` ptcφs)(ptc)
               }
             }
-          }
-      case _ =>
-        import su.{as}
-        ptc =>
-          {
-            as
-          } `=` {
-            as
           }

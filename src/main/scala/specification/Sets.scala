@@ -22,7 +22,7 @@ trait Sets[Collection[_]] extends MonadPlus[Collection]:
 
   // declared related to Ordered (apply needed at use site)
 
-  def interval[Z: Ordered]: Option[Tuple2[Z, Z]] => Collection[Z]
+  def interval[Z: Ordered]: Tuple2[Z, Z] => Collection[Z]
 
   // declared related to Law (apply needed at use site)
 
