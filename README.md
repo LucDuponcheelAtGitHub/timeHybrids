@@ -51,7 +51,9 @@ In a way you can think of a specification as a *description*.
 
 I tend to think of a description as an implementation that is an *informal specification*.
 
-For example, the picture below is a description (pun intended!) of a well known description of a pipe.
+For example, the picture on
+[The Treachery of Images](https://en.wikipedia.org/wiki/The_Treachery_of_Images)
+is a description (pun intended!) of a well known description of a pipe.
 
 <img src="https://github.com/LucDuponcheelAtGitHub/time-hibrids/blob/main/pipeDescription.png" width=50% height=50%>
 
@@ -1573,7 +1575,7 @@ trait Monad[UTC[_]] extends Triple[Function, UTC]:
 
 `map` and `flatMap` support *powerful *`for`*-iteration notation*.
 
-<img src="https://github.com/LucDuponcheelAtGitHub/time-hibrids/blob/main/flatMap.png" width=50% height=50%>
+See [flatmapthatshit](http://www.flatmapthatshit.com/).
 
 Back to [MonadPlus](#monadplus)
 
