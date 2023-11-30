@@ -55,8 +55,6 @@ For example, the picture on
 [The Treachery of Images](https://en.wikipedia.org/wiki/The_Treachery_of_Images)
 is a description (pun intended!) of a well known description of a pipe.
 
-<img src="https://github.com/LucDuponcheelAtGitHub/time-hibrids/blob/main/pipeDescription.png" width=50% height=50%>
-
 Frankly, if you would never have seen a pipe before, would you be able to make a pipe *only* from this description?
 
 ### Generic Theory
