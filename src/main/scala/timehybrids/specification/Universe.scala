@@ -9,32 +9,27 @@ import specification.{
 }
 
 trait Universe[
-    Collection[_]: Sets,
+    Set[_]: Sets,
     Morphism[_, _]: Category: ActingUponFunction,
-    Moment: [_] =>> Time[
-      Moment
-    ],
-    State: [_] =>> Functor[
+    Moment: Time,
+    State: [_] =>> VirtualTopology[Set, State]: [_] =>> Functor[
       [_, _] =>> Tuple2[Moment, Moment],
       Morphism,
       [_] =>> State
-    ]: [_] =>> VirtualTopology[
-      Collection,
-      State
     ]
 ]:
 
   // Foundational delegates are defined
 
-  val cs: Sets[Collection] = summon[Sets[Collection]]
+  val cs: Sets[Set] = summon[Sets[Set]]
 
   val mc: Category[Morphism] = summon[Category[Morphism]]
 
-  val mfa: ActingUponFunction[Morphism] = summon[ActingUponFunction[Morphism]]
+  val mauf: ActingUponFunction[Morphism] = summon[ActingUponFunction[Morphism]]
 
   // `Time` related domain delegates are defined
 
-  val mm: Time[Moment] = summon[Time[Moment]]
+  val mt: Time[Moment] = summon[Time[Moment]]
 
   // `Time` related domain types are defined
 
@@ -42,11 +37,11 @@ trait Universe[
 
   // `Universe` related foundational delegates are defined.
 
-  val mmΦst: Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State] =
-    summon[Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State]]
+  val svt: VirtualTopology[Set, State] =
+    summon[VirtualTopology[Set, State]]
 
-  val svt: VirtualTopology[Collection, State] =
-    summon[VirtualTopology[Collection, State]]
+  val mmΦsm: Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State] =
+    summon[Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State]]
 
   // `Universe` related domain types are defined
 
@@ -55,7 +50,6 @@ trait Universe[
   // `Universe` related foundational members
   // using members of `Universe` related foundational delegates are defined.
 
-  val mmφst: Function[MomentMorphism, StateMorphism] = mmΦst.φ
+  val mmφsm: Function[MomentMorphism, StateMorphism] = mmΦsm.φ
 
-  val ss: Function[Collection[State], State] = svt.sup
-
+  val svts: Function[Set[State], State] = svt.sup

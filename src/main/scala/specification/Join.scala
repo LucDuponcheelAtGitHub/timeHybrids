@@ -4,7 +4,7 @@ trait Join[T: Ordered: Arbitrary]:
 
   // declared
 
-  extension (l: T) def ∨(r: T): T
+  extension (lt: T) def ∨(rt: T): T
 
   // laws
 
@@ -13,12 +13,12 @@ trait Join[T: Ordered: Arbitrary]:
     val at = summon[Arbitrary[T]].arbitrary
 
     val smallestGreaterThanBoth: T => T => L[Boolean] =
-      l =>
-        r =>
+      lt =>
+        rt =>
           {
-            (l `<=` (l ∨ r)) `=` true `&` (r `<=` (l ∨ r)) `=` true
+            (lt `<=` (lt ∨ rt)) `=` true `&` (rt `<=` (lt ∨ rt)) `=` true
           } `&` {
-            (l `<=` at) `=` true `&` (r `<=` at) `=` true
+            (lt `<=` at) `=` true `&` (rt `<=` at) `=` true
           } `=>` {
-            (l ∨ r) `<=` at `=` true
+            (lt ∨ rt) `<=` at `=` true
           }

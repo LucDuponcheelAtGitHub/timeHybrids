@@ -1,7 +1,0 @@
-package specification
-
-trait Proof[P[_]]:
-
-  extension [Z](ps: Z) def `=:`(rop: P[Z]): P[Z]
-
-  def qed[Z]: P[Z]

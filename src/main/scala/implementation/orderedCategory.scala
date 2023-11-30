@@ -2,7 +2,7 @@ package implementation
 
 import specification.{Arbitrary, Ordered, Sets, Category}
 
-given orderedCategory[Collection[_]: Sets, T: Arbitrary: Ordered]
+given orderedCategory[Set[_]: Sets, T: Arbitrary: Ordered]
     : Category[[_, _] =>> Tuple2[T, T]] with
 
   type BTC = [_, _] =>> Tuple2[T, T]

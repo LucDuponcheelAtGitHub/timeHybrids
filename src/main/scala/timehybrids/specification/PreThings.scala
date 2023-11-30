@@ -1,6 +1,6 @@
 package timehybrids.specification
 
-import types.{NestedComposition, composition2, decomposition2}
+import types.{Composition2, composition2, decomposition2}
 
 import specification.{
   Arbitrary,
@@ -19,125 +19,114 @@ import implementation.{
 }
 
 trait PreThings[
-    Collection[_],
+    Set[_],
     Morphism[_, _],
     Moment,
-    State: [_] =>> Universe[Collection, Morphism, Moment, State],
+    State: [_] =>> Universe[Set, Morphism, Moment, State],
     PreObject: [_] =>> Arbitrary[
-      Collection[
-        Collection[
-          NestedComposition[Collection, PreObject]
-        ]
-      ]
+      Set[Set[Composition2[Set, PreObject]]]
     ]: [_] =>> Functor[
       [_, _] =>> Tuple2[Moment, Moment],
       Function,
-      [_] =>> Collection[NestedComposition[Collection, PreObject]]
+      [_] =>> Set[Composition2[Set, PreObject]]
     ]: [_] =>> Transformation[
       [_, _] =>> Tuple2[Moment, Moment],
       Function,
-      [_] =>> Collection[
-        Collection[
-          NestedComposition[Collection, PreObject]
+      [_] =>> Set[
+        Set[
+          Composition2[Set, PreObject]
         ]
       ],
-      [_] =>> Collection[
-        Collection[
-          NestedComposition[Collection, PreObject]
-        ]
-      ]
-    ]: [_] =>> Function[
-      Collection[NestedComposition[Collection, PreObject]],
-      State
-    ]
+      [_] =>> Set[Set[Composition2[Set, PreObject]]]
+    ]: [_] =>> Function[Set[Composition2[Set, PreObject]], State]
 ]:
 
   // `Universe` related domain delegates are defined
 
-  val su: Universe[Collection, Morphism, Moment, State] =
-    summon[Universe[Collection, Morphism, Moment, State]]
+  val su: Universe[Set, Morphism, Moment, State] =
+    summon[Universe[Set, Morphism, Moment, State]]
 
   // `PreThings` related domain types are defined.
 
   import su.{cs}
 
-  import cs.{Collection2}
+  import cs.{Set2}
 
-  type PreThing = NestedComposition[Collection, PreObject]
+  type PreThing = Composition2[Set, PreObject]
 
-  type PreThingsCollection = Collection[PreThing]
+  type PreThingsSet = Set[PreThing]
 
-  type PreInteraction = Collection2[PreThing]
+  type PreInteraction = Set2[PreThing]
 
-  type PreInteractionsCollection = Collection[PreInteraction]
+  type PreInteractionsSet = Set[PreInteraction]
 
   // `PreThings` related foundational delegates are defined
 
   import su.{MomentMorphism}
 
-  val pica: Arbitrary[PreInteractionsCollection] =
-    summon[Arbitrary[PreInteractionsCollection]]
+  val pisa: Arbitrary[PreInteractionsSet] =
+    summon[Arbitrary[PreInteractionsSet]]
 
-  val mmΦptcf: Functor[
+  val mmΦptsf: Functor[
     [_, _] =>> MomentMorphism,
     Function,
-    [_] =>> PreThingsCollection
+    [_] =>> PreThingsSet
   ] =
     summon[
       Functor[
         [_, _] =>> MomentMorphism,
         Function,
-        [_] =>> PreThingsCollection
+        [_] =>> PreThingsSet
       ]
     ]
 
-  val ptcc2Τpic: Transformation[
+  val ptss2Τpis: Transformation[
     [_, _] =>> MomentMorphism,
     Function,
-    [_] =>> Collection2[PreThingsCollection],
-    [_] =>> PreInteractionsCollection
+    [_] =>> Set2[PreThingsSet],
+    [_] =>> PreInteractionsSet
   ] = summon[
     Transformation[
       [_, _] =>> MomentMorphism,
       Function,
-      [_] =>> Collection2[PreThingsCollection],
-      [_] =>> PreInteractionsCollection
+      [_] =>> Set2[PreThingsSet],
+      [_] =>> PreInteractionsSet
     ]
   ]
 
-  val ptcφs: Function[PreThingsCollection, State] =
-    summon[Function[PreThingsCollection, State]]
+  val ptsφs: Function[PreThingsSet, State] =
+    summon[Function[PreThingsSet, State]]
 
   // `PreThings` related foundational members
   // using members of `PreThings` related foundational delegates are defined.
 
-  val apic: Collection[PreInteraction] = pica.arbitrary
+  val apis: Set[PreInteraction] = pisa.arbitrary
 
-  val mmφptcf: Function[
+  val mmφptsf: Function[
     MomentMorphism,
-    Function[PreThingsCollection, PreThingsCollection]
-  ] = mmΦptcf.φ
+    Function[PreThingsSet, PreThingsSet]
+  ] = mmΦptsf.φ
 
-  val ptcc2φtpic: Function[
-    Collection2[PreThingsCollection],
-    PreInteractionsCollection
-  ] = ptcc2Τpic.τ
+  val ptss2φtpis: Function[
+    Set2[PreThingsSet],
+    PreInteractionsSet
+  ] = ptss2Τpis.τ
 
   // Foundational `given`s using `import`ed foundational delegates are defined
 
-  import su.{mc, mfa}
+  import su.{mc, mauf}
 
-  given Sets[Collection] = cs
+  given Sets[Set] = cs
 
   given Category[Morphism] = mc
 
-  given ActingUponFunction[Morphism] = mfa
+  given ActingUponFunction[Morphism] = mauf
 
   // `Time` related foundational `given`s are defined
 
-  import su.{mm, mmΦst}
+  import su.{mt, mmΦsm}
 
-  import mm.{ma, mo}
+  import mt.{ma, mo}
 
   given Arbitrary[Moment] = ma
 
@@ -145,36 +134,36 @@ trait PreThings[
 
   // `Universe` related foundational `given`s are defined
 
-  given Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State] = mmΦst
+  given Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State] = mmΦsm
 
   // `PreThings` related foundational `given`s are defined
 
-  given mmΦptcc2f: Functor[
+  given mmΦptss2f: Functor[
     [_, _] =>> MomentMorphism,
     Function,
-    [_] =>> Collection2[PreThingsCollection]
+    [_] =>> Set2[PreThingsSet]
   ] = functionValuedFunctor2[
-    Collection,
+    Set,
     [_, _] =>> MomentMorphism,
-    [_] =>> PreThingsCollection
+    [_] =>> PreThingsSet
   ]
 
   // `PreThings` related foundational members
   // using `PreThings` related foundational `given`s are defined
 
-  val mmφptcc2f: Function[
+  val mmφptss2f: Function[
     MomentMorphism,
     Function[
-      Collection2[PreThingsCollection],
-      Collection2[PreThingsCollection]
+      Set2[PreThingsSet],
+      Set2[PreThingsSet]
     ]
-  ] = mmΦptcc2f.φ
+  ] = mmΦptss2f.φ
 
   // Composed `PreThings` related foundational members
   // using `PreThings` related foundational members
   // using `PreThings` related foundational `given`s are defined
 
-  val picφptc: Function[PreInteractionsCollection, PreThingsCollection] =
+  val pisφpts: Function[PreInteractionsSet, PreThingsSet] =
     pic =>
       for {
         pi <- pic
@@ -182,18 +171,18 @@ trait PreThings[
         composition2 apply pi
       }
 
-  val ptcφpic: Function[PreThingsCollection, PreInteractionsCollection] =
-    ptc =>
+  val ptsφpis: Function[PreThingsSet, PreInteractionsSet] =
+    pts =>
       for {
-        pt <- ptc
+        pt <- pts
       } yield {
         decomposition2 apply pt
       }
 
-  val mmφpicf: Function[
+  val mmφpisf: Function[
     MomentMorphism,
-    Function[PreInteractionsCollection, PreInteractionsCollection]
-  ] = mm => ptcφpic `o` mmφptcf(mm) `o` picφptc
+    Function[PreInteractionsSet, PreInteractionsSet]
+  ] = mm => ptsφpis `o` mmφptsf(mm) `o` pisφpts
 
   // laws
 
@@ -203,23 +192,23 @@ trait PreThings[
 
   trait PreThingsFunctorCompositionLaws[L[_]: Law]:
 
-    given stΦptcf: Functor[Morphism, Function, [_] =>> PreThingsCollection]
+    given smΦptsf: Functor[Morphism, Function, [_] =>> PreThingsSet]
 
     val composition2: L[
       Functor[
         [_, _] =>> MomentMorphism,
         Function,
-        [_] =>> PreThingsCollection
+        [_] =>> PreThingsSet
       ]
     ] = {
-      mmΦptcf
+      mmΦptsf
     } `=` {
       composedFunctor[
         [_, _] =>> MomentMorphism,
         Morphism,
         Function,
         [_] =>> State,
-        [_] =>> PreThingsCollection
+        [_] =>> PreThingsSet
       ]
     }
 
@@ -240,39 +229,39 @@ trait PreThings[
       identity
     }
 
-    val noPreThingFromNothing: MomentMorphism => L[PreThingsCollection] =
+    val noPreThingFromNothing: MomentMorphism => L[PreThingsSet] =
       mm =>
-        import cs.{collection0}
+        import cs.{set0}
         {
-          mmφptcf(mm)(collection0)
+          mmφptsf(mm)(set0)
         } `=` {
-          collection0
+          set0
         }
 
     val unionOfSingletonPreInteractions
-        : Collection2[PreThingsCollection] => L[PreInteractionsCollection] =
-      tptc =>
-        import cs.{tuple2, collection1, collection2, union}
-        tuple2(tptc) match
-          case (lptc, rptc) =>
+        : Set2[PreThingsSet] => L[PreInteractionsSet] =
+      ptss2 =>
+        import cs.{tuple2, set1, set2, union}
+        tuple2(ptss2) match
+          case (lpts, rpts) =>
             {
               union {
                 for {
-                  lpt <- lptc
-                  rpt <- rptc
+                  lpt <- lpts
+                  rpt <- rpts
                 } yield {
-                  ptcc2φtpic(collection2(collection1(lpt), collection1(rpt)))
+                  ptss2φtpis(set2(set1(lpt), set1(rpt)))
                 }
               }
             } `=` {
-              ptcc2φtpic(tptc)
+              ptss2φtpis(ptss2)
             }
 
     val naturePreservingPreInteraction: MomentMorphism => L[Boolean] =
       mm =>
         {
-          { mmφpicf(mm) `o` ptcc2φtpic } `<=` {
-            ptcc2φtpic `o` mmφptcc2f(mm)
+          { mmφpisf(mm) `o` ptss2φtpis } `<=` {
+            ptss2φtpis `o` mmφptss2f(mm)
           }
         }
           `=` {
@@ -281,56 +270,54 @@ trait PreThings[
 
   trait PreThingsPlacesLaws[L[_]: Law]:
 
-    val orderPreserving
-        : PreThingsCollection => PreThingsCollection => L[Boolean] =
-      lptc =>
-        rptc =>
+    val orderPreserving: PreThingsSet => PreThingsSet => L[Boolean] =
+      lpts =>
+        rpts =>
           import su.{svt}
           import svt.{`<=`}
           {
-            lptc `<=` rptc `=` true
+            lpts `<=` rpts `=` true
           } `=>` {
-            ptcφs(lptc) `<=` ptcφs(rptc) `=` true
+            ptsφs(lpts) `<=` ptsφs(rpts) `=` true
           }
 
-    val supremumOfAllSingletonPlaces: PreThingsCollection => L[State] =
-      ptc =>
-        import cs.{collection1}
-        import su.{ss}
+    val supremumOfAllSingletonPlaces: PreThingsSet => L[State] =
+      pts =>
+        import cs.{set1}
+        import su.{svts}
         {
-          ss {
+          svts {
             for {
-              pt <- ptc
-            } yield ptcφs(collection1(pt))
+              pt <- pts
+            } yield ptsφs(set1(pt))
           }
         } `=` {
-          ptcφs(ptc)
+          ptsφs(pts)
         }
 
-    val immobileAfter
-        : MomentMorphism => L[Function[PreThingsCollection, State]] =
+    val immobileAfter: MomentMorphism => L[Function[PreThingsSet, State]] =
       mm =>
-        import su.{mmφst}
+        import su.{mmφsm}
         {
-          ptcφs `o` mmφptcf(mm)
+          ptsφs `o` mmφptsf(mm)
         } `=` {
-          mmφst(mm) `a` ptcφs
+          mmφsm(mm) `a` ptsφs
         }
 
-    val immobileOnInterval: MomentMorphism => PreThingsCollection => L[State] =
+    val immobileOnInterval: MomentMorphism => PreThingsSet => L[State] =
       case (bm, em) =>
         import cs.{Interval, interval, all}
-        import su.{mmφst}
+        import su.{mmφsm}
         val mi: Interval[Moment] = interval apply ((bm, em))
-        ptc =>
+        pts =>
           all apply {
             for {
               m <- mi
             } yield {
               {
-                (ptcφs `o` mmφptcf((bm, m)))(ptc)
+                (ptsφs `o` mmφptsf((bm, m)))(pts)
               } `=` {
-                (mmφst((bm, m)) `a` ptcφs)(ptc)
+                (mmφsm((bm, m)) `a` ptsφs)(pts)
               }
             }
           }

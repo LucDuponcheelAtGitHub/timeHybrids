@@ -4,7 +4,7 @@ trait Meet[T: Ordered: Arbitrary]:
 
   // declared
 
-  extension (l: T) def ∧(r: T): T
+  extension (lt: T) def ∧(rt: T): T
 
   // laws
 
@@ -13,12 +13,12 @@ trait Meet[T: Ordered: Arbitrary]:
     val at = summon[Arbitrary[T]].arbitrary
 
     val greatestSmallerThanBoth: T => T => L[Boolean] =
-      l =>
-        r =>
+      lt =>
+        rt =>
           {
-            ((l ∧ r) `<=` l) `=` true `&` ((l ∧ r) `<=` r) `=` true
+            ((lt ∧ rt) `<=` lt) `=` true `&` ((lt ∧ rt) `<=` rt) `=` true
           } `&` {
-            (at `<=` l) `=` true `&` (at `<=` r) `=` true
+            (at `<=` lt) `=` true `&` (at `<=` rt) `=` true
           } `=>` {
-            at `<=` (l ∧ r) `=` true
+            at `<=` (lt ∧ rt) `=` true
           }

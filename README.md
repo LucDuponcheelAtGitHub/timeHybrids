@@ -264,12 +264,14 @@ The following concepts are involved
 - universe states,
 - pre-things,
 - space,
+and,
 - things.
 
 Moreover
 
 - pre-things are momentary (they do not really exist),
 - things exist (which takes time)
+and,
 - observing takes more time.
 
 This document is work in progress.
@@ -285,7 +287,7 @@ This sentence uses notation that needs some explanation.
 
 - Time moments are denoted as *t*.
 - The universe state at time moment *t* is denoted as *U(t)*.
-- The collection of sets of pre-things at time moment *t* is denoted as *PS(t)*.
+- The set of sets of pre-things at time moment *t* is denoted as *PS(t)*.
 - Sets of pre-things are denoted as *A(t)*.
 - The "place map" *p(t)* maps *A(t)* to *pA(t)*.
 - The *non-commutative lattice* on *U(t)* is denoted as *L(t)*.
@@ -389,18 +391,13 @@ import specification.{
 }
 
 trait Universe[
-    Collection[_]: Sets,
+    Set[_]: Sets,
     Morphism[_, _]: Category: ActingUponFunction,
-    Moment: [_] =>> Time[
-      Moment
-    ],
-    State: [_] =>> Functor[
+    Moment: Time,
+    State: [_] =>> VirtualTopology[Set, State]: [_] =>> Functor[
       [_, _] =>> Tuple2[Moment, Moment],
       Morphism,
       [_] =>> State
-    ]: [_] =>> VirtualTopology[
-      Collection,
-      State
     ]
 ]:
 
@@ -411,25 +408,20 @@ Using the `type` definitions below you can read the `Universe` definition above 
 
 ```scala
 trait Universe[
-    Collection[_]: Sets,
+    Set[_]: Sets,
     Morphism[_, _]: Category: ActingUponFunction,
-    Moment: [_] =>> Time[
-      Moment
-    ],
-    State: [_] =>> Functor[
+    Moment: Time,
+    State: [_] =>> VirtualTopology[Set, State]: [_] =>> Functor[
       [_, _] =>> MomentMorphism,
       Morphism,
       [_] =>> State
-    ]: [_] =>> VirtualTopology[
-      Collection,
-      State
     ]
-]
+]:
 ```
 
 `Universe` is a type class for parameter `State`.
 
-`Universe` also has a foundational parameter `Collection` that is required to be a `Sets` unary type constructor.
+`Universe` also has a foundational parameter `Set` that is required to be a `Sets` unary type constructor.
 
 `Sets` is fully explained in [Sets](#sets).
 
@@ -454,21 +446,21 @@ Type `Tuple2[T, T]`, somewhat abusively, denotes an ordered set implicitly denot
 
 Using the `type` definitions below the requirements for `State` to be a `Universe` type are
 
+- `State` is a `VirtualTopology[Set, State]` type.
 - `State` is a `Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State]` type,
-- `State` is a `VirtualTopology[Collection, State]` type.
-
-`Functor` is fully explained in [Functor](#functor).
 
 `VirtualTopology` is fully explained in [VirtualTopology](#virtualtopology).
+
+`Functor` is fully explained in [Functor](#functor).
 
 ```scala
   // ...
 
-  val cs: Sets[Collection] = summon[Sets[Collection]]
+  val cs: Sets[Set] = summon[Sets[Set]]
 
   val mc: Category[Morphism] = summon[Category[Morphism]]
 
-  val mfa: ActingUponFunction[Morphism] = summon[ActingUponFunction[Morphism]]
+  val mauf: ActingUponFunction[Morphism] = summon[ActingUponFunction[Morphism]]
 
   // ...
 ```
@@ -478,7 +470,7 @@ Foundational delegates are defined.
 ```scala
   // ...
 
-  val mm: Time[Moment] = summon[Time[Moment]]
+  val mt: Time[Moment] = summon[Time[Moment]]
 
   // ...
 ```
@@ -498,11 +490,13 @@ Foundational delegates are defined.
 ```scala
   // ...
 
-  val mmΦst: Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State] =
-    summon[Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State]]
+  // `Universe` related foundational delegates are defined.
 
-  val svt: VirtualTopology[Collection, State] =
-    summon[VirtualTopology[Collection, State]]
+  val svt: VirtualTopology[Set, State] =
+    summon[VirtualTopology[Set, State]]
+
+  val mmΦsm: Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State] =
+    summon[Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State]]
 
   // ...
 ```
@@ -522,58 +516,53 @@ Foundational delegates are defined.
 ```scala
   // ...
 
-  val mmφst: Function[MomentMorphism, StateMorphism] = mmΦst.φ
+  val mmφsm: Function[MomentMorphism, StateMorphism] = mmΦsm.φ
 
-  val ss: Function[Collection[State], State] = svt.sup
+  val svts: Function[Set[State], State] = svt.sup
 
   // ...
 ```
 
 `Universe` related foundational members using members of `Universe` related foundational delegates are defined.
 
-### NestedComposition
+### Composition2
 
 ```scala
 package types
 
 import specification.{Sets}
 
-enum NestedComposition[Collection[_]: Sets, Z]:
-  case Atom[Collection[_]: Sets, Z](z: Z)
-      extends NestedComposition[Collection, Z]
-  case Composition2[Collection[_]: Sets, Z](
-      ncc: Collection[NestedComposition[Collection, Z]]
-  ) extends NestedComposition[Collection, Z]
+enum Composition2[Set[_]: Sets, Z]:
+  case Atomic[Set[_]: Sets, Z](z: Z) extends Composition2[Set, Z]
+  case Composed[Set[_]: Sets, Z](cs2: Set[Composition2[Set, Z]])
+      extends Composition2[Set, Z]
 
-import NestedComposition.{Composition2}
+import Composition2.{Composed}
 
-def composition2[Collection[_]: Sets, Z]: Collection[
-  NestedComposition[Collection, Z]
-] => NestedComposition[Collection, Z] =
-  Composition2.apply
+def composition2[Set[_]: Sets, Z]
+    : Set[Composition2[Set, Z]] => Composition2[Set, Z] =
+  Composed.apply
 
-def decomposition2[Collection[_]: Sets, Z]
-    : NestedComposition[Collection, Z] => Collection[
-      NestedComposition[Collection, Z]
-    ] =
+def decomposition2[Set[_]: Sets, Z]
+    : Composition2[Set, Z] => Set[Composition2[Set, Z]] =
 
-  val sets: Sets[Collection] = summon[Sets[Collection]]
+  val sets: Sets[Set] = summon[Sets[Set]]
 
-  import sets.{collection2}
+  import sets.{set2}
 
-  nc => collection2 apply (nc, nc)
+  c => set2 apply (c, c)
 ```
 
-`NestedComposition` is an example of *recursive structural compositionality*.
+`Composition2` is an example of *structural compositionality*.
 
-Note that the `Collection[NestedComposition[Collection, Z]]` is a `Collection2[NestedComposition[Collection, Z]]`.
+Note that the `Set[Composition2[Set, Z]]` is a `Set2[Composition2[Set, Z]]`.
 
 ### PreThings
 
 ```scala
 package timehybrids.specification
 
-import types.{NestedComposition, composition2, decomposition2}
+import types.{Composition2, composition2, decomposition2}
 
 import specification.{
   Arbitrary,
@@ -592,37 +581,26 @@ import implementation.{
 }
 
 trait PreThings[
-    Collection[_],
+    Set[_],
     Morphism[_, _],
     Moment,
-    State: [_] =>> Universe[Collection, Morphism, Moment, State],
+    State: [_] =>> Universe[Set, Morphism, Moment, State],
     PreObject: [_] =>> Arbitrary[
-      Collection[
-        Collection[
-          NestedComposition[Collection, PreObject]
-        ]
-      ]
+      Set[Set[Composition2[Set, PreObject]]]
     ]: [_] =>> Functor[
       [_, _] =>> Tuple2[Moment, Moment],
       Function,
-      [_] =>> Collection[NestedComposition[Collection, PreObject]]
+      [_] =>> Set[Composition2[Set, PreObject]]
     ]: [_] =>> Transformation[
       [_, _] =>> Tuple2[Moment, Moment],
       Function,
-      [_] =>> Collection[
-        Collection[
-          NestedComposition[Collection, PreObject]
+      [_] =>> Set[
+        Set[
+          Composition2[Set, PreObject]
         ]
       ],
-      [_] =>> Collection[
-        Collection[
-          NestedComposition[Collection, PreObject]
-        ]
-      ]
-    ]: [_] =>> Function[
-      Collection[NestedComposition[Collection, PreObject]],
-      State
-    ]
+      [_] =>> Set[Set[Composition2[Set, PreObject]]]
+    ]: [_] =>> Function[Set[Composition2[Set, PreObject]], State]
 ]:
 
   // ...
@@ -632,51 +610,48 @@ Using the `type` definitions below you can read the `PreThings` definition above
 
 ```scala
 trait PreThings[
-    Collection[_],
+    Set[_],
     Morphism[_, _],
     Moment,
-    State: [_] =>> Universe[Collection, Morphism, Moment, State],
+    State: [_] =>> Universe[Set, Morphism, Moment, State],
     PreObject: [_] =>> Arbitrary[
-      PreInteractionsCollection
+      PreInteractionsSet
     ]: [_] =>> Functor[
       [_, _] =>> MomentMorphism,
       Function,
-      [_] =>> PreThingsCollection
+      [_] =>> PreThingsSet
     ]: [_] =>> Transformation[
       [_, _] =>> MomentTransition,
       Function,
-      [_] =>> Collection2[PreThingsCollection],
-      [_] =>> PreInteractionsCollection
-    ]: [_] =>> Function[
-      PreThingsCollection,
-      State
-    ]
+      [_] =>> Set2[PreThingsSet],
+      [_] =>> PreInteractionsSet
+    ]: [_] =>> Function[PreThingsSet, State]
 ]:
 ```
 
 `PreThings` is a type class for parameter `PreObject`.
 
-`PreThings` also has a foundational parameter `Collection`.
+`PreThings` also has a foundational parameter `Set`.
 
 `PreThings` also has a foundational parameter `Morphism`.
 
 `PreThings` also has a domain parameter `Moment`.
 
 `PreThings` also has a domain parameter `State` that is required to be a
-`Universe[Collection, Morphism, Moment, State]` type.
+`Universe[Set, Morphism, Moment, State]` type.
 
 Using the `type` definitions below the requirements for `PreObject` to be a `PreThings` type are
 
-- `PreObject` is an `Arbitrary[PreInteractionsCollection]` type.
+- `PreObject` is an `Arbitrary[PreInteractionsSet]` type.
 
-- `PreObject` is a `Functor[[_, _] =>> MomentMorphism, Function, [_] =>> PreThingsCollection]` type.
+- `PreObject` is a `Functor[[_, _] =>> MomentMorphism, Function, [_] =>> PreThingsSet]` type.
 
 - `PreObject` is a
   `Transformation[`
   `[_, _] =>> MomentMorphism,`
   ` Function,`
-  `[_] =>> Collection2[PreThingsCollection],`
-  `[_] =>> PreInteractionsCollection]` type.
+  `[_] =>> Set2[PreThingsSet],`
+  `[_] =>> PreInteractionsSet]` type.
 
 `Transformation` is fully explained in [Transformation](#transformation).
 
@@ -690,8 +665,8 @@ Using the `type` definitions below the requirements for `PreObject` to be a `Pre
 ```scala
   // ..
 
-  val su: Universe[Collection, Morphism, Moment, State] =
-    summon[Universe[Collection, Morphism, Moment, State]]
+  val su: Universe[Set, Morphism, Moment, State] =
+    summon[Universe[Set, Morphism, Moment, State]]
 
   // ...
 ```
@@ -703,15 +678,15 @@ Using the `type` definitions below the requirements for `PreObject` to be a `Pre
 
   import su.{cs}
 
-  import cs.{Collection2}
+  import cs.{Set2}
 
-  type PreThing = NestedComposition[Collection, PreObject]
+  type PreThing = Composition2[Set, PreObject]
 
-  type PreThingsCollection = Collection[PreThing]
+  type PreThingsSet = Set[PreThing]
 
-  type PreInteraction = Collection2[PreThing]
+  type PreInteraction = Set2[PreThing]
 
-  type PreInteractionsCollection = Collection[PreInteraction]
+  type PreInteractionsSet = Set[PreInteraction]
 
   // ...
 ```
@@ -721,38 +696,38 @@ Using the `type` definitions below the requirements for `PreObject` to be a `Pre
 ```scala
  import su.{MomentMorphism}
 
-  val pica: Arbitrary[PreInteractionsCollection] =
-    summon[Arbitrary[PreInteractionsCollection]]
+  val pisa: Arbitrary[PreInteractionsSet] =
+    summon[Arbitrary[PreInteractionsSet]]
 
-  val mmΦptcf: Functor[
+  val mmΦptsf: Functor[
     [_, _] =>> MomentMorphism,
     Function,
-    [_] =>> PreThingsCollection
+    [_] =>> PreThingsSet
   ] =
     summon[
       Functor[
         [_, _] =>> MomentMorphism,
         Function,
-        [_] =>> PreThingsCollection
+        [_] =>> PreThingsSet
       ]
     ]
 
-  val ptcc2Τpic: Transformation[
+  val ptss2Τpis: Transformation[
     [_, _] =>> MomentMorphism,
     Function,
-    [_] =>> Collection2[PreThingsCollection],
-    [_] =>> PreInteractionsCollection
+    [_] =>> Set2[PreThingsSet],
+    [_] =>> PreInteractionsSet
   ] = summon[
     Transformation[
       [_, _] =>> MomentMorphism,
       Function,
-      [_] =>> Collection2[PreThingsCollection],
-      [_] =>> PreInteractionsCollection
+      [_] =>> Set2[PreThingsSet],
+      [_] =>> PreInteractionsSet
     ]
   ]
 
-  val ptcφs: Function[PreThingsCollection, State] =
-    summon[Function[PreThingsCollection, State]]
+  val ptsφs: Function[PreThingsSet, State] =
+    summon[Function[PreThingsSet, State]]
   
   // ...
 ```
@@ -762,17 +737,17 @@ Using the `type` definitions below the requirements for `PreObject` to be a `Pre
 ```scala
   // ...
 
-  val apic: Collection[PreInteraction] = pica.arbitrary
+  val apis: Set[PreInteraction] = pisa.arbitrary
 
-  val mmφptcf: Function[
+  val mmφptsf: Function[
     MomentMorphism,
-    Function[PreThingsCollection, PreThingsCollection]
-  ] = mmΦptcf.φ
+    Function[PreThingsSet, PreThingsSet]
+  ] = mmΦptsf.φ
 
-  val ptcc2φtpic: Function[
-    Collection2[PreThingsCollection],
-    PreInteractionsCollection
-  ] = ptcc2Τpic.τ
+  val ptss2φtpis: Function[
+    Set2[PreThingsSet],
+    PreInteractionsSet
+  ] = ptss2Τpis.τ
 
   // ...
 ```
@@ -780,13 +755,13 @@ Using the `type` definitions below the requirements for `PreObject` to be a `Pre
 `PreThings` related foundational members using members of `PreThings` related foundational delegates are defined.
 
 ```scala
-  import su.{mc, mfa}
+  import su.{mc, mauf}
 
-  given Sets[Collection] = cs
+  given Sets[Set] = cs
 
   given Category[Morphism] = mc
 
-  given ActingUponFunction[Morphism] = mfa
+  given ActingUponFunction[Morphism] = mauf
 ```
 
 Foundational `given`s using `import`ed foundational delegates are defined.
@@ -794,9 +769,9 @@ Foundational `given`s using `import`ed foundational delegates are defined.
 ```scala
   // ...
 
-  import su.{mm, mmΦst}
+  import su.{mt, mmΦsm}
 
-  import mm.{ma, mo}
+  import mt.{ma, mo}
 
   given Arbitrary[Moment] = ma
 
@@ -808,7 +783,7 @@ Foundational `given`s using `import`ed foundational delegates are defined.
 `Time` related foundational `given`s are defined.
 
 ```scala
-  given Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State] = mmΦst
+  given Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State] = mmΦsm
 
   // ...
 ```
@@ -818,14 +793,14 @@ Foundational `given`s using `import`ed foundational delegates are defined.
 ```scala
   // ...
 
-  given mmΦptcc2f: Functor[
+  given mmΦptss2f: Functor[
     [_, _] =>> MomentMorphism,
     Function,
-    [_] =>> Collection2[PreThingsCollection]
+    [_] =>> Set2[PreThingsSet]
   ] = functionValuedFunctor2[
-    Collection,
+    Set,
     [_, _] =>> MomentMorphism,
-    [_] =>> PreThingsCollection
+    [_] =>> PreThingsSet
   ]
 
   // ...
@@ -836,13 +811,13 @@ Foundational `given`s using `import`ed foundational delegates are defined.
 ```scala
   // ...
 
-  val mmφptcc2f: Function[
+  val mmφptss2f: Function[
     MomentMorphism,
     Function[
-      Collection2[PreThingsCollection],
-      Collection2[PreThingsCollection]
+      Set2[PreThingsSet],
+      Set2[PreThingsSet]
     ]
-  ] = mmΦptcc2f.φ
+  ] = mmΦptss2f.φ
 
   // ...
 ```
@@ -852,7 +827,7 @@ Foundational `given`s using `import`ed foundational delegates are defined.
 ```scala
   // ...
 
-  val picφptc: Function[PreInteractionsCollection, PreThingsCollection] =
+  val pisφpts: Function[PreInteractionsSet, PreThingsSet] =
     pic =>
       for {
         pi <- pic
@@ -860,18 +835,18 @@ Foundational `given`s using `import`ed foundational delegates are defined.
         composition2 apply pi
       }
 
-  val ptcφpic: Function[PreThingsCollection, PreInteractionsCollection] =
-    ptc =>
+  val ptsφpis: Function[PreThingsSet, PreInteractionsSet] =
+    pts =>
       for {
-        pt <- ptc
+        pt <- pts
       } yield {
         decomposition2 apply pt
       }
 
-  val mmφpicf: Function[
+  val mmφpisf: Function[
     MomentMorphism,
-    Function[PreInteractionsCollection, PreInteractionsCollection]
-  ] = mm => ptcφpic `o` mmφptcf(mm) `o` picφptc
+    Function[PreInteractionsSet, PreInteractionsSet]
+  ] = mm => ptsφpis `o` mmφptsf(mm) `o` pisφpts
 
   // ...
 ```
@@ -899,23 +874,23 @@ Back to [PreThings](#prethings)
 
   trait PreThingsFunctorCompositionLaws[L[_]: Law]:
 
-    given stΦptcf: Functor[Morphism, Function, [_] =>> PreThingsCollection]
+    given stΦptcf: Functor[Morphism, Function, [_] =>> PreThingsSet]
 
     val composition2: L[
       Functor[
         [_, _] =>> MomentMorphism,
         Function,
-        [_] =>> PreThingsCollection
+        [_] =>> PreThingsSet
       ]
     ] = {
-      mmΦptcf
+      mmΦptsf
     } `=` {
       composedFunctor[
         [_, _] =>> MomentMorphism,
         Morphism,
         Function,
         [_] =>> State,
-        [_] =>> PreThingsCollection
+        [_] =>> PreThingsSet
       ]
     }
 
@@ -966,13 +941,13 @@ pre-thing A(t) a pre-interaction i(A(t),A(t))*.
 ```scala
   // ...
 
-    val noPreThingFromNothing: MomentMorphism => L[PreThingsCollection] =
+    val noPreThingFromNothing: MomentMorphism => L[PreThingsSet] =
       mm =>
-        import cs.{collection0}
+        import cs.{set0}
         {
-          mmφptcf(mm)(collection0)
+          mmφptsf(mm)(set0)
         } `=` {
-          collection0
+          set0
         }
 
   // ...
@@ -987,22 +962,22 @@ This law refers to the following, slightly adapted, excerpt from the paper.
   // ...
 
     val unionOfSingletonPreInteractions
-        : Collection2[PreThingsCollection] => L[PreInteractionsCollection] =
-      tptc =>
-        import cs.{tuple2, collection1, collection2, union}
-        tuple2(tptc) match
-          case (lptc, rptc) =>
+        : Set2[PreThingsSet] => L[PreInteractionsSet] =
+      ptss2 =>
+        import cs.{tuple2, set1, set2, union}
+        tuple2(ptss2) match
+          case (lpts, rpts) =>
             {
               union {
                 for {
-                  lpt <- lptc
-                  rpt <- rptc
+                  lpt <- lpts
+                  rpt <- rpts
                 } yield {
-                  ptcc2φtpic(collection2(collection1(lpt), collection1(rpt)))
+                  ptss2φtpis(set2(set1(lpt), set1(rpt)))
                 }
               }
             } `=` {
-              ptcc2φtpic(tptc)
+              ptss2φtpis(ptss2)
             }
 
   // ...
@@ -1019,8 +994,8 @@ This law refers to the following excerpt from the paper, where [1] refers to the
     val naturePreservingPreInteraction: MomentMorphism => L[Boolean] =
       mm =>
         {
-          { mmφpicf(mm) `o` ptcc2φtpic } `<=` {
-            ptcc2φtpic `o` mmφptcc2f(mm)
+          { mmφpisf(mm) `o` ptss2φtpis } `<=` {
+            ptss2φtpis `o` mmφptss2f(mm)
           }
         }
           `=` {
@@ -1044,15 +1019,15 @@ This is. i.m.h.o., really the most fundamental law of the realm of pre-things.
   trait PreThingsPlacesLaws[L[_]: Law]:
 
     val orderPreserving
-        : PreThingsCollection => PreThingsCollection => L[Boolean] =
-      lptc =>
-        rptc =>
+        : PreThingsSet => PreThingsSet => L[Boolean] =
+      lpts =>
+        rpts =>
           import su.{svt}
           import svt.{`<=`}
           {
-            lptc `<=` rptc `=` true
+            lpts `<=` rpts `=` true
           } `=>` {
-            ptcφs(lptc) `<=` ptcφs(rptc) `=` true
+            ptsφs(lpts) `<=` ptsφs(rpts) `=` true
           }
 
   // ...
@@ -1066,18 +1041,18 @@ This law refers to the following excerpt from the paper (already mentioned in th
 ```scala
   // ...
 
-    val supremumOfAllSingletonPlaces: PreThingsCollection => L[State] =
-      ptc =>
-        import cs.{collection1}
-        import su.{ss}
+    val supremumOfAllSingletonPlaces: PreThingsSet => L[State] =
+      pts =>
+        import cs.{set1}
+        import su.{svts}
         {
-          ss {
+          svts {
             for {
-              pt <- ptc
-            } yield ptcφs(collection1(pt))
+              pt <- pts
+            } yield ptsφs(set1(pt))
           }
         } `=` {
-          ptcφs(ptc)
+          ptsφs(pts)
         }
 
   // ...
@@ -1093,29 +1068,29 @@ This law refers to the following excerpt from the paper, where [2] refers to the
   // ...
 
     val immobileAfter
-        : MomentMorphism => L[Function[PreThingsCollection, State]] =
+        : MomentMorphism => L[Function[PreThingsSet, State]] =
       mm =>
-        import su.{mmφst}
+        import su.{mmφsm}
         {
-          ptcφs `o` mmφptcf(mm)
+          ptsφs `o` mmφptsf(mm)
         } `=` {
-          mmφst(mm) `a` ptcφs
+          mmφsm(mm) `a` ptsφs
         }
 
-    val immobileOnInterval: MomentMorphism => PreThingsCollection => L[State] =
+    val immobileOnInterval: MomentMorphism => PreThingsSet => L[State] =
       case (bm, em) =>
         import cs.{Interval, interval, all}
-        import su.{mmφst}
+        import su.{mmφsm}
         val mi: Interval[Moment] = interval apply ((bm, em))
-        ptc =>
+        pts =>
           all apply {
             for {
               m <- mi
             } yield {
               {
-                (ptcφs `o` mmφptcf((bm, m)))(ptc)
+                (ptsφs `o` mmφptsf((bm, m)))(pts)
               } `=` {
-                (mmφst((bm, m)) `a` ptcφs)(ptc)
+                (mmφsm((bm, m)) `a` ptsφs)(pts)
               }
             }
           }
@@ -1299,11 +1274,11 @@ Back to [Universe](#universe)
 ```scala
 package specification
 
-trait VirtualTopology[Collection[_]: Sets, T]
+trait VirtualTopology[Set[_]: Sets, T]
     extends Ordered[T],
       Meet[T],
       Join[T],
-      Supremum[Collection, T]
+      Supremum[Set, T]
 ```
 
 `VirtualTopology` is a type class for parameter `T`.
@@ -1339,7 +1314,7 @@ trait Meet[T: Ordered: Arbitrary]:
 
   // declared
 
-  extension (l: T) def ∧(r: T): T
+  extension (lt: T) def ∧(rt: T): T
 
   // ...
 ```
@@ -1367,7 +1342,7 @@ trait Join[T: Ordered: Arbitrary]:
 
   // declared
 
-  extension (l: T) def ∨(r: T): T
+  extension (lt: T) def ∨(rt: T): T
 
   // ...
 ```
@@ -1385,7 +1360,7 @@ Back to [VirtualTopology](#virtualtopology)
 ```scala
 package specification
 
-trait Supremum[Collection[_]: Sets, T: Ordered: Arbitrary]:
+trait Supremum[Set[_]: Sets, T: Ordered: Arbitrary]:
 ```
 
 `Supremum` is a type class for parameter `T`.
@@ -1395,7 +1370,7 @@ trait Supremum[Collection[_]: Sets, T: Ordered: Arbitrary]:
 ```scala
   //
 
-  val sup: Function[Collection[T], T]
+  val sup: Function[Set[T], T]
 
   // ...
 ```
@@ -1417,12 +1392,12 @@ Back to [Supremum](#supremum)
 ```scala
 package specification
 
-trait Sets[Collection[_]] extends MonadPlus[Collection]:
+trait Sets[Set[_]] extends MonadPlus[Set]:
 
   // ...
 ```
 
-`Sets` is a unary type constructor class for parameter `Collection`.
+`Sets` is a unary type constructor class for parameter `Set`.
 
 `MonadPlus` is fully explained in [MonadPlus](#monadplus).
 
@@ -1431,13 +1406,13 @@ trait Sets[Collection[_]] extends MonadPlus[Collection]:
 
   // types
 
-  type Collection0 = [Z] =>> Collection[Z]
+  type Set0 = [Z] =>> Set[Z]
 
-  type Collection1 = [Z] =>> Collection[Z]
+  type Set1 = [Z] =>> Set[Z]
 
-  type Collection2 = [Z] =>> Collection[Z]
+  type Set2 = [Z] =>> Set[Z]
 
-  type Interval = [Z] =>> Collection[Z]
+  type Interval = [Z] =>> Set[Z]
 
   // ...
 ```
@@ -1449,19 +1424,15 @@ trait Sets[Collection[_]] extends MonadPlus[Collection]:
 
   // declared
 
-  extension [Z](lc: Collection[Z]) def `=s=`(rc: Collection[Z]): Boolean
+  extension [Z](lc: Set[Z]) def `=s=`(rc: Set[Z]): Boolean
 
-  extension [Z](lc: Collection[Z]) def `<s<`(rc: Collection[Z]): Boolean
+  extension [Z](lc: Set[Z]) def `<s<`(rc: Set[Z]): Boolean
 
-  def tuple2[Z]: Collection2[Z] => Tuple2[Z, Z]
+  def tuple2[Z]: Set2[Z] => Tuple2[Z, Z]
 
-  // declared related to Ordered (apply needed at use site)
+  def interval[Z: Ordered]: Option[Tuple2[Z, Z]] => Set[Z]
 
-  def interval[Z: Ordered]: Option[Tuple2[Z, Z]] => Collection[Z]
-
-  // declared related to Law (apply needed at use site)
-
-  def all[Z, L[_]: Law]: Collection[L[Z]] => L[Z]
+  def all[Z, L[_]: Law]: Set[L[Z]] => L[Z]
 
   // ...  
 ```
@@ -1473,28 +1444,25 @@ trait Sets[Collection[_]] extends MonadPlus[Collection]:
 
   // defined
 
-  def collection0[Z]: Collection0[Z] = ζ
+  def set0[Z]: Set0[Z] = ζ
 
-  def collection1[Z]: Z => Collection1[Z] = ν
+  def set1[Z]: Z => Set1[Z] = ν
 
-  extension [Z](lc: Collection[Z])
-    def ∪(rc: Collection[Z]): Collection[Z] =
-      lc `+` rc
+  extension [Z](ls: Set[Z]) def ∪(rs: Set[Z]): Set[Z] = ls `+` rs
 
-  def collection2[Z]: Tuple2[Z, Z] => Collection2[Z] = (l, r) =>
-    collection1(l) ∪ collection1(r)
+  def set2[Z]: Tuple2[Z, Z] => Set2[Z] = (l, r) => set1(l) ∪ set1(r)
 
-  def union[Z]: Collection[Collection[Z]] => Collection[Z] = μ
+  def union[Z]: Set[Set[Z]] => Set[Z] = μ
 
-  extension [Z](lc: Collection[Z])
-    def `<=s<=`(rc: Collection[Z]): Boolean = lc `<s<` rc || lc `=s=` rc
+  extension [Z](ls: Set[Z])
+    def `<=s<=`(rs: Set[Z]): Boolean = ls `<s<` rs || ls `=s=` rs
 
   // ...  
 ```
 
 `Sets` members are defined.
 
-The laws of `Sets`, `SetLaws`, are fully explained in [SetLaws](#setlaws).
+The laws of `Sets`, `SetsLaws`, are fully explained in [SetsLaws](#setslaws).
 
 Back to [Supremum](#supremum)
 
@@ -2264,14 +2232,14 @@ Back to [Meet](#meet)
     val at = summon[Arbitrary[T]].arbitrary
 
     val greatestSmallerThanBoth: T => T => L[Boolean] =
-      l =>
-        r =>
+      lt =>
+        rt =>
           {
-            ((l ∧ r) `<=` l) `=` true `&` ((l ∧ r) `<=` r) `=` true
+            ((lt ∧ rt) `<=` lt) `=` true `&` ((lt ∧ rt) `<=` rt) `=` true
           } `&` {
-            (at `<=` l) `=` true `&` (at `<=` r) `=` true
+            (at `<=` lt) `=` true `&` (at `<=` rt) `=` true
           } `=>` {
-            at `<=` (l ∧ r) `=` true
+            at `<=` (lt ∧ rt) `=` true
           }
 ```
 
@@ -2293,14 +2261,14 @@ Back to [Meet](#meet)
     val at = summon[Arbitrary[T]].arbitrary
 
     val smallestGreaterThanBoth: T => T => L[Boolean] =
-      l =>
-        r =>
+      lt =>
+        rt =>
           {
-            (l `<=` (l ∨ r)) `=` true `&` (r `<=` (l ∨ r)) `=` true
+            (lt `<=` (lt ∨ rt)) `=` true `&` (rt `<=` (lt ∨ rt)) `=` true
           } `&` {
-            (l `<=` at) `=` true `&` (r `<=` at) `=` true
+            (lt `<=` at) `=` true `&` (rt `<=` at) `=` true
           } `=>` {
-            (l ∨ r) `<=` at `=` true
+            (lt ∨ rt) `<=` at `=` true
           }
 ```
 
@@ -2318,42 +2286,42 @@ Back to [Supremum](#supremum)
 ```scala
   // ...
 
- // laws
+  // laws
 
   trait SupremumLaws[L[_]: Law]:
 
-    val sets: Sets[Collection] = summon[Sets[Collection]]
+    val sets: Sets[Set] = summon[Sets[Set]]
 
     import sets.{map, all}
 
     val at = summon[Arbitrary[T]].arbitrary
 
-    val smallestGreaterThanAll: Collection[T] => L[Boolean] =
-      c =>
+    val smallestGreaterThanAll: Set[T] => L[Boolean] =
+      ts =>
         {
           all apply {
             for {
-              t <- c
-            } yield t `<=` sup(c) `=` true
+              t <- ts
+            } yield t `<=` sup(ts) `=` true
           }
         } `&` {
           all apply {
             for {
-              t <- c
+              t <- ts
             } yield t `<=` at `=` true
           }
         } `=>` {
-          sup(c) `<=` at `=` true
+          sup(ts) `<=` at `=` true
         }
 
     given join: Join[T]
 
     val joinAsSupremum: Tuple2[T, T] => L[T] =
-      val sets = summon[Sets[Collection]]
-      import sets.{collection2}
+      val sets = summon[Sets[Set]]
+      import sets.{set2}
       (lt, rt) =>
         {
-          sup(collection2(lt, rt))
+          sup(set2(lt, rt))
         } `=` {
           lt ∨ rt
         }
@@ -2365,7 +2333,7 @@ Anyway, see, for example, [Supremum](https://en.wikipedia.org/wiki/Join_and_meet
 
 Back to [Supremum](#supremum)
 
-### SetLaws
+### SetsLaws
 
 Back to [Sets](#sets)
 
@@ -2375,16 +2343,16 @@ Back to [Sets](#sets)
 
   // laws
 
-  trait SetLaws[L[_]: Law]:
+  trait SetsLaws[L[_]: Law]:
 
-    trait Collection2Related:
+    trait Set2Related:
 
-      def unordered[Z]: Tuple2[Z, Z] => L[Collection2[Z]] =
+      def unordered[Z]: Tuple2[Z, Z] => L[Set2[Z]] =
         (l, r) =>
           {
-            collection2(l, r)
+            set2(l, r)
           } `=` {
-            collection2(r, l)
+            set2(r, l)
           }
 
       import implementation.{functionCategory}
@@ -2392,71 +2360,69 @@ Back to [Sets](#sets)
       def iso2[Z]: L[Function[Tuple2[Z, Z], Tuple2[Z, Z]]] = {
         identity[Tuple2[Z, Z]]
       } `=` {
-        tuple2 `o` collection2
+        tuple2 `o` set2
       }
 
-      def osi2[Z]: L[Function[Collection2[Z], Collection2[Z]]] = {
-        identity[Collection2[Z]]
+      def osi2[Z]: L[Function[Set2[Z], Set2[Z]]] = {
+        identity[Set2[Z]]
       } `=` {
-        collection2 `o` tuple2
+        set2 `o` tuple2
       }
 
     trait EqualityRelated:
 
-      def reflexive[Z]: Collection[Z] => L[Boolean] = c =>
+      def reflexive[Z]: Set[Z] => L[Boolean] = s =>
         {
-          c `=s=` c
+          s `=s=` s
         } `=` {
           true
         }
 
-      def symmetric[Z]: Collection[Z] => Collection[Z] => L[Boolean] =
-        lc =>
-          rc =>
+      def symmetric[Z]: Set[Z] => Set[Z] => L[Boolean] =
+        l =>
+          r =>
             {
-              lc `=s=` rc `=` true
+              l `=s=` r `=` true
             } `=>` {
-              rc `=s=` lc `=` true
+              r `=s=` l `=` true
             }
 
-      def transitive[Z]
-          : Collection[Z] => Collection[Z] => Collection[Z] => L[Boolean] =
-        lc =>
-          mc =>
-            rc =>
+      def transitive[Z]: Set[Z] => Set[Z] => Set[Z] => L[Boolean] =
+        l =>
+          m =>
+            r =>
               {
-                { lc `=s=` mc `=` true } `&` { mc `=s=` rc `=` true }
+                { l `=s=` m `=` true } `&` { m `=s=` r `=` true }
               } `=>` {
-                lc `=s=` rc `=` true
+                l `=s=` r `=` true
               }
 
     trait OrderedRelated:
 
-      def reflexive[Z]: Collection[Z] => L[Boolean] = c =>
+      def reflexive[Z]: Set[Z] => L[Boolean] = s =>
         {
-          c `<=s<=` c
+          s `<=s<=` s
         } `=` {
-          trueF
+          true
         }
 
-      def antiSymmetric[Z]: Collection[Z] => Collection[Z] => L[Boolean] =
-        lc =>
-          rc =>
+      def antiSymmetric[Z]: Set[Z] => Set[Z] => L[Boolean] =
+        l =>
+          r =>
             {
-              { lc `<=s<=` rc } `=` true `&` { rc `<=s<=` lc } `=` true
+              { l `<=s<=` r } `=` true `&` { r `<=s<=` l } `=` true
             } `=>` {
-              lc `=s=` rc `=` true
+              l `=s=` r `=` true
             }
 
-      def transitive[Z]
-          : Collection[Z] => Collection[Z] => Collection[Z] => L[Boolean] =
-        lc =>
-          mc =>
-            rc =>
+      def transitive[Z]: Set[Z] => Set[Z] => Set[Z] => L[Boolean] =
+        l =>
+          m =>
+            r =>
               {
-                { lc `<=s<=` mc } `=` true `&` { mc `<=s<=` rc } `=` true
+                { l `<=s<=` m } `=` true `&` { m `<=s<=` r } `=` true
               } `=>` {
-                { lc `<=s<=` rc } `=` true
+                { l `<=s<=` r } `=` true
               }
 ```
 
@@ -2846,30 +2812,30 @@ package implementation
 import specification.{Sets, Category, Functor}
 
 given functionValuedFunctor2[
-    Collection[_]: Sets,
+    Set[_]: Sets,
     BTC[_, _]: Category,
     UTC1[_]: [_[_]] =>> Functor[BTC, Function, UTC1]
 ]: Functor[
   BTC,
   Function,
-  [Z] =>> Collection[UTC1[Z]]
+  [Z] =>> Set[UTC1[Z]]
 ] with
 
-  val sets: Sets[Collection] = summon[Sets[Collection]]
+  val sets: Sets[Set] = summon[Sets[Set]]
 
   val btcToFunctionFunctor = summon[Functor[BTC, Function, UTC1]]
 
   import types.{`o`}
 
-  import sets.{Collection2, tuple2, collection2}
+  import sets.{Set2, tuple2, set2}
 
-  type UTC2 = [Z] =>> (Collection2 `o` UTC1)[Z]
+  type UTC2 = [Z] =>> (Set2 `o` UTC1)[Z]
   def φ[Z, Y]: BTC[Z, Y] => Function[UTC2[Z], UTC2[Y]] =
     zμy =>
       val zφy = btcToFunctionFunctor.φ(zμy)
       d =>
         tuple2(d) match
-          case (l, r) => collection2(zφy(l), zφy(r))
+          case (l, r) => set2(zφy(l), zφy(r))
 ```
 
 Back to [PreThings](#prethings)
@@ -2883,7 +2849,7 @@ package implementation
 
 import specification.{Arbitrary, Ordered, Sets, Category}
 
-given orderedCategory[Collection[_]: Sets, T: Arbitrary: Ordered]
+given orderedCategory[Set[_]: Sets, T: Arbitrary: Ordered]
     : Category[[_, _] =>> Tuple2[T, T]] with
 
   type BTC = [_, _] =>> Tuple2[T, T]
@@ -2998,13 +2964,13 @@ package implementation
 
 import specification.{Sets, Ordered}
 
-given setOrdered[Z, Collection[_]: Sets]: Ordered[Collection[Z]] with
+given setOrdered[Z, Set[_]: Sets]: Ordered[Set[Z]] with
 
-  val sets: Sets[Collection] = summon[Sets[Collection]]
+  val sets: Sets[Set] = summon[Sets[Set]]
 
   import sets.{`=s=`, `<s<`}
 
-  type T = [Z] =>> Collection[Z]
+  type T = [Z] =>> Set[Z]
 
   extension (lt: T[Z]) def `=`(rt: T[Z]): Boolean = lt `=s=` rt
 
