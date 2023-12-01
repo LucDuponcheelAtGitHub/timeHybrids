@@ -254,7 +254,7 @@ Recently I attended a lecture of Fred on its book in Almeria. The lecture was ac
 
 Let's start with the first sentences of the abstract of the paper.
 
-*We introduce a generic model for space-time where time is just a totally ordered sets ordering the states of the*
+*We introduce a generic model for space-time where time is just a totally ordered set ordering the states of the*
 *universe at moments where over (not in) each state we define potentials or pre-things which are going to evolve via*
 *correspondences between the momentary potentials to existing things. Existing takes time and observing takes more time.*
 
@@ -264,7 +264,9 @@ The following concepts are involved
 - universe states,
 - pre-things,
 - space,
+
 and,
+
 - things.
 
 Moreover
@@ -287,7 +289,7 @@ This sentence uses notation that needs some explanation.
 
 - Time moments are denoted as *t*.
 - The universe state at time moment *t* is denoted as *U(t)*.
-- The set of sets of pre-things at time moment *t* is denoted as *PS(t)*.
+- The collection of sets of pre-things at time moment *t* is denoted as *PS(t)*.
 - Sets of pre-things are denoted as *A(t)*.
 - The "place map" *p(t)* maps *A(t)* to *pA(t)*.
 - The *non-commutative lattice* on *U(t)* is denoted as *L(t)*.
@@ -323,7 +325,7 @@ The requirements for `Moment` to be a `Time` type are
 
 `Ordered` is fully explained in [Ordered](#ordered).
 
-A types *implicitly* denotes a *sets* and a *value* of a type *implicitly* denotes an *element* of a sets.
+A type *implicitly* denotes a *set* and a *value* of a type *implicitly* denotes an *element* of a set.
 
 Recall that we are building a DSL for reality and its foundations.
 
