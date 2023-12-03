@@ -1,6 +1,6 @@
 package implementation
 
-import specification.{Category, ActingUponFunction, Functor}
+import specification.{Category, ActionUponFunction, Functor}
 
 given functionCategory: Category[Function] with
 
@@ -11,7 +11,7 @@ given functionCategory: Category[Function] with
 
   def ι[Z]: BTC[Z, Z] = z => z
 
-given functionFunctionActingUpon: ActingUponFunction[Function] with
+given functionFunctionActionUpon: ActionUponFunction[Function] with
 
   type BTC = [Z, Y] =>> Function[Z, Y]
 

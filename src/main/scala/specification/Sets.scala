@@ -1,8 +1,10 @@
 package specification
 
-trait Sets[Set[_]] extends MonadPlus[Set]:
+trait Sets[UTC[_]] extends MonadPlus[UTC]:
 
   // types
+
+  type Set = [Z] =>> UTC[Z]
 
   type Set0 = [Z] =>> Set[Z]
 

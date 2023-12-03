@@ -1,6 +1,6 @@
 package specification
 
-trait ActingUpon[LBTC[_, _], RBTC[_, _]: Category]:
+trait ActionUpon[LBTC[_, _], RBTC[_, _]: Category]:
 
   // declared
 

@@ -388,13 +388,13 @@ import specification.{
   VirtualTopology,
   Sets,
   Category,
-  ActingUponFunction,
+  ActionUponFunction,
   Functor
 }
 
 trait Universe[
     Set[_]: Sets,
-    Morphism[_, _]: Category: ActingUponFunction,
+    Morphism[_, _]: Category: ActionUponFunction,
     Moment: Time,
     State: [_] =>> VirtualTopology[Set, State]: [_] =>> Functor[
       [_, _] =>> Tuple2[Moment, Moment],
@@ -411,7 +411,7 @@ Using the `type` definitions below you can read the `Universe` definition above 
 ```scala
 trait Universe[
     Set[_]: Sets,
-    Morphism[_, _]: Category: ActingUponFunction,
+    Morphism[_, _]: Category: ActionUponFunction,
     Moment: Time,
     State: [_] =>> VirtualTopology[Set, State]: [_] =>> Functor[
       [_, _] =>> MomentMorphism,
@@ -429,16 +429,16 @@ trait Universe[
 
 `Sets` *explicitly* denotes *the realm of all sets*.
 
-Mathematically this is not a set. 
+Mathematically this is not a set.
 
 Programmatically it is a constructive set (recall that, programmatically, a set is implicitly denoted by a type).
 
 `Universe` also has a foundational parameter `Morphism` that is required to be a `Category` binary type constructor and
-a `ActingUponFunction` binary type constructor.
+a `ActionUponFunction` binary type constructor.
 
 `Category` is fully explained in [Category](#category).
 
-`ActingUponFunction` is fully explained in [ActingUponFunction](#actinguponfunction).
+`ActionUponFunction` is fully explained in [ActionUponFunction](#actionuponfunction).
 
 `Universe` also has a domain parameter `Moment` that is required to be a `Time` type.
 
@@ -462,7 +462,7 @@ Using the `type` definitions below the requirements for `State` to be a `Univers
 
   val mc: Category[Morphism] = summon[Category[Morphism]]
 
-  val mauf: ActingUponFunction[Morphism] = summon[ActingUponFunction[Morphism]]
+  val mauf: ActionUponFunction[Morphism] = summon[ActionUponFunction[Morphism]]
 
   // ...
 ```
@@ -571,7 +571,7 @@ import specification.{
   Ordered,
   Sets,
   Category,
-  ActingUponFunction,
+  ActionUponFunction,
   Functor,
   Transformation
 }
@@ -763,7 +763,7 @@ Using the `type` definitions below the requirements for `PreObject` to be a `Pre
 
   given Category[Morphism] = mc
 
-  given ActingUponFunction[Morphism] = mauf
+  given ActionUponFunction[Morphism] = mauf
 ```
 
 Foundational `given`s using `import`ed foundational delegates are defined.
@@ -1394,12 +1394,12 @@ Back to [Supremum](#supremum)
 ```scala
 package specification
 
-trait Sets[Set[_]] extends MonadPlus[Set]:
+trait Sets[UTC[_]] extends MonadPlus[UTC]:
 
   // ...
 ```
 
-`Sets` is a unary type constructor class for parameter `Set`.
+`Sets` is a unary type constructor class for parameter `UTC`.
 
 `MonadPlus` is fully explained in [MonadPlus](#monadplus).
 
@@ -1420,6 +1420,8 @@ trait Sets[Set[_]] extends MonadPlus[Set]:
 ```
 
 `Sets` related types are defined.
+
+`Set` is just a convenient type synonym of `UTC`.
 
 ```scala
   // ...
@@ -1476,13 +1478,13 @@ Back to [Universe](#universe)
 
 Back to [Universe](#universe)
 
-Back to [ActingUpon](#actingupon)
+Back to [ActionUpon](#actionupon)
 
 Back to [Triple](#triple)
 
 Back to [NaturalTransformation](#naturaltransformation)
 
-Back to [ActingUponNaturalTransformation](#actinguponnaturaltransformation)
+Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
 
 ```scala
 package specification
@@ -1508,13 +1510,13 @@ trait Functor[FBTC[_, _]: Category, TBTC[_, _]: Category, UTC[_]]:
 
 The laws of `Functor`, `FunctorLaws` are fully defined in [FunctorLaws](#functorlaws).
 
-Back to [ActingUponNaturalTransformation](#actinguponnaturaltransformation)
+Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
 
 Back to [NaturalTransformation](#naturaltransformation)
 
 Back to [Triple](#triple)
 
-Back to [ActingUpon](#actingupon)
+Back to [ActionUpon](#actionupon)
 
 Back to [Universe](#universe)
 
@@ -1707,13 +1709,13 @@ Back to [Universe](#universe)
 
 Back to [Functor](#functor)
 
-Back to [ActingUpon](#actingupon)
+Back to [ActionUpon](#actionupon)
 
 Back to [Triple](#triple)
 
 Back to [NaturalTransformation](#naturaltransformation)
 
-Back to [ActingUponNaturalTransformation](#actinguponnaturaltransformation)
+Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
 
 ```scala
 package specification
@@ -1724,19 +1726,22 @@ trait Category[BTC[_, _]] extends BtcComposition[BTC], BtcUnit[BTC]:
 
 `Category` is a binary type constructor class for parameter `BTC`.
 
-`BtcComposition` is fully explained in [BtcComposition](#btccomposition)
+`BtcComposition` is fully explained in [BtcComposition](#btccomposition).
 
-`BtcUnit` is fully explained in [BtcUnit](#btcunit)
+`BtcUnit` is fully explained in [BtcUnit](#btcunit).
+
+`Category` *explicitly* denotes *the realm of all morphisms* of categories whose objects are sets that are implicitly
+denoted as types.
 
 The laws of `Category`, `CategoryLaws` are fully defined in [CategoryLaws](#categorylaws).
 
-Back to [ActingUponNaturalTransformation](#actinguponnaturaltransformation)
+Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
 
 Back to [NaturalTransformation](#naturaltransformation)
 
 Back to [Triple](#triple)
 
-Back to [ActingUpon](#actingupon)
+Back to [ActionUpon](#actionupon)
 
 Back to [Functor](#functor)
 
@@ -1794,37 +1799,37 @@ trait BtcUnit[BTC[_, _]]:
 
 Back to [Category](#category)
 
-### ActingUponFunction
+### ActionUponFunction
 
 Back to [Universe](#universe)
 
 ```scala
 package specification
 
-type ActingUponFunction = [BTC[_, _]] =>> ActingUpon[Function, BTC]
+type ActionUponFunction = [BTC[_, _]] =>> ActionUpon[Function, BTC]
 ```
 
-`ActingUpon` is fully explained in [ActingUpon](#actingupon).
+`ActionUpon` is fully explained in [ActionUpon](#actionupon).
 
 Back to [Universe](#universe)
 
-### ActingUpon
+### ActionUpon
 
-Back to [ActingUponFunction](#actinguponfunction)
+Back to [ActionUponFunction](#actionuponfunction)
 
-Back to [ActingUponNaturalTransformation](#actinguponnaturaltransformation)
+Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
 
 ```scala
 package specification
 
-trait ActingUpon[LBTC[_, _], RBTC[_, _]: Category]:
+trait ActionUpon[LBTC[_, _], RBTC[_, _]: Category]:
 
   // ...
 ```
 
-`ActingUpon` is a binary type constructor class for `LBTC`.
+`ActionUpon` is a binary type constructor class for `LBTC`.
 
-`ActingUpon` has a parameter that is required to be a `Category`binary type constructor.
+`ActionUpon` has a parameter that is required to be a `Category`binary type constructor.
 
 `Category` is fully explained in [Category](#category).
 
@@ -1838,7 +1843,7 @@ trait ActingUpon[LBTC[_, _], RBTC[_, _]: Category]:
   // ...
 ```
 
-`ActingUpon` features are declared.
+`ActionUpon` features are declared.
 
 ```scala
   // ...
@@ -1851,13 +1856,13 @@ trait ActingUpon[LBTC[_, _], RBTC[_, _]: Category]:
   // ...
 ```
 
-`ActingUpon` members are defined.
+`ActionUpon` members are defined.
 
 `Functor` is fully explained in [Functor](#functor).
 
-Back to [ActingUponNaturalTransformation](#actinguponnaturaltransformation)
+Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
 
-Back to [ActingUponFunction](#actinguponfunction)
+Back to [ActionUponFunction](#actionuponfunction)
 
 ### CompositionNaturalTransformation
 
@@ -1996,13 +2001,13 @@ Back to [UnitNaturalTransformation](#unitnaturaltransformation)
 
 Back to [CompositionNaturalTransformation](#compositionnaturaltransformation)
 
-### ActingUponNaturalTransformation
+### ActionUponNaturalTransformation
 
 ```scala
 package specification
 
-trait ActingUponNaturalTransformation[
-    FBTC[_, _]: Category: [_[_, _]] =>> ActingUpon[FBTC, TBTC],
+trait ActionUponNaturalTransformation[
+    FBTC[_, _]: Category: [_[_, _]] =>> ActionUpon[FBTC, TBTC],
     TBTC[_, _]: Category,
     FUTC[_]: [_[_]] =>> Functor[TBTC, FBTC, FUTC],
     TUTC[_]: [_[_]] =>> Functor[TBTC, TBTC, TUTC]
@@ -2011,25 +2016,25 @@ trait ActingUponNaturalTransformation[
   // ...
 ```
 
-`ActingUponNaturalTransformation` is a value class.
+`ActionUponNaturalTransformation` is a value class.
 
-`ActingUponNaturalTransformation` has a parameter, `FBTC` that is required to be `Category` binary type constructor and
-an `ActingUpon` binary type constructor.
+`ActionUponNaturalTransformation` has a parameter, `FBTC` that is required to be `Category` binary type constructor and
+an `ActionUpon` binary type constructor.
 
-`ActingUponNaturalTransformation` has a parameter, `TBTC` that is required to be `Category` binary type constructor
+`ActionUponNaturalTransformation` has a parameter, `TBTC` that is required to be `Category` binary type constructor
 
 `NaturalTransformation` has two parameters, `FUTC` and `TUTC` that are required to be `Functor` unary type constructors.
 
 `Category` is fully explained in [Category](#category)
 
-`ActingUpon` is fully explained in [ActingUpon](#actingupon)
+`ActionUpon` is fully explained in [ActionUpon](#actionupon)
 
 `Functor` is fully explained in [Functor](#functor)
 
 `Transformation` is fully explained in [Transformation](#transformation)
 
-The laws of `ActedUpoNaturalTransformation`, `ActingUponNaturalTransformationLaws` are fully defined in
-[ActingUponNaturalTransformationLaws](#actinguponnaturaltransformationlaws).
+The laws of `ActedUpoNaturalTransformation`, `ActionUponNaturalTransformationLaws` are fully defined in
+[ActionUponNaturalTransformationLaws](#actionuponnaturaltransformationlaws).
 
 ### Transformation
 
@@ -2037,7 +2042,7 @@ Back to [PreThings](#prethings)
 
 Back to [NaturalTransformation](#naturaltransformation)
 
-Back to [ActingUponNaturalTransformation](#actinguponnaturaltransformation)
+Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
 
 ```scala
 package specification
@@ -2055,7 +2060,7 @@ trait Transformation[FBTC[_, _], TBTC[_, _], FUTC[_], TUTC[_]]:
 
 `Transformation` features are declared.
 
-Back to [ActingUponNaturalTransformation](#actinguponnaturaltransformation)
+Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
 
 Back to [NaturalTransformation](#naturaltransformation)
 
@@ -2774,16 +2779,16 @@ Back to [BtcComposition](#btccomposition)
 
 Back to [NaturalTransformation](#naturaltransformation)
 
-### ActingUponNaturalTransformationLaws
+### ActionUponNaturalTransformationLaws
 
-Back to [ActingUponNaturalTransformation](#actinguponnaturaltransformation)
+Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
 
 ```scala
   // ...
 
   // laws
 
-  trait ActingUponNaturalTransformationLaws[L[_]: Law](
+  trait ActionUponNaturalTransformationLaws[L[_]: Law](
       transformation: NaturalTransformation[RBTC, LBTC, FUTC, TUTC]
   ):
 
@@ -2800,7 +2805,7 @@ Back to [ActingUponNaturalTransformation](#actinguponnaturaltransformation)
         }
 ```
 
-Back to [ActingUponNaturalTransformation](#actinguponnaturaltransformation)
+Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
 
 ## Mathematical Foundations Domain: Implementations
 
@@ -2877,7 +2882,7 @@ Back to [PreThings](#prethings)
 ```scala
 package implementation
 
-import specification.{Category, ActingUponFunction, Functor}
+import specification.{Category, ActionUponFunction, Functor}
 
 given functionCategory: Category[Function] with
 
@@ -2888,7 +2893,7 @@ given functionCategory: Category[Function] with
 
   def ι[Z]: BTC[Z, Z] = z => z
 
-given functionFunctionActingUpon: ActingUponFunction[Function] with
+given functionFunctionActionUpon: ActionUponFunction[Function] with
 
   type BTC = [Z, Y] =>> Function[Z, Y]
 

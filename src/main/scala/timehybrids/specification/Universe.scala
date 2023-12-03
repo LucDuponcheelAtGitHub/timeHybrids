@@ -4,13 +4,13 @@ import specification.{
   VirtualTopology,
   Sets,
   Category,
-  ActingUponFunction,
+  ActionUponFunction,
   Functor
 }
 
 trait Universe[
     Set[_]: Sets,
-    Morphism[_, _]: Category: ActingUponFunction,
+    Morphism[_, _]: Category: ActionUponFunction,
     Moment: Time,
     State: [_] =>> VirtualTopology[Set, State]: [_] =>> Functor[
       [_, _] =>> Tuple2[Moment, Moment],
@@ -25,7 +25,7 @@ trait Universe[
 
   val mc: Category[Morphism] = summon[Category[Morphism]]
 
-  val mauf: ActingUponFunction[Morphism] = summon[ActingUponFunction[Morphism]]
+  val mauf: ActionUponFunction[Morphism] = summon[ActionUponFunction[Morphism]]
 
   // `Time` related domain delegates are defined
 

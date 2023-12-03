@@ -1,7 +1,7 @@
 package specification
 
-trait ActingUponNaturalTransformation[
-    FBTC[_, _]: Category: [_[_, _]] =>> ActingUpon[FBTC, TBTC],
+trait ActionUponNaturalTransformation[
+    FBTC[_, _]: Category: [_[_, _]] =>> ActionUpon[FBTC, TBTC],
     TBTC[_, _]: Category,
     FUTC[_]: [_[_]] =>> Functor[TBTC, FBTC, FUTC],
     TUTC[_]: [_[_]] =>> Functor[TBTC, TBTC, TUTC]
@@ -9,7 +9,7 @@ trait ActingUponNaturalTransformation[
 
   // laws
 
-  trait ActingUponNaturalTransformationLaws[L[_]: Law](
+  trait ActionUponNaturalTransformationLaws[L[_]: Law](
       transformation: NaturalTransformation[TBTC, FBTC, FUTC, TUTC]
   ):
 

@@ -7,7 +7,7 @@ import specification.{
   Ordered,
   Sets,
   Category,
-  ActingUponFunction,
+  ActionUponFunction,
   Functor,
   Transformation
 }
@@ -120,7 +120,7 @@ trait PreThings[
 
   given Category[Morphism] = mc
 
-  given ActingUponFunction[Morphism] = mauf
+  given ActionUponFunction[Morphism] = mauf
 
   // `Time` related foundational `given`s are defined
 
