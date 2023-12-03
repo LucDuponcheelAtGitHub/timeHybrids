@@ -93,9 +93,9 @@
 \begin{frame}[fragile]
   \frametitle{\begin{center}Specification\end{center}}
   \begin{itemize}
-    \item<3-> {\em declares} features
-    \item<4-> {\em defines} laws that come with those declared features
-    \item<5-> also {\em defines} features in terms of declared and defined
+    \item<2-> {\em declares} features
+    \item<3-> {\em defines} laws that come with those declared features
+    \item<4-> also {\em defines} features in terms of declared and defined
       features
   \end{itemize}
 \end{frame}
@@ -140,7 +140,8 @@
     \item<3-> traditionally, mathematics is used to deal with that in a
       continous, analytic way, using shrinking limits of time intervals
     \item<4-> recently, mathematics is used to deal with that in a discrete,
-      algebraic way
+      algebraic way (if only because of the observational minimal Planck time
+      unit!)
   \end{itemize}
 \end{frame}
 
@@ -151,9 +152,7 @@
       interval starting at some time moment (think of a big bang of graph
       rewriting without specific rules), recall that it is an implementation
     \item<3-> Fred Van Oystaeyen's approach also goes for a discrete, algebraic
-      way (if only because of the observational minimal Planck time unit!) but
-      makes
-      no concrete choices, recall that it is a specification
+      way but makes no concrete choices, recall that it is a specification
   \end{itemize}
 \end{frame}
 
@@ -176,8 +175,8 @@
   \frametitle{\begin{center}Virtual Topology\end{center}}
   \begin{itemize}
     \item<2-> Fred Van Oystayen's Virtual Topology is, as far as I know, the
-      most abstract (read: simplest) generic geometry as far as being useful
-      for modeling reality
+      most abstract (read: simplest) geometry as far as being useful for
+      modeling reality
     \item<3-> Virtual Topology is pointfree (cfr Category Theory)
   \end{itemize}
 \end{frame}
@@ -185,18 +184,80 @@
 \begin{frame}[fragile]
   \frametitle{\begin{center}Program language notation\end{center}}
   \begin{itemize}
-    \item<2-> Mathematical notation (in this case the one used for Physics) can
-      kill you
+    \item<2-> Mathematical notation can overwhelm you \\
+      \includegraphics[height=30pt]{png/formula.png}
     \item<3-> Natural language notation can confuse you
       \begin{itemize}
         \item<4-> many words used for one concept without explanantion
         \item<5-> one word used for many concepts without defining context
       \end{itemize}
     \item<6-> Program language notation is required to be precise and,
-      therefore may be somewhat verbose, but the benefit is that it is checked
-      by a
-      type system
+      therefore may also overwhelm you, but the benefit is that it is checked
+      by a type system that, by the way, is not overwhelmed by it
   \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{\begin{center}Category\end{center}}
+  {\color{DarkGreen}
+    \footnotesize{
+      \footnotesize{
+        \begin{verbatim}
+  trait Category[BTC[_, _]]
+    extends BtcComposition[BTC], BtcUnit[BTC]:
+  \end{verbatim}}}}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{\begin{center}CategoryLaws\end{center}}
+  {\color{DarkGreen}
+    \footnotesize{
+      \begin{verbatim}    
+    trait CategoryLaws[L[_]: Law]:
+  
+      def leftIdentity[Z, Y]: BTC[Z, Y] => L[BTC[Z, Y]] =
+        z2y => { i `o` z2y } `=` { z2y }
+  
+      def rightIdentity[Z, Y]: BTC[Z, Y] => L[BTC[Z, Y]] =
+        z2y => { z2y `o` i } `=` { z2y }
+  \end{verbatim}}}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{\begin{center}BtcComposition\end{center}}
+  {\color{DarkGreen}
+    \footnotesize{
+      \begin{verbatim}
+  trait BtcComposition[BTC[_, _]]:
+  
+    extension [Z, Y, X](y2x: BTC[Y, X])
+      def `o`(z2y: BTC[Z, Y]): BTC[Z, X]
+  \end{verbatim}}}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{\begin{center}BtcCompositionLaws\end{center}}
+  {\color{DarkGreen}
+    \footnotesize{
+      \begin{verbatim}
+  trait CompositionLaws[L[_]: Law]:
+
+    def associativity[Z, Y, X, W]
+        : BTC[X, W] => BTC[Y, X] => BTC[Z, Y] => L[BTC[Z, W]] =
+      x2w => y2x => z2y =>
+        { (x2w `o` y2x) `o` z2y } `=` { x2w `o` (y2x `o` z2y) }
+  \end{verbatim}}}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{\begin{center}BtcUnit\end{center}}
+  {\color{DarkGreen}
+    \footnotesize{
+      \begin{verbatim}
+    trait BtcUnit[BTC[_, _]]:
+
+      def i[Z]: BTC[Z, Z]
+  \end{verbatim}}}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -250,66 +311,68 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{\begin{center}BtcComposition\end{center}}
+  \frametitle{\begin{center}An example: immobility\end{center}}
+  \begin{itemize}
+    \item<2-> immobility can be expressed without mentioning real numbers for
+      time and space
+    \item<3-> some history of geometry
+      \begin{itemize}
+        \item<4-> Euclides did not use numbers to measure with
+        \item<5-> Pythagoras showed that rational numbers were not enough
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{\begin{center}immobileAfter\end{center}}
   {\color{DarkGreen}
     \footnotesize{
       \begin{verbatim}
-  trait BtcComposition[BTC[_, _]]:
-  
-    extension [Z, Y, X](y2x: BTC[Y, X])
-      def `o`(z2y: BTC[Z, Y]): BTC[Z, X]
+    val immobileAfter
+      : MomentMorphism => L[Function[PreThingsSet, State]] =
+    mm =>
+      {
+        pts2s `o` mm2ptsf(mm)
+      } `=` {
+        mm2sm(mm) `a` pts2s
+      }
   \end{verbatim}}}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{\begin{center}BtcCompositionLaws\end{center}}
+  \frametitle{\begin{center}immobileAfter\end{center}}
   {\color{DarkGreen}
     \footnotesize{
       \begin{verbatim}
-  trait CompositionLaws[L[_]: Law]:
-
-    def associativity[Z, Y, X, W]
-        : BTC[X, W] => BTC[Y, X] => BTC[Z, Y] => L[BTC[Z, W]] =
-      x2w => y2x => z2y =>
-        { (x2w `o` y2x) `o` z2y } `=` { x2w `o` (y2x `o` z2y) }
+    val immobileOnInterval
+      : MomentMorphism => PreThingsSet => L[State] =
+      case (bm, em) =>
+        val mi: Interval[Moment] = interval apply ((bm, em))
+        pts =>
+          all apply {
+            for {
+              m <- mi
+            } yield {
+              {
+                (pts2s `o` mm2ptsf((bm, m)))(pts)
+              } `=` {
+                (mm2sm((bm, m)) `a` pts2s)(pts)
+              }
+            }
+          }
   \end{verbatim}}}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{\begin{center}BtcUnit\end{center}}
-  {\color{DarkGreen}
-    \footnotesize{
-      \begin{verbatim}
-    trait BtcUnit[BTC[_, _]]:
-
-    def i[Z]: BTC[Z, Z]
-  \end{verbatim}}}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{\begin{center}Category\end{center}}
-  {\color{DarkGreen}
-    \footnotesize{
-      \footnotesize{
-        \begin{verbatim}
-  trait Category[BTC[_, _]]
-    extends BtcComposition[BTC], BtcUnit[BTC]:
-  \end{verbatim}}}}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{\begin{center}CategoryLaws\end{center}}
-  {\color{DarkGreen}
-    \footnotesize{
-      \begin{verbatim}    
-    trait CategoryLaws[L[_]: Law]:
-  
-      def leftIdentity[Z, Y]: BTC[Z, Y] => L[BTC[Z, Y]] =
-        z2y => { i `o` z2y } `=` { z2y }
-  
-      def rightIdentity[Z, Y]: BTC[Z, Y] => L[BTC[Z, Y]] =
-        z2y => { z2y `o` i } `=` { z2y }
-  \end{verbatim}}}
+  \frametitle{\begin{center}Reality goes beyond Imagination\end{center}}
+  \begin{itemize}
+    \item<2-> the \ttdg{`a`} in the formula is not morphism composition
+      \ttdg{`o`}
+    \item<3-> the \ttdg{`a`} in the formula is an action of morphism
+      \ttdg{mm2sm(mm)} on the place function \ttdg{pts2s}
+    \item<4-> cfr a monoid acting upon a set
+    \item<4-> cfr rotations acting upon a Rubic Cube
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
