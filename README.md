@@ -657,11 +657,11 @@ Using the `type` definitions below the requirements for `PreObject` to be a `Pre
 
 `Transformation` is fully explained in [Transformation](#transformation).
 
-`functionValuedFunctor2`, is fully explained in [functionValuedFunctor2](#functionValuedFunctor2)
+`functionValuedFunctor2`, is fully explained in [functionValuedFunctor2](#functionValuedFunctor2).
 
-`orderedCategory`, is fully explained in [orderedCategory](#orderedCategory)
+`orderedCategory`, is fully explained in [orderedCategory](#orderedCategory).
 
-`functionCategory`, is fully explained in [functionCategory](#functionCategory)
+`functionCategory`, is fully explained in [functionCategory](#functionCategory).
 
 
 ```scala
@@ -1103,11 +1103,11 @@ This law refers to the following, slightly adapted, excerpt from the paper.
 *A string of correspondences, over an interval I=[t,t’], starting with A(t) then yields places p(A(t”)) with t” in I.*
 *If f(t,t”)p(A(t))=p(A(t”)) for all t” in I, then we say the pre-thing A is immobile on I.*
 
-`composedFunctor`, is fully explained in [composedFunctor](#composedfunctor)
+`composedFunctor`, is fully explained in [composedFunctor](#composedfunctor).
 
-`functionTargetOrdered`, is fully explained in [functionCategory](#functionCategory)
+`functionTargetOrdered`, is fully explained in [functionCategory](#functionCategory).
 
-`setOrdered`, is fully explained in [functionValuedFunctor2](#functionValuedFunctor2)
+`setOrdered`, is fully explained in [functionValuedFunctor2](#functionValuedFunctor2).
 
 Back to [PreThings](#prethings)
 
@@ -1229,7 +1229,7 @@ The features above allow us to, programmatically,
 The laws of `Ordered`, `OrderedLaws` resp. `TotallyOrderedLaws` are fully explained in [OrderedLaws](#orderedlaws),
 resp. [TotallyOrderedLaws](#totallyorderedlaws).
 
-Back to [VirtualTopology](#virtualtopology)
+Back to [VirtualTopology](#virtualtopology).
 
 Back to [Time](#time)
 
@@ -1295,7 +1295,7 @@ trait VirtualTopology[Set[_]: Sets, T]
 
 `Supremum` is fully explained in [Supremum](#supremum).
 
-Back to [Universe](#universe)
+Back to [Universe](#universe).
 
 ### Meet
 
@@ -1860,9 +1860,9 @@ trait ActionUpon[LBTC[_, _], RBTC[_, _]: Category]:
 
 `Functor` is fully explained in [Functor](#functor).
 
-Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
+Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation).
 
-Back to [ActionUponFunction](#actionuponfunction)
+Back to [ActionUponFunction](#actionuponfunction).
 
 ### CompositionNaturalTransformation
 
@@ -1902,7 +1902,7 @@ trait CompositionNaturalTransformation[
 
 `CompositionNaturalTransformation` features are declared.
 
-`NaturalTransformation` is fully explained in [NaturalTransformation](#naturaltransformation)
+`NaturalTransformation` is fully explained in [NaturalTransformation](#naturaltransformation).
 
 ```scala
   // ...
@@ -1948,7 +1948,7 @@ trait UnitNaturalTransformation[
 
 `UnitNaturalTransformation` features are declared.
 
-`NaturalTransformation` is fully explained in [NaturalTransformation](#naturaltransformation)
+`NaturalTransformation` is fully explained in [NaturalTransformation](#naturaltransformation).
 
 ```scala
   // ...
@@ -1988,18 +1988,18 @@ constructors.
 
 `NaturalTransformation` has two parameters, `FUTC` and `TUTC` that are required to be `Functor` unary type constructors.
 
-`Category` is fully explained in [Category](#category)
+`Category` is fully explained in [Category](#category).
 
-`Functor` is fully explained in [Functor](#functor)
+`Functor` is fully explained in [Functor](#functor).
 
-`Transformation` is fully explained in [Transformation](#transformation)
+`Transformation` is fully explained in [Transformation](#transformation).
 
 The laws of `NaturalTransformation`, `NaturalTransformationLaws` are fully defined in
 [NaturalTransformationLaws](#naturaltransformationlaws).
 
-Back to [UnitNaturalTransformation](#unitnaturaltransformation)
+Back to [UnitNaturalTransformation](#unitnaturaltransformation).
 
-Back to [CompositionNaturalTransformation](#compositionnaturaltransformation)
+Back to [CompositionNaturalTransformation](#compositionnaturaltransformation).
 
 ### ActionUponNaturalTransformation
 
@@ -2025,13 +2025,13 @@ an `ActionUpon` binary type constructor.
 
 `NaturalTransformation` has two parameters, `FUTC` and `TUTC` that are required to be `Functor` unary type constructors.
 
-`Category` is fully explained in [Category](#category)
+`Category` is fully explained in [Category](#category).
 
-`ActionUpon` is fully explained in [ActionUpon](#actionupon)
+`ActionUpon` is fully explained in [ActionUpon](#actionupon).
 
-`Functor` is fully explained in [Functor](#functor)
+`Functor` is fully explained in [Functor](#functor).
 
-`Transformation` is fully explained in [Transformation](#transformation)
+`Transformation` is fully explained in [Transformation](#transformation).
 
 The laws of `ActedUpoNaturalTransformation`, `ActionUponNaturalTransformationLaws` are fully defined in
 [ActionUponNaturalTransformationLaws](#actionuponnaturaltransformationlaws).
