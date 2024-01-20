@@ -1,24 +1,21 @@
 package specification
 
-trait Join[T: Ordered: Arbitrary]:
+trait Join[Z] extends Ordered[Z]:
 
   // declared
 
-  extension (lt: T) def ∨(rt: T): T
-
-  // laws
+  extension (lz: Z) def ∨(rz: Z): Z
 
   trait JoinLaws[L[_]: Law]:
 
-    val at = summon[Arbitrary[T]].arbitrary
-
-    val smallestGreaterThanBoth: T => T => L[Boolean] =
-      lt =>
-        rt =>
-          {
-            (lt `<=` (lt ∨ rt)) `=` true `&` (rt `<=` (lt ∨ rt)) `=` true
-          } `&` {
-            (lt `<=` at) `=` true `&` (rt `<=` at) `=` true
-          } `=>` {
-            (lt ∨ rt) `<=` at `=` true
-          }
+    val smallestGreaterThanBoth: Z => Z => Z => L[Boolean] =
+      az =>
+        lz =>
+          rz =>
+            {
+              (lz <= (lz ∨ rz)) `=` true `&` (rz <= (lz ∨ rz)) `=` true
+            } `&` {
+              (lz <= az) `=` true `&` (rz <= az) `=` true
+            } `=>` {
+              (lz ∨ rz) <= az `=` true
+            }

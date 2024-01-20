@@ -1,13 +1,15 @@
 package specification
 
-trait Law[UTC[_]]:
+trait Law[L[_]]:
 
   // declared
 
-  extension [Z, Y](lly: UTC[Y]) def `=>`(rlz: UTC[Z]): UTC[Z]
+  extension [Z, Y](lly: L[Y]) def `=>`(rlz: L[Z]): L[Z]
 
-  extension [Z](l: Z) def `=`(r: Z): UTC[Z]
+  extension [Z](l: Z) def `=`(r: Z): L[Z]
 
-  extension [Z](ll: UTC[Z]) def `&`(rl: UTC[Z]): UTC[Z]
+  extension [Z](ll: L[Z]) def `&`(rl: L[Z]): L[Z]
 
-  extension [Z](ll: UTC[Z]) def `|`(rl: UTC[Z]): UTC[Z]
+  extension [Z](ll: L[Z]) def `|`(rl: L[Z]): L[Z]
+
+  def all[Z]: Function[Set[L[Z]], L[Z]]

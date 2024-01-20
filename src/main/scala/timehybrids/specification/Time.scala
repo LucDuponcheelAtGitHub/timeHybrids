@@ -1,16 +1,16 @@
 package timehybrids.specification
 
-import specification.{Arbitrary, Ordered}
+import specification.{Ordered}
 
-trait Time[Moment: Arbitrary: Ordered]:
+trait Time[Moment]:
 
-  // `Time` related foundational delegates are defined
+  given momentOrdered: Ordered[Moment]
+  
+  val momentOrderedVal = momentOrdered
 
-  val ma: Arbitrary[Moment] = summon[Arbitrary[Moment]]
+  type MomentInterval = momentOrderedVal.Interval
 
-  val mo: Ordered[Moment] = summon[Ordered[Moment]]
+  type MomentIntervalUtilities = momentOrderedVal.IntervalUtilities
 
-  // `Time` related foundational members
-  // using members of `Time` related foundational delegates are defined
+  val momentIntervalUtilities: MomentIntervalUtilities
 
-  val am: Moment = ma.arbitrary

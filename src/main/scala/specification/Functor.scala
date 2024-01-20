@@ -1,26 +1,40 @@
 package specification
 
-trait Functor[FBTC[_, _]: Category, TBTC[_, _]: Category, UTC[_]]:
+trait Functor[
+    FromMorphism[_, _]: Category,
+    ToMorphism[_, _]: Category,
+    Morphed[_]
+]:
 
   // declared
 
-  def φ[Z, Y]: Function[FBTC[Z, Y], TBTC[UTC[Z], UTC[Y]]]
+  def φ[Z, Y]: Function[
+    FromMorphism[Z, Y],
+    ToMorphism[Morphed[Z], Morphed[Y]]
+  ]
+
+  // defined
+
+  type FromTransition = [Z] =>> FromMorphism[Z, Z]
+
+  type ToTransition = [Z] =>> ToMorphism[Z, Z]
 
   // laws
 
   trait FunctorLaws[L[_]: Law]:
 
-    def identity[Z]: L[TBTC[UTC[Z], UTC[Z]]] =
-      val fbtc = summon[Category[FBTC]]
-      val tbtc = summon[Category[TBTC]]
-      φ(fbtc.ι[Z]) `=` tbtc.ι[UTC[Z]]
+    def identity[Z]: L[ToMorphism[Morphed[Z], Morphed[Z]]] =
+      val fm = summon[Category[FromMorphism]]
+      val tm = summon[Category[ToMorphism]]
+      φ(fm.ι) `=` tm.ι
 
-    def composition[Z, Y, X]
-        : FBTC[Z, Y] => FBTC[Y, X] => L[TBTC[UTC[Z], UTC[X]]] =
+    def composition[Z, Y, X]: FromMorphism[Z, Y] => FromMorphism[Y, X] => L[
+      ToMorphism[Morphed[Z], Morphed[X]]
+    ] =
       fzμy =>
         fyμx =>
           {
-            φ(fyμx `o` fzμy)
+            φ(fyμx o fzμy)
           } `=` {
-            φ(fyμx) `o` φ(fzμy)
+            φ(fyμx) o φ(fzμy)
           }

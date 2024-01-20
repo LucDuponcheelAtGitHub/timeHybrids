@@ -1,33 +1,33 @@
-package specification
+// package specification
 
-trait Equality[T]:
+// trait Equality[Z]:
 
-  extension (lt: T) def `=`(rt: T): Boolean
+//   extension (lz: Z) def `=`(rz: Z): Boolean
 
-  // laws
+//   // laws
 
-  trait EqualityLaws[L[_]: Law]:
+//   trait EqualityLaws[L[_]: Law]:
 
-    val reflexive: T => L[Boolean] = t =>
-      {
-        t `=` t
-      } `=` {
-        true
-      }
+//     val reflexive: Z => L[Boolean] = z =>
+//       {
+//         z `=` z
+//       } `=` {
+//         true
+//       }
 
-    val symmetric: T => T => L[Boolean] = lt =>
-      rt =>
-        {
-          lt `=` rt `=` true
-        } `=>` {
-          rt `=` lt `=` true
-        }
+//     val symmetric: Z => Z => L[Boolean] = lz =>
+//       rz =>
+//         {
+//           lz `=` rz `=` true
+//         } `=>` {
+//           rz `=` lz `=` true
+//         }
 
-    val transitive: T => T => T => L[Boolean] = lt =>
-      mt =>
-        rt =>
-          {
-            lt `=` mt `=` true `&` mt `=` rt `=` true
-          } `=>` {
-            lt `=` rt `=` true
-          }
+//     val transitive: Z => Z => Z => L[Boolean] = lz =>
+//       mz =>
+//         rz =>
+//           {
+//             lz `=` mz `=` true `&` mz `=` rz `=` true
+//           } `=>` {
+//             lz `=` rz `=` true
+//           }

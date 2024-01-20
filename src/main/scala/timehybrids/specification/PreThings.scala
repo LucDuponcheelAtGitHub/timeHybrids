@@ -1,323 +1,282 @@
 package timehybrids.specification
 
-import types.{Composition2, composition2, decomposition2}
+import types.{Composition}
+
+import utilities.set.{emptySet, singleton, choices, U, all}
+
+import utilities.composition.{compose, composeAll, decomposeAll}
 
 import specification.{
-  Arbitrary,
   Ordered,
-  Sets,
+  VirtualTopology,
   Category,
-  ActionUponFunction,
   Functor,
-  Transformation
+  Action,
+  FunctorTransformation,
+  ActorTransformation
 }
 
-import implementation.{
-  orderedCategory,
-  functionCategory,
-  functionValuedFunctor2
-}
+import implementation.{functionCategory}
 
-trait PreThings[
-    Set[_],
-    Morphism[_, _],
-    Moment,
-    State: [_] =>> Universe[Set, Morphism, Moment, State],
-    PreObject: [_] =>> Arbitrary[
-      Set[Set[Composition2[Set, PreObject]]]
-    ]: [_] =>> Functor[
-      [_, _] =>> Tuple2[Moment, Moment],
-      Function,
-      [_] =>> Set[Composition2[Set, PreObject]]
-    ]: [_] =>> Transformation[
-      [_, _] =>> Tuple2[Moment, Moment],
-      Function,
-      [_] =>> Set[
-        Set[
-          Composition2[Set, PreObject]
-        ]
-      ],
-      [_] =>> Set[Set[Composition2[Set, PreObject]]]
-    ]: [_] =>> Function[Set[Composition2[Set, PreObject]], State]
-]:
+trait PreThings[Morphism[_, _], Moment, Place, PreObject]:
 
-  // `Universe` related domain delegates are defined
+  given placeUniverse: Universe[Moment, Place, Morphism]
 
-  val su: Universe[Set, Morphism, Moment, State] =
-    summon[Universe[Set, Morphism, Moment, State]]
+  val placeUniverseVal = placeUniverse
 
-  // `PreThings` related domain types are defined.
+  import placeUniverseVal.{morphismCategory}
 
-  import su.{cs}
+  import placeUniverseVal.morphismCategoryVal.{Transition}
 
-  import cs.{Set2}
+  import placeUniverseVal.{morphismFunctionAction}
 
-  type PreThing = Composition2[Set, PreObject]
+  import placeUniverseVal.momentTimeVal.{MomentInterval}
 
-  type PreThingsSet = Set[PreThing]
+  import placeUniverseVal.{
+    momentIntervalToPlaceTransitionFunction,
+    placeTransitionToInitialPlaceTransitionSetFunction,
+    placeTransitionToSubPlaceTransitionSetFunction
+  }
 
-  type PreInteraction = Set2[PreThing]
+  import placeUniverseVal.{placeVirtualTopology}
 
-  type PreInteractionsSet = Set[PreInteraction]
+  val placeVirtualTopologyVal = placeVirtualTopology
 
-  // `PreThings` related foundational delegates are defined
+  import placeVirtualTopologyVal.{V}
 
-  import su.{MomentMorphism}
+  type PreThing = Composition[PreObject]
 
-  val pisa: Arbitrary[PreInteractionsSet] =
-    summon[Arbitrary[PreInteractionsSet]]
+  type PreInteraction = Set[PreThing]
 
-  val mmΦptsf: Functor[
-    [_, _] =>> MomentMorphism,
+  given preThingSetFunctor: Functor[Morphism, Function, [_] =>> Set[PreThing]]
+
+  val preThingSetFunctorVal = preThingSetFunctor
+
+  import preThingSetFunctorVal.{φ}
+
+  val preThingSetSetToPreInteractionSetFunctorTransformation: FunctorTransformation[
+    Morphism,
     Function,
-    [_] =>> PreThingsSet
+    [_] =>> Set[Set[PreThing]],
+    [_] =>> Set[PreInteraction]
+  ]
+
+  import preThingSetSetToPreInteractionSetFunctorTransformation.{φτ}
+
+  val preThingSetToPlaceActorTransformation: ActorTransformation[
+    Morphism,
+    Function,
+    [_] =>> Set[PreThing],
+    [_] =>> Place
+  ]
+
+  import preThingSetToPlaceActorTransformation.{ατ, isNaturalFor}
+
+  given preInteractionSetFunctor: Functor[
+    Morphism,
+    Function,
+    [_] =>> Set[PreInteraction]
+  ] = new:
+    def φ[Z, Y]: Function[
+      Morphism[Z, Y],
+      Function[Set[PreInteraction], Set[PreInteraction]]
+    ] = pt =>
+      val preInteractionToPreThingSetFunction
+          : Function[Set[PreInteraction], Set[PreThing]] = composeAll
+      val preThingSetToPreInteractionFunction
+          : Function[Set[PreThing], Set[PreInteraction]] = decomposeAll
+      preThingSetToPreInteractionFunction o
+        preThingSetFunctor.φ(pt) o
+        preInteractionToPreThingSetFunction
+
+  val preThingSetSetFunctor: Functor[
+    Morphism,
+    Function,
+    [_] =>> Set[Set[PreThing]]
   ] =
-    summon[
-      Functor[
-        [_, _] =>> MomentMorphism,
-        Function,
-        [_] =>> PreThingsSet
-      ]
-    ]
+    new:
+      def φ[Z, Y]: Function[
+        Morphism[Z, Y],
+        Function[Set[Set[PreThing]], Set[Set[PreThing]]]
+      ] =
+        zμy =>
+          ptss =>
+            for {
+              pts <- ptss
+            } yield {
+              preThingSetFunctor.φ(zμy)(pts)
+            }
 
-  val ptss2Τpis: Transformation[
-    [_, _] =>> MomentMorphism,
-    Function,
-    [_] =>> Set2[PreThingsSet],
-    [_] =>> PreInteractionsSet
-  ] = summon[
-    Transformation[
-      [_, _] =>> MomentMorphism,
-      Function,
-      [_] =>> Set2[PreThingsSet],
-      [_] =>> PreInteractionsSet
-    ]
-  ]
+  extension (placeTransitionFunctor: Functor[Morphism, Morphism, [_] =>> Place])
+    def isMovementAfterPlaceTransition[Z, Y](
+        placeTransition: Transition[Place]
+    ): Boolean =
 
-  val ptsφs: Function[PreThingsSet, State] =
-    summon[Function[PreThingsSet, State]]
-
-  // `PreThings` related foundational members
-  // using members of `PreThings` related foundational delegates are defined.
-
-  val apis: Set[PreInteraction] = pisa.arbitrary
-
-  val mmφptsf: Function[
-    MomentMorphism,
-    Function[PreThingsSet, PreThingsSet]
-  ] = mmΦptsf.φ
-
-  val ptss2φtpis: Function[
-    Set2[PreThingsSet],
-    PreInteractionsSet
-  ] = ptss2Τpis.τ
-
-  // Foundational `given`s using `import`ed foundational delegates are defined
-
-  import su.{mc, mauf}
-
-  given Sets[Set] = cs
-
-  given Category[Morphism] = mc
-
-  given ActionUponFunction[Morphism] = mauf
-
-  // `Time` related foundational `given`s are defined
-
-  import su.{mt, mmΦsm}
-
-  import mt.{ma, mo}
-
-  given Arbitrary[Moment] = ma
-
-  given Ordered[Moment] = mo
-
-  // `Universe` related foundational `given`s are defined
-
-  given Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State] = mmΦsm
-
-  // `PreThings` related foundational `given`s are defined
-
-  given mmΦptss2f: Functor[
-    [_, _] =>> MomentMorphism,
-    Function,
-    [_] =>> Set2[PreThingsSet]
-  ] = functionValuedFunctor2[
-    Set,
-    [_, _] =>> MomentMorphism,
-    [_] =>> PreThingsSet
-  ]
-
-  // `PreThings` related foundational members
-  // using `PreThings` related foundational `given`s are defined
-
-  val mmφptss2f: Function[
-    MomentMorphism,
-    Function[
-      Set2[PreThingsSet],
-      Set2[PreThingsSet]
-    ]
-  ] = mmΦptss2f.φ
-
-  // Composed `PreThings` related foundational members
-  // using `PreThings` related foundational members
-  // using `PreThings` related foundational `given`s are defined
-
-  val pisφpts: Function[PreInteractionsSet, PreThingsSet] =
-    pic =>
-      for {
-        pi <- pic
-      } yield {
-        composition2 apply pi
+      {
+        ατ o preThingSetFunctor.φ(placeTransition)
+      } == {
+        placeTransitionFunctor.φ(placeTransition) a ατ
       }
 
-  val ptsφpis: Function[PreThingsSet, PreInteractionsSet] =
-    pts =>
-      for {
-        pt <- pts
-      } yield {
-        decomposition2 apply pt
+      placeTransitionFunctor isNaturalFor placeTransition
+
+  val isImmobileAfterPlaceTransition: Transition[Place] => Boolean =
+    val identityPlaceTransition: Transition[Place] = morphismCategory.ι
+    val constantIdentityPlaceTransitionFunctor =
+      new Functor[Morphism, Morphism, [_] =>> Place]:
+        def φ[Z, Y] = _ => identityPlaceTransition
+    constantIdentityPlaceTransitionFunctor isMovementAfterPlaceTransition _
+
+  val isImmobileAtPlaceTransitionInitialPlaceTransitionBased
+      : Transition[Place] => Boolean =
+    placeTransition =>
+      all {
+        for {
+          initialPlaceTransition <-
+            placeTransitionToInitialPlaceTransitionSetFunction(
+              placeTransition
+            )
+        } yield {
+          isImmobileAfterPlaceTransition(initialPlaceTransition)
+        }
       }
 
-  val mmφpisf: Function[
-    MomentMorphism,
-    Function[PreInteractionsSet, PreInteractionsSet]
-  ] = mm => ptsφpis `o` mmφptsf(mm) `o` pisφpts
+  val isImmobileAtPlaceTransitionSubPlaceTransitionBased
+      : Transition[Place] => Boolean =
+    placeTransition =>
+      all {
+        for {
+          subPlaceTransition <- placeTransitionToSubPlaceTransitionSetFunction(
+            placeTransition
+          )
+        } yield {
+          isImmobileAfterPlaceTransition(subPlaceTransition)
+        }
+      }
+
+  extension (placeTransitionFunctor: Functor[Morphism, Morphism, [_] =>> Place])
+    def isMovementAfterMomentInterval[Z, Y](
+        momentInterval: MomentInterval
+    ): Boolean =
+      placeTransitionFunctor isMovementAfterPlaceTransition
+        momentIntervalToPlaceTransitionFunction(momentInterval)
+
+  val immobileAfterTimeInterval: MomentInterval => Boolean =
+    isImmobileAfterPlaceTransition o momentIntervalToPlaceTransitionFunction
+
+  val immobileAtTimeIntervalInitialPlaceTransitionBased
+      : MomentInterval => Boolean =
+    isImmobileAtPlaceTransitionInitialPlaceTransitionBased o
+      momentIntervalToPlaceTransitionFunction
+
+  val immobileAtTimeIntervalSubPlaceTransitionBased: MomentInterval => Boolean =
+    isImmobileAtPlaceTransitionSubPlaceTransitionBased o
+      momentIntervalToPlaceTransitionFunction
 
   // laws
 
   import specification.{Law}
 
-  import implementation.{composedFunctor}
-
-  trait PreThingsFunctorCompositionLaws[L[_]: Law]:
-
-    given smΦptsf: Functor[Morphism, Function, [_] =>> PreThingsSet]
-
-    val composition2: L[
-      Functor[
-        [_, _] =>> MomentMorphism,
-        Function,
-        [_] =>> PreThingsSet
-      ]
-    ] = {
-      mmΦptsf
-    } `=` {
-      composedFunctor[
-        [_, _] =>> MomentMorphism,
-        Morphism,
-        Function,
-        [_] =>> State,
-        [_] =>> PreThingsSet
-      ]
-    }
-
-  import implementation.{functionTargetOrdered, setOrdered}
+  import implementation.{setOrdered}
 
   trait PreThingsLaws[L[_]: Law]:
 
-    val preInteractionAsPreThingComposition
-        : L[PreInteraction => PreInteraction] = {
-      decomposition2 `o` composition2
-    } `=` {
-      identity
-    }
+    val selfPreInteraction: PreInteraction => L[Set[PreThing]] =
+      preInteraction =>
+        require(preInteraction.size == 1)
+        val preThingSet: Set[PreThing] = preInteraction
+        val preThing = compose(preThingSet)
+        preInteraction `=` singleton(preThing)
 
-    val preThingAsPreInteractionDecomposition: L[PreThing => PreThing] = {
-      composition2 `o` decomposition2
-    } `=` {
-      identity
-    }
-
-    val noPreThingFromNothing: MomentMorphism => L[PreThingsSet] =
-      mm =>
-        import cs.{set0}
+    val noPreThingsFromNoPreThings: Transition[Place] => L[Set[PreThing]] =
+      placeTransition =>
         {
-          mmφptsf(mm)(set0)
+          φ(placeTransition)(emptySet)
         } `=` {
-          set0
+          emptySet
         }
 
     val unionOfSingletonPreInteractions
-        : Set2[PreThingsSet] => L[PreInteractionsSet] =
-      ptss2 =>
-        import cs.{tuple2, set1, set2, union}
-        tuple2(ptss2) match
-          case (lpts, rpts) =>
-            {
-              union {
+        : Set[Set[PreThing]] => L[Set[PreInteraction]] =
+      preThingSetSet =>
+        {
+          U {
+            for {
+              preThingSet <- choices(preThingSetSet)
+            } yield {
+              φτ {
                 for {
-                  lpt <- lpts
-                  rpt <- rpts
+                  preThing <- preThingSet
                 } yield {
-                  ptss2φtpis(set2(set1(lpt), set1(rpt)))
+                  singleton(preThing)
                 }
               }
-            } `=` {
-              ptss2φtpis(ptss2)
             }
-
-    val naturePreservingPreInteraction: MomentMorphism => L[Boolean] =
-      mm =>
-        {
-          { mmφpisf(mm) `o` ptss2φtpis } `<=` {
-            ptss2φtpis `o` mmφptss2f(mm)
           }
+        } `=` {
+          φτ(preThingSetSet)
         }
-          `=` {
+
+    import specification.{FunctorTransformationLawsFor}
+
+    val transformationLaws =
+      FunctorTransformationLawsFor(
+        preThingSetSetToPreInteractionSetFunctorTransformation
+      )
+
+    import transformationLaws.{orderedNatural}
+
+    val preInteractionNaturePreserving
+        : Set[PreInteraction] => Transition[Place] => L[Boolean] =
+      preInteractionSet =>
+
+        given Ordered[Function[Set[PreInteraction], Set[PreInteraction]]] with
+          extension (
+              leftPreInteractionSetFunction: Function[
+                Set[PreInteraction],
+                Set[PreInteraction]
+              ]
+          )
+            def <(
+                rightPreInteractionSetFunction: Function[
+                  Set[PreInteraction],
+                  Set[PreInteraction]
+                ]
+            ): Boolean =
+              leftPreInteractionSetFunction(preInteractionSet)
+                < rightPreInteractionSetFunction(preInteractionSet)
+
+        placeTransition =>
+          import preThingSetSetFunctor.φ
+          {
+            {
+              φτ o φ(placeTransition)
+            } <= {
+              φ(placeTransition) o φτ
+            }
+          } `=` {
             true
           }
 
-  trait PreThingsPlacesLaws[L[_]: Law]:
+        orderedNatural apply placeTransition
 
-    val orderPreserving: PreThingsSet => PreThingsSet => L[Boolean] =
-      lpts =>
-        rpts =>
-          import su.{svt}
-          import svt.{`<=`}
+    val orderPreserving: Set[PreThing] => Set[PreThing] => L[Boolean] =
+      leftPreThingSet =>
+        rightPreThingSet =>
           {
-            lpts `<=` rpts `=` true
+            leftPreThingSet <= rightPreThingSet `=` true
           } `=>` {
-            ptsφs(lpts) `<=` ptsφs(rpts) `=` true
+            ατ(leftPreThingSet) <= ατ(rightPreThingSet) `=` true
           }
 
-    val supremumOfAllSingletonPlaces: PreThingsSet => L[State] =
-      pts =>
-        import cs.{set1}
-        import su.{svts}
+    val supremumOfAllSingletonPlaces: Set[PreThing] => L[Place] =
+      preThingSet =>
         {
-          svts {
+          V {
             for {
-              pt <- pts
-            } yield ptsφs(set1(pt))
+              preThing <- preThingSet
+            } yield ατ(singleton(preThing))
           }
         } `=` {
-          ptsφs(pts)
+          ατ(preThingSet)
         }
-
-    val immobileAfter: MomentMorphism => L[Function[PreThingsSet, State]] =
-      mm =>
-        import su.{mmφsm}
-        {
-          ptsφs `o` mmφptsf(mm)
-        } `=` {
-          mmφsm(mm) `a` ptsφs
-        }
-
-    val immobileOnInterval: MomentMorphism => PreThingsSet => L[State] =
-      case (bm, em) =>
-        import cs.{Interval, interval, all}
-        import su.{mmφsm}
-        val mi: Interval[Moment] = interval apply ((bm, em))
-        pts =>
-          all apply {
-            for {
-              m <- mi
-            } yield {
-              {
-                (ptsφs `o` mmφptsf((bm, m)))(pts)
-              } `=` {
-                (mmφsm((bm, m)) `a` ptsφs)(pts)
-              }
-            }
-          }

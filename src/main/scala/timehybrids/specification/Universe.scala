@@ -1,55 +1,107 @@
 package timehybrids.specification
 
 import specification.{
+  Ordered,
   VirtualTopology,
-  Sets,
+  OneToOne,
   Category,
-  ActionUponFunction,
+  Action,
   Functor
 }
 
-trait Universe[
-    Set[_]: Sets,
-    Morphism[_, _]: Category: ActionUponFunction,
-    Moment: Time,
-    State: [_] =>> VirtualTopology[Set, State]: [_] =>> Functor[
-      [_, _] =>> Tuple2[Moment, Moment],
-      Morphism,
-      [_] =>> State
-    ]
-]:
+trait Universe[Moment, Place, Morphism[_, _]]:
 
-  // Foundational delegates are defined
+  given morphismCategory: Category[Morphism]
 
-  val cs: Sets[Set] = summon[Sets[Set]]
+  val morphismCategoryVal = morphismCategory
 
-  val mc: Category[Morphism] = summon[Category[Morphism]]
+  import morphismCategoryVal.{Transition}
 
-  val mauf: ActionUponFunction[Morphism] = summon[ActionUponFunction[Morphism]]
+  given morphismFunctionAction: Action[Morphism, Function]
 
-  // `Time` related domain delegates are defined
+  given momentTime: Time[Moment]
 
-  val mt: Time[Moment] = summon[Time[Moment]]
+  val momentTimeVal = momentTime
 
-  // `Time` related domain types are defined
+  import momentTimeVal.{MomentInterval, momentIntervalUtilities}
 
-  type MomentMorphism = Tuple2[Moment, Moment]
+  import momentIntervalUtilities.{initialIntervals, subIntervals}
 
-  // `Universe` related foundational delegates are defined.
+  given placeVirtualTopology: VirtualTopology[Place]
 
-  val svt: VirtualTopology[Set, State] =
-    summon[VirtualTopology[Set, State]]
+  given placeTransitionToMomentIntervalOneToOne
+      : OneToOne[
+        Transition[Place],
+        MomentInterval
+      ]
 
-  val mmΦsm: Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State] =
-    summon[Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State]]
+  val momentIntervalToPlaceTransitionFunction
+      : Function[MomentInterval, Transition[Place]] =
+    placeTransitionToMomentIntervalOneToOne.`to`
 
-  // `Universe` related domain types are defined
+  val momentIntervalFromPlaceTransitionFunction
+      : Function[Transition[Place], MomentInterval] =
+    placeTransitionToMomentIntervalOneToOne.`from`
 
-  type StateMorphism = Morphism[State, State]
+  val placeTransitionToInitialPlaceTransitionSetFunction
+      : Function[Transition[Place], Set[Transition[Place]]] =
+    placeTransition =>
+      for {
+        momentInterval <- initialIntervals(
+          momentIntervalFromPlaceTransitionFunction(placeTransition)
+        )
+      } yield {
+        momentIntervalToPlaceTransitionFunction(momentInterval)
+      }
 
-  // `Universe` related foundational members
-  // using members of `Universe` related foundational delegates are defined.
+  val placeTransitionToSubPlaceTransitionSetFunction
+      : Function[Transition[Place], Set[Transition[Place]]] =
+    placeTransition =>
+      for {
+        momentInterval <- subIntervals(
+          momentIntervalFromPlaceTransitionFunction(placeTransition)
+        )
+      } yield {
+        momentIntervalToPlaceTransitionFunction(momentInterval)
+      }
 
-  val mmφsm: Function[MomentMorphism, StateMorphism] = mmΦsm.φ
+  // not used
 
-  val svts: Function[Set[State], State] = svt.sup
+  given placeTransitionCategory
+      : Category[[_, _] =>> Transition[Place]] =
+    new:
+      extension [Z, Y, X](leftPlaceTransition: Transition[Place])
+        def o(rightPlaceTransition: Transition[Place]): Transition[Place] =
+          morphismCategory.o(leftPlaceTransition)(rightPlaceTransition)
+      def ι[Z]: Transition[Place] = morphismCategory.ι
+
+  given momentIntervalCategory: Category[[_, _] =>> MomentInterval] =
+    new:
+      extension [Z, Y, X](leftMomentInterval: MomentInterval)
+        def o(rightMomentInterval: MomentInterval): MomentInterval =
+          momentIntervalFromPlaceTransitionFunction(
+            momentIntervalToPlaceTransitionFunction(
+              leftMomentInterval
+            ) o momentIntervalToPlaceTransitionFunction(rightMomentInterval)
+          )
+
+      def ι[Z]: MomentInterval =
+        momentIntervalFromPlaceTransitionFunction(morphismCategory.ι)
+
+  given placeTransitionFunctor: Functor[
+    [_, _] =>> MomentInterval,
+    [_, _] =>> Transition[Place],
+    [_] =>> Transition[Place]
+  ] =
+    new:
+      def φ[Z, Y]: MomentInterval => Transition[Place] =
+        momentIntervalToPlaceTransitionFunction
+
+  given momentIntervalFunctor: Functor[
+    [_, _] =>> Transition[Place],
+    [_, _] =>> MomentInterval,
+    [_] =>> MomentInterval
+  ] =
+    new:
+      def φ[Z, Y]: Transition[Place] => MomentInterval =
+        momentIntervalFromPlaceTransitionFunction

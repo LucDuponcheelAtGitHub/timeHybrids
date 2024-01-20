@@ -16,6 +16,8 @@ Fred compared his book with that stone.
 
 I hope that this document will, somehow, increase the number of people that read his book.
 
+The goal of this document is to illustrate the book programmatically.
+
 ## How to read this document
 
 This document does not present its content in a linear way.
@@ -28,7 +30,7 @@ Sections contain hyperlinks to sections that can be read by need.
 
 This document, especially its introduction, is a highly opinionated one.
 
-Many sentences start with "I tend to think of", emphasizing the fact that I may be wrong.
+Many sentences start with "I think of", emphasizing the fact that I may be wrong.
 
 I hope that my opinion about the book is more or less compatible with the opinion of Fred.
 
@@ -49,7 +51,7 @@ requirements as minimal as possible.
 
 In a way you can think of a specification as a *description*.
 
-I tend to think of a description as an implementation that is an *informal specification*.
+I think of a description as an implementation that is an *informal specification*.
 
 For example, the picture on
 [The Treachery of Images](https://en.wikipedia.org/wiki/The_Treachery_of_Images)
@@ -59,14 +61,14 @@ Frankly, if you would never have seen a pipe before, would you be able to make a
 
 ### Generic Theory
 
-I tend to think of a *generic theory* as a *theory consisting of specifications of theories*,
+I think of a *generic theory* as a *theory consisting of specifications of theories*,
 a *framework theory of theories* or *template theory of theories*, where *theories fit into as implementations*.
 
 ### Generic Theory of Reality
 
 The *Time Hybrids* book describes a *Generic Theory of Reality*.
 
-Hence I tend to think of a generic theory of reality as a *theory consisting of specifications of theories of reality*,
+Hence I think of a generic theory of reality as a *theory consisting of specifications of theories of reality*,
 a *framework theory of theories of reality* or *template theory of theories of reality*, where
 *theories of reality fit into as implementations*.
 
@@ -76,7 +78,7 @@ It is generally agreed upon that *quantum theory* and *relativity theory* are tw
 
 A *unifying theory* for quantum theory and relativity theory is yet to be agreed upon.
 
-I tend to think of the generic theory of reality of the book as a *partially unifying theory* for quantum theory and
+I think of the generic theory of reality of the book as a *partially unifying theory* for quantum theory and
 relativity theory, concentrating on *common requirements*.
 
 The book states that various phenomena of quantum theory and relativity theory, which, until now, have been considered
@@ -87,12 +89,12 @@ unifying generic theory of reality.
 
 ### Future Research
 
-I tend to think that, providing *all details* on how to fit quantum theory and relativity theory into the partially
+I think that, providing *all details* on how to fit quantum theory and relativity theory into the partially
 unifying generic theory of reality, and comparing it with *observed reality*, is a challenging topic for future
 research.
 
 For example, would it not be nice to be able to show that, somehow, the theory of Stephen Wolfram and Co, explained in
-[https://www.ted.com/talks/stephen_wolfram_how_to_think_computationally_about_ai_the_universe_and_everything?language=en]
+[how to think computationally about ai the universe and everything](https://www.ted.com/talks/stephen_wolfram_how_to_think_computationally_about_ai_the_universe_and_everything?language=en)
 can be seen as an implementation of the specification of Fred Van Oystaeyen?
 
 If, one day, all those details would be provided, and if they all correspond to observed reality so far, then that would
@@ -106,15 +108,20 @@ quantum theory and/or relativity theory.
 
 ### Reality and Compositionality
 
-I tend to think of *compositionality* as an important aspect of reality.
+I think of *compositionality* as an important aspect of reality.
 
 *Compositionality* is about *components*.
 
 Components can, starting from various *atomic components* be *composed* to *composed components* in various ways.
 
+Compositionality comes in different flavors.
+
+- *functionality-like*
+- *information-like*
+
 ### Category Theory
 
-I tend to think of *category theory* as a *generic theory of mathematics*, a
+I think of *category theory* as a *generic theory of mathematics*, a
 *theory consisting of specifications of theories of mathematics*, a *framework theory of theories of mathematics* or
 *template theory of theories of mathematics*, where *theories of mathematics fit into as implementations*.
 
@@ -180,12 +187,14 @@ For its foundations, it uses verbose notation that, more or less, corresponds to
 
 In what follows `Scala` is not explicitly mentioned any more.
 
-#### Programmatic notation for specifications
+### Programmatic notation for specifications
 
 *Specifications* are, programmatically, denoted as
 
 - *value classes*,
+
 and,
+
 - *type classes*,
 - *unary type constructor classes*,
 - *binary type constructor classes*,
@@ -194,27 +203,39 @@ and,
 More precisely, they are denoted as
 
 - `trait`*s without corresponding parameter* for value classes,
+
 and,
+
 - `trait`*s with corresponding parameter* for all other classes.
 
-#### Programmatic notation for implementations
+### Programmatic notation for implementations
 
 *Implementations* are, programmatically, denoted as
 
 - `val`*s* for value classes,
+
 and,
+
 - `given`*s* for all other classes.
 
-#### Programmatic naming conventions
+### Implicitly denoting homogeneous sets
 
-The programmatic notation uses names that are abbreviations using first letters of (sequences of (parts of)) words.
+Types `Z` *implicitly* denote *homogeneous sets* and *values* `z` of a type `Z` *implicitly* denote
+*elements of the same type*.
+
+### Explicitly denoting homogeneous sets
+
+The unary type constructor `Set`, constructs types `Set[Z]` for every type `Z`.
+
+Types `Set[Z]` *explicitly* denote *homogeneous sets* and *values* `zs` of a type `Set[Z]` *explicitly* denote
+*elements of the same type*.
+
+### Programmatic naming conventions
 
 The programmatic notation uses names with letters of the
 [Greek alphabet](https://en.wikipedia.org/wiki/Greek_alphabet)
 corresponding to first letters of words, according to the
 [Romanization of Greek alphabet](https://en.wikipedia.org/wiki/Romanization_of_Greek).
-
-The programmatic notation uses *symbolic operator names between backticks*.
 
 ### Analogy between Physics and Computer Science
 
@@ -248,1026 +269,951 @@ explained above.
 In other words, I have been doig and I still am doing foundational work on software theories that is similar to the
 foundational work Fred is doing on physics theories.
 
-## Time Hybrids Domain: Specifications
+### Time Hybrids Domain
 
-Recently I attended a lecture of Fred on its book in Almeria. The lecture was accompanied with an informal paper.
-
-Let's start with the first sentences of the abstract of the paper.
+In what follows I will quote some sentences of a paper of Fred related to a presentation in Almeria on his book.
 
 *We introduce a generic model for space-time where time is just a totally ordered set ordering the states of the*
-*universe at moments where over (not in) each state we define potentials or pre-things which are going to evolve via*
-*correspondences between the momentary potentials to existing things. Existing takes time and observing takes more time.*
+*universe at moments where over (not in) each state we define potentials, or pre-things, which are going to evolve via*
+*correspondences between momentary potentials to existing things. Existing takes time and observing takes more time.*
 
-The following concepts are involved
+*We will look at time as a totally ordered set T.*
+
+*The universe U is constructed as a set of states at moments, where moments are the elements of T, say U(t) at t in T.*
+
+*Over a state U(t) at moment t, we consider a set S(t) of pre-things or t-potentials and we look at the set PS(t) of*
+*all subsets of S(t), including the empty subset and S(t) itself.* 
+
+*For the geometry we will use a very general pre-geometry based upon non-commutative topologies in the states of the*
+*universe, made dynamic via morphisms between states forming strings over time intervals.*
+
+*We made the U(t) sets but a geometry on it need not be a geometry given by sets of points. The non-commutative*
+*topology X(t) is given by a non-commutative lattice structure L(t) on the set U(t) where there is a partial order < on*
+*the set and two operations, ∧ and ∨, being meet and join, generalizing the intersection and union of topological sets*
+*of points.*
+
+*We can define a “place map”, p(t): PS(t)--->U(t) where some A(t) is taken to an element pA(t) of the non-commutative*
+*lattice L(t) giving the topology of U(t) such that p(t) respects the partial orders on PS(t) and U(t).*
+
+This document is work in progress. 
+
+For now, let's concentrate on the following concepts:
 
 - time moments,
-- universe states,
-- pre-things,
-- space,
+- universe places,
+- pre-things.
 
-and,
-
-- things.
-
-Moreover
-
-- pre-things are momentary (they do not really exist),
-- things exist (which takes time)
-and,
-- observing takes more time.
-
-This document is work in progress.
-
-For now only time moments, universe states and pre-things are dealt with.
-
-Let's continue with another sentence of the content of the paper.
-
-*We can define a “place map”, p(t): PS(t)--->U(t) where some A(t) is taken to an element pA(t) of the nc-lattice L(t)*
-*giving the topology of U(t) such that p(t) respects the (inclusion) partial orders on PS(t) and U(t).*
-
-This sentence uses notation that needs some explanation.
+Let's explain some notation:
 
 - Time moments are denoted as *t*.
-- The universe state at time moment *t* is denoted as *U(t)*.
-- The collection of sets of pre-things at time moment *t* is denoted as *PS(t)*.
+- Universe places at time moment *t* are denoted as *U(t)*.
+- The collection of all sets of pre-things at time moment *t* is denoted as *PS(t)*.
+  - mathematically this collection is not a set
+  - programmatically this collection is a constructive set
 - Sets of pre-things are denoted as *A(t)*.
-- The "place map" *p(t)* maps *A(t)* to *pA(t)*.
+- The place map *p(t)* maps *A(t)* to *pA(t)*.
 - The *non-commutative lattice* on *U(t)* is denoted as *L(t)*.
+- The *non-commutative tupology* defined by *L(t)* is denoted as *X(t)*. 
 
-The non-commutative *L(t)* lattice defines a *virtual topology* on *U(t)*.
+In what follows we gradually denote the concepts involved using programmatic notation.
 
-*p(t)* respects the non-commutative lattice order on *PS(t)* and the subset order on *U(t)*.
-
-Note that the statements above can be seen as requirements.
-
-In what follows we denote them using programmatic notation.
+## Time Hybrids Domain: Specification
 
 ### Time
 
+Back to [Universe](#universe) 
+
 ```scala
-package timehybrids.specification
+trait Time[Moment]:
 
-import specification.{Arbitrary, Ordered}
+  given momentOrdered: Ordered[Moment]
+  
+  val momentOrderedVal = momentOrdered
 
-trait Time[Moment: Arbitrary: Ordered]:
+  type MomentInterval = momentOrderedVal.Interval
 
-// ...
+  type MomentIntervalUtilities = momentOrderedVal.IntervalUtilities
+
+  val momentIntervalUtilities: MomentIntervalUtilities
 ```
 
 `Time` is a type class for parameter `Moment`.
 
 The requirements for `Moment` to be a `Time` type are
 
-- `Moment` is an `Arbitrary` type,
-- `Moment` is a `Ordered` type.
+- `Moment` is an `Ordered` type (cfr. `given momentOrdered`).
 
-`Arbitrary` is fully explained in [Arbitrary](#arbitrary).
+`Ordered` is explained in [Ordered](#ordered).
 
-`Ordered` is fully explained in [Ordered](#ordered).
+Time moments are also simply called moments.
 
-A type *implicitly* denotes a *set* and a *value* of a type *implicitly* denotes an *element* of a set.
-
-Recall that we are building a DSL for reality and its foundations.
-
-The requirements above allow us to, programmatically,
-
-- write statements involving arbitrary time moments,
-- state that one time moment is before another one.
-
-Time moments are also simply called *moments*.
-
-Recall that the code is not really the most idiomatic one, it is idiomatic for the DSL we are defining.
-
-Instead of using the *"is-a" Object Oriented Programming* idiom we use the *"has-a" Functional Programming* idiom.
-
-In other words, instead of using *inheritance* we use *delegation*.
-
-Moreover, delegation is *implicit*.
-
-*Delegates* need to be defined *explicitly* by `summon`*ing* them.
-
-They can then be `import`*ed* by need and made available as `given`*s* by need.
-
-Agreed, all this is somewhat verbose, but, the beauty of programmatic notation like this comes from the combination of
-*compactness* and *conciseness* of `trait` *declarations* like
-
-- `trait Time[Moment: Arbitrary: Ordered]`,
-
-stating that, for `Moment` to be a `Time` type, `Moment` is required to be an `Arbitrary` type and an `Ordered` type.
-
-```scala
-  // ...
-
-  val ma: Arbitrary[Moment] = summon[Arbitrary[Moment]]
-
-  val mo: Ordered[Moment] = summon[Ordered[Moment]]
-
-  // ...
-```
-
-`Time` related foundational delegates are defined.
-
-```scala
-  // ...
-
-  val am: Moment = ma.arbitrary
-```
-
-`Time` related foundational members using members of `Time` related foundational delegates are defined.
-
-You may wonder why similar members using `mo` are not defined.
-
-This is because those members are `extension`s that are globally available.
+Back to [Universe](#universe) 
 
 ### Universe
+
+Back to [PreThings](#prethings) 
 
 ```scala
 package timehybrids.specification
 
 import specification.{
+  Ordered,
   VirtualTopology,
-  Sets,
+  OneToOne,
   Category,
-  ActionUponFunction,
+  Action,
   Functor
 }
 
-trait Universe[
-    Set[_]: Sets,
-    Morphism[_, _]: Category: ActionUponFunction,
-    Moment: Time,
-    State: [_] =>> VirtualTopology[Set, State]: [_] =>> Functor[
-      [_, _] =>> Tuple2[Moment, Moment],
-      Morphism,
-      [_] =>> State
-    ]
-]:
+trait Universe[Moment, Place, Morphism[_, _]]:
 
-  // ...
+  given morphismCategory: Category[Morphism]
+
+  val morphismCategoryVal = morphismCategory
+
+  import morphismCategoryVal.{Transition}
+
+  given morphismFunctionAction: Action[Morphism, Function]
+
+  given momentTime: Time[Moment]
+
+  val momentTimeVal = momentTime
+
+  import momentTimeVal.{MomentInterval, momentIntervalUtilities}
+
+  import momentIntervalUtilities.{initialIntervals, subIntervals}
+
+  given placeVirtualTopology: VirtualTopology[Place]
+
+  given placeTransitionToMomentIntervalOneToOne
+      : OneToOne[
+        Transition[Place],
+        MomentInterval
+      ]
+
+  val momentIntervalToPlaceTransitionFunction
+      : Function[MomentInterval, Transition[Place]] =
+    placeTransitionToMomentIntervalOneToOne.`to`
+
+  val momentIntervalFromPlaceTransitionFunction
+      : Function[Transition[Place], MomentInterval] =
+    placeTransitionToMomentIntervalOneToOne.`from`
+
+  val placeTransitionToInitialPlaceTransitionSetFunction
+      : Function[Transition[Place], Set[Transition[Place]]] =
+    placeTransition =>
+      for {
+        momentInterval <- initialIntervals(
+          momentIntervalFromPlaceTransitionFunction(placeTransition)
+        )
+      } yield {
+        momentIntervalToPlaceTransitionFunction(momentInterval)
+      }
+
+  val placeTransitionToSubPlaceTransitionSetFunction
+      : Function[Transition[Place], Set[Transition[Place]]] =
+    placeTransition =>
+      for {
+        momentInterval <- subIntervals(
+          momentIntervalFromPlaceTransitionFunction(placeTransition)
+        )
+      } yield {
+        momentIntervalToPlaceTransitionFunction(momentInterval)
+      }
+
+  // not used
+
+  given placeTransitionCategory: Category[[_, _] =>> Transition[Place]] =
+    new:
+      extension [Z, Y, X](leftPlaceTransition: Transition[Place])
+        def o(rightPlaceTransition: Transition[Place]): Transition[Place] =
+          morphismCategory.o(leftPlaceTransition)(rightPlaceTransition)
+      def ι[Z]: Transition[Place] = morphismCategory.ι
+
+  given momentIntervalCategory: Category[[_, _] =>> MomentInterval] =
+    new:
+      extension [Z, Y, X](leftMomentInterval: MomentInterval)
+        def o(rightMomentInterval: MomentInterval): MomentInterval =
+          momentIntervalFromPlaceTransitionFunction(
+            momentIntervalToPlaceTransitionFunction(
+              leftMomentInterval
+            ) o momentIntervalToPlaceTransitionFunction(rightMomentInterval)
+          )
+
+      def ι[Z]: MomentInterval =
+        momentIntervalFromPlaceTransitionFunction(morphismCategory.ι)
+
+  given placeTransitionFunctor: Functor[
+    [_, _] =>> MomentInterval,
+    [_, _] =>> Transition[Place],
+    [_] =>> Transition[Place]
+  ] =
+    new:
+      def φ[Z, Y]: MomentInterval => Transition[Place] =
+        momentIntervalToPlaceTransitionFunction
+
+  given momentIntervalFunctor: Functor[
+    [_, _] =>> Transition[Place],
+    [_, _] =>> MomentInterval,
+    [_] =>> MomentInterval
+  ] =
+    new:
+      def φ[Z, Y]: Transition[Place] => MomentInterval =
+        momentIntervalFromPlaceTransitionFunction
 ```
 
-Using the `type` definitions below you can read the `Universe` definition above as
+`Universe` is a type class for parameter `Place`.
 
-```scala
-trait Universe[
-    Set[_]: Sets,
-    Morphism[_, _]: Category: ActionUponFunction,
-    Moment: Time,
-    State: [_] =>> VirtualTopology[Set, State]: [_] =>> Functor[
-      [_, _] =>> MomentMorphism,
-      Morphism,
-      [_] =>> State
-    ]
-]:
-```
+`Universe` has a foundational parameter `Morphism` that is required to be a `Category` binary type constructor
+(cfr. `given morphismCategory`).
 
-`Universe` is a type class for parameter `State`.
+`Category` is explained in [Category](#category).
 
-`Universe` also has a foundational parameter `Set` that is required to be a `Sets` unary type constructor.
+`Universe` requires morphisms to act upon functions (cfr. `given morphismFunctionAction`).
 
-`Sets` is fully explained in [Sets](#sets).
+`Action` is explained in [Action](#action).
 
-`Sets` *explicitly* denotes *the realm of all sets*.
+`Universe` has a domain parameter `Moment` that is required to be a `Time` type (cfr. `given momentTime`).
 
-Mathematically this is not a set.
+`Time` is explained in [Time](#time).
 
-Programmatically it is a constructive set (recall that, programmatically, a set is implicitly denoted by a type).
+The requirements for `Place` to be a `Universe` type are
 
-`Universe` also has a foundational parameter `Morphism` that is required to be a `Category` binary type constructor and
-a `ActionUponFunction` binary type constructor.
+- `Place` is a `VirtualTopology` type (cfr. `given placeVirtualTopology`),
+- place transitions are one to one with moment intervals (cfr `given placeTransitionToMomentIntervalOneToOne`).
 
-`Category` is fully explained in [Category](#category).
+The places of the virtual topology of the universe are dymanic.
 
-`ActionUponFunction` is fully explained in [ActionUponFunction](#actionuponfunction).
+On the one hand, their transitions are driven by moment intervals.
 
-`Universe` also has a domain parameter `Moment` that is required to be a `Time` type.
+On the other hand, it even makes sense to even go one step further by considering moment intervals as being implicitly
+defined by place transitions, hence the one to one.
 
-Type `Tuple2[T, T]`, somewhat abusively, denotes an ordered set implicitly denoted by type `T`.
+`VirtualTopology` is explained in [VirtualTopology](#virtualtopology).
 
-- A value `(l, r)`, somewhat abusively, denotes ``{ l `<=` r } `=` { true }``.
+`OneToOne` is explained in [OneToOne](#onetoone).
 
-Using the `type` definitions below the requirements for `State` to be a `Universe` type are
-
-- `State` is a `VirtualTopology[Set, State]` type.
-- `State` is a `Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State]` type,
-
-`VirtualTopology` is fully explained in [VirtualTopology](#virtualtopology).
-
-`Functor` is fully explained in [Functor](#functor).
-
-```scala
-  // ...
-
-  val cs: Sets[Set] = summon[Sets[Set]]
-
-  val mc: Category[Morphism] = summon[Category[Morphism]]
-
-  val mauf: ActionUponFunction[Morphism] = summon[ActionUponFunction[Morphism]]
-
-  // ...
-```
-
-Foundational delegates are defined.
-
-```scala
-  // ...
-
-  val mt: Time[Moment] = summon[Time[Moment]]
-
-  // ...
-```
-
-`Time` related domain delegates are defined.
-
-```scala
-  // ...
-
-  type MomentMorphism = Tuple2[Moment, Moment]
-
-  // ...
-```
-
-`Time` related domain types are defined.
-
-```scala
-  // ...
-
-  // `Universe` related foundational delegates are defined.
-
-  val svt: VirtualTopology[Set, State] =
-    summon[VirtualTopology[Set, State]]
-
-  val mmΦsm: Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State] =
-    summon[Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State]]
-
-  // ...
-```
-
-`Universe` related foundational delegates are defined.
-
-```scala
-  // ...
-
-  type StateMorphism = Morphism[State, State]
-
-  // ...
-```
-
-`Universe` related domain types are defined.
-
-```scala
-  // ...
-
-  val mmφsm: Function[MomentMorphism, StateMorphism] = mmΦsm.φ
-
-  val svts: Function[Set[State], State] = svt.sup
-
-  // ...
-```
-
-`Universe` related foundational members using members of `Universe` related foundational delegates are defined.
-
-### Composition2
-
-```scala
-package types
-
-import specification.{Sets}
-
-enum Composition2[Set[_]: Sets, Z]:
-  case Atomic[Set[_]: Sets, Z](z: Z) extends Composition2[Set, Z]
-  case Composed[Set[_]: Sets, Z](cs2: Set[Composition2[Set, Z]])
-      extends Composition2[Set, Z]
-
-import Composition2.{Composed}
-
-def composition2[Set[_]: Sets, Z]
-    : Set[Composition2[Set, Z]] => Composition2[Set, Z] =
-  Composed.apply
-
-def decomposition2[Set[_]: Sets, Z]
-    : Composition2[Set, Z] => Set[Composition2[Set, Z]] =
-
-  val sets: Sets[Set] = summon[Sets[Set]]
-
-  import sets.{set2}
-
-  c => set2 apply (c, c)
-```
-
-`Composition2` is an example of *structural compositionality*.
-
-Note that the `Set[Composition2[Set, Z]]` is a `Set2[Composition2[Set, Z]]`.
+Back to [PreThings](#prethings) 
 
 ### PreThings
 
 ```scala
 package timehybrids.specification
 
-import types.{Composition2, composition2, decomposition2}
+import types.{Composition}
+
+import utilities.set.{emptySet, singleton, choices, U, all}
+
+import utilities.composition.{compose, composeAll, decomposeAll}
 
 import specification.{
-  Arbitrary,
   Ordered,
-  Sets,
+  VirtualTopology,
   Category,
-  ActionUponFunction,
   Functor,
-  Transformation
+  Action,
+  FunctorTransformation,
+  ActorTransformation
 }
 
-import implementation.{
-  orderedCategory,
-  functionCategory,
-  functionValuedFunctor2
-}
+import implementation.{setOrdered, functionCategory}
 
-trait PreThings[
-    Set[_],
-    Morphism[_, _],
-    Moment,
-    State: [_] =>> Universe[Set, Morphism, Moment, State],
-    PreObject: [_] =>> Arbitrary[
-      Set[Set[Composition2[Set, PreObject]]]
-    ]: [_] =>> Functor[
-      [_, _] =>> Tuple2[Moment, Moment],
-      Function,
-      [_] =>> Set[Composition2[Set, PreObject]]
-    ]: [_] =>> Transformation[
-      [_, _] =>> Tuple2[Moment, Moment],
-      Function,
-      [_] =>> Set[
-        Set[
-          Composition2[Set, PreObject]
-        ]
-      ],
-      [_] =>> Set[Set[Composition2[Set, PreObject]]]
-    ]: [_] =>> Function[Set[Composition2[Set, PreObject]], State]
-]:
+trait PreThings[Moment, Place, PreObject, Morphism[_, _]]:
 
-  // ...
-```
+  given placeUniverse: Universe[Moment, Place, Morphism]
 
-Using the `type` definitions below you can read the `PreThings` definition above as
+  val placeUniverseVal = placeUniverse
 
-```scala
-trait PreThings[
-    Set[_],
-    Morphism[_, _],
-    Moment,
-    State: [_] =>> Universe[Set, Morphism, Moment, State],
-    PreObject: [_] =>> Arbitrary[
-      PreInteractionsSet
-    ]: [_] =>> Functor[
-      [_, _] =>> MomentMorphism,
-      Function,
-      [_] =>> PreThingsSet
-    ]: [_] =>> Transformation[
-      [_, _] =>> MomentTransition,
-      Function,
-      [_] =>> Set2[PreThingsSet],
-      [_] =>> PreInteractionsSet
-    ]: [_] =>> Function[PreThingsSet, State]
-]:
+  import placeUniverseVal.{morphismCategory}
+
+  import placeUniverseVal.morphismCategoryVal.{Transition}
+
+  import placeUniverseVal.{morphismFunctionAction}
+
+  import placeUniverseVal.momentTimeVal.{MomentInterval}
+
+  import placeUniverseVal.{
+    momentIntervalToPlaceTransitionFunction,
+    placeTransitionToInitialPlaceTransitionSetFunction,
+    placeTransitionToSubPlaceTransitionSetFunction
+  }
+
+  import placeUniverseVal.{placeVirtualTopology}
+
+  val placeVirtualTopologyVal = placeVirtualTopology
+
+  import placeVirtualTopologyVal.{V}
+
+  type PreThing = Composition[PreObject]
+
+  type PreInteraction = Set[PreThing]
+
+  val preThingSetToPlaceActorTransformation: ActorTransformation[
+    Morphism,
+    Function,
+    [_] =>> Set[PreThing],
+    [_] =>> Place
+  ]
+
+  import preThingSetToPlaceActorTransformation.{ατ, isNaturalFor}
+
+  given preThingSetFunctor: Functor[Morphism, Function, [_] =>> Set[PreThing]]
+
+  val preThingSetFunctorVal = preThingSetFunctor
+
+  import preThingSetFunctorVal.{φ}
+
+  val preThingSetSetToPreInteractionSetFunctorTransformation:
+    FunctorTransformation[
+    Morphism,
+    Function,
+    [_] =>> Set[Set[PreThing]],
+    [_] =>> Set[PreInteraction]
+  ]
+
+  import preThingSetSetToPreInteractionSetFunctorTransformation.{φτ}
+
+  given preInteractionSetFunctor: Functor[
+    Morphism,
+    Function,
+    [_] =>> Set[PreInteraction]
+  ] = new:
+    def φ[Z, Y]: Function[
+      Morphism[Z, Y],
+      Function[Set[PreInteraction], Set[PreInteraction]]
+    ] = pt =>
+      val preInteractionToPreThingSetFunction
+          : Function[Set[PreInteraction], Set[PreThing]] = composeAll
+      val preThingSetToPreInteractionFunction
+          : Function[Set[PreThing], Set[PreInteraction]] = decomposeAll
+      preThingSetToPreInteractionFunction o
+        preThingSetFunctor.φ(pt) o
+        preInteractionToPreThingSetFunction
+
+  val preThingSetSetFunctor: Functor[
+    Morphism,
+    Function,
+    [_] =>> Set[Set[PreThing]]
+  ] =
+    new:
+      def φ[Z, Y]: Function[
+        Morphism[Z, Y],
+        Function[Set[Set[PreThing]], Set[Set[PreThing]]]
+      ] =
+        zμy =>
+          ptss =>
+            for {
+              pts <- ptss
+            } yield {
+              preThingSetFunctor.φ(zμy)(pts)
+            }
+
+  extension (placeTransitionFunctor: Functor[Morphism, Morphism, [_] =>> Place])
+    def isMovementAfterPlaceTransition[Z, Y](
+        placeTransition: Transition[Place]
+    ): Boolean =
+
+      {
+        ατ o preThingSetFunctor.φ(placeTransition)
+      } == {
+        placeTransitionFunctor.φ(placeTransition) a ατ
+      }
+
+      placeTransitionFunctor isNaturalFor placeTransition
+
+  val isImmobileAfterPlaceTransition: Transition[Place] => Boolean =
+    val identityPlaceTransition: Transition[Place] = morphismCategory.ι
+    val constantIdentityPlaceTransitionFunctor =
+      new Functor[Morphism, Morphism, [_] =>> Place]:
+        def φ[Z, Y] = _ => identityPlaceTransition
+    constantIdentityPlaceTransitionFunctor isMovementAfterPlaceTransition _
+
+  val isImmobileAtPlaceTransitionInitialPlaceTransitionBased
+      : Transition[Place] => Boolean =
+    placeTransition =>
+      all {
+        for {
+          initialPlaceTransition <-
+            placeTransitionToInitialPlaceTransitionSetFunction(
+              placeTransition
+            )
+        } yield {
+          isImmobileAfterPlaceTransition(initialPlaceTransition)
+        }
+      }
+
+  val isImmobileAtPlaceTransitionSubPlaceTransitionBased
+      : Transition[Place] => Boolean =
+    placeTransition =>
+      all {
+        for {
+          subPlaceTransition <- placeTransitionToSubPlaceTransitionSetFunction(
+            placeTransition
+          )
+        } yield {
+          isImmobileAfterPlaceTransition(subPlaceTransition)
+        }
+      }
+
+  val immobileAfterTimeInterval: MomentInterval => Boolean =
+    isImmobileAfterPlaceTransition o momentIntervalToPlaceTransitionFunction
+
+  val immobileAtTimeIntervalInitialPlaceTransitionBased
+      : MomentInterval => Boolean =
+    isImmobileAtPlaceTransitionInitialPlaceTransitionBased o
+      momentIntervalToPlaceTransitionFunction
+
+  val immobileAtTimeIntervalSubPlaceTransitionBased: MomentInterval => Boolean =
+    isImmobileAtPlaceTransitionSubPlaceTransitionBased o
+      momentIntervalToPlaceTransitionFunction
+
+  // laws
+
+  import specification.{Law}
+
+  trait PreThingsLaws[L[_]: Law]:
+
+    val selfPreInteraction: PreInteraction => L[Set[PreThing]] =
+      preInteraction =>
+        require(preInteraction.size == 1)
+        val preThingSet: Set[PreThing] = preInteraction
+        val preThing = compose(preThingSet)
+        preInteraction `=` singleton(preThing)
+
+    val noPreThingsFromNoPreThings: Transition[Place] => L[Set[PreThing]] =
+      placeTransition =>
+        {
+          φ(placeTransition)(emptySet)
+        } `=` {
+          emptySet
+        }
+
+    val unionOfSingletonPreInteractions
+        : Set[Set[PreThing]] => L[Set[PreInteraction]] =
+      preThingSetSet =>
+        {
+          U {
+            for {
+              preThingSet <- choices(preThingSetSet)
+            } yield {
+              φτ {
+                for {
+                  preThing <- preThingSet
+                } yield {
+                  singleton(preThing)
+                }
+              }
+            }
+          }
+        } `=` {
+          φτ(preThingSetSet)
+        }
+
+    import specification.{FunctorTransformationLawsFor}
+
+    val transformationLaws =
+      FunctorTransformationLawsFor(preThingSetSetToPreInteractionSetFunctorTransformation)
+
+    import transformationLaws.{orderedNatural}
+
+    val preInteractionNaturePreserving
+        : Set[PreInteraction] => Transition[Place] => L[Boolean] =
+      preInteractionSet =>
+
+        given Ordered[Function[Set[PreInteraction], Set[PreInteraction]]] with
+          extension (
+              leftPreInteractionSetFunction: Function[
+                Set[PreInteraction],
+                Set[PreInteraction]
+              ]
+          )
+            def <(
+                rightPreInteractionSetFunction: Function[
+                  Set[PreInteraction],
+                  Set[PreInteraction]
+                ]
+            ): Boolean =
+              leftPreInteractionSetFunction(preInteractionSet)
+                < rightPreInteractionSetFunction(preInteractionSet)
+
+        placeTransition =>
+          import preThingSetSetFunctor.φ
+          {
+            {
+              φτ o φ(placeTransition)
+            } <= {
+              φ(placeTransition) o φτ
+            }
+          } `=` {
+            true
+          }
+
+        orderedNatural apply placeTransition
+
+    val orderPreserving: Set[PreThing] => Set[PreThing] => L[Boolean] =
+      leftPreThingSet =>
+        rightPreThingSet =>
+          {
+            leftPreThingSet <= rightPreThingSet `=` true
+          } `=>` {
+            ατ(leftPreThingSet) <= ατ(rightPreThingSet) `=` true
+          }
+
+    val supremumOfAllSingletonPlaces: Set[PreThing] => L[Place] =
+      preThingSet =>
+        {
+          V {
+            for {
+              preThing <- preThingSet
+            } yield ατ(singleton(preThing))
+          }
+        } `=` {
+          ατ(preThingSet)
+        }
 ```
 
 `PreThings` is a type class for parameter `PreObject`.
 
-`PreThings` also has a foundational parameter `Set`.
+`functionCategory` is explained in [functionCategory](#functioncategory)
 
-`PreThings` also has a foundational parameter `Morphism`.
+`PreThings` has a foundational parameter `Morphism`.
 
-`PreThings` also has a domain parameter `Moment`.
+`PreThings` has a domain parameter `Moment`.
 
-`PreThings` also has a domain parameter `State` that is required to be a
-`Universe[Set, Morphism, Moment, State]` type.
+`PreThings` has a domain parameter `Place` that is required to be a `Universe[Moment, Place, Morphism]` type
+(cfr. `given placeUniverse`).
 
-Using the `type` definitions below the requirements for `PreObject` to be a `PreThings` type are
+`Universe` is explained in [Universe](#universe).
 
-- `PreObject` is an `Arbitrary[PreInteractionsSet]` type.
+`PreThings` uses `type` `Composition` to define `type` `PreThing` and `type` `PreInteraction` in terms of `PreObject`.
 
-- `PreObject` is a `Functor[[_, _] =>> MomentMorphism, Function, [_] =>> PreThingsSet]` type.
+`type` `Composition` is explained in [type Composition](#compositiontype).
 
-- `PreObject` is a
-  `Transformation[`
-  `[_, _] =>> MomentMorphism,`
-  ` Function,`
-  `[_] =>> Set2[PreThingsSet],`
-  `[_] =>> PreInteractionsSet]` type.
+`compose`, `composeAll` and  `decomposeAl` are explained in [CompositionUtilities](#compositionUtilities).
 
-`Transformation` is fully explained in [Transformation](#transformation).
+The requirements for `PreObject` to be a `PreThings` type are
 
-`functionValuedFunctor2`, is fully explained in [functionValuedFunctor2](#functionValuedFunctor2).
+- `PreObject` is a `Functor[Morphism, Function, [_] =>> Set[PreThing]]`
+   type (cfr. `given preThingSetFunctor`),
+- `PreObject` has a `FunctorTransformation[Morphism, Function, [_] =>> Set[Set[PreThing]], [_] =>> Set[PreInteraction]]`
+   type instance (cfr. `preThingSetSetToPreInteractionSetFunctorTransformation`),
+- `PreObject` has an `ActorTransformation[Morphism, Function, [_] =>> Set[PreThing], [_] =>> Place]`
+  type instance (cfr. `preThingSetToPlaceActorTransformation`).
 
-`orderedCategory`, is fully explained in [orderedCategory](#orderedCategory).
+`Functor` is explained in [Functor](#functor).
 
-`functionCategory`, is fully explained in [functionCategory](#functionCategory).
+`FunctorTransformation` is explained in [FunctorTransformation](#functortransformation).
 
+`ActorTransformation` is explained in [ActorTransformation](#association).
 
-```scala
-  // ..
+`isMovementAfterPlaceTransition` can be defined as a `Functor[Morphism, Morphism, [_] =>> Place]`, together with
 
-  val su: Universe[Set, Morphism, Moment, State] =
-    summon[Universe[Set, Morphism, Moment, State]]
+- `isImmobileAfterPlaceTransition`
+- `isImmobileAtPlaceTransitionInitialPlaceTransitionBased`
+- `isImmobileAtPlaceTransitionSubPlaceTransitionBased`
 
-  // ...
-```
+and, corresponding `TimeInterval` related
 
-`Universe` related domain delegates are defined.
+- `isMovementAfterMomentInterval`
+- `immobileAfterTimeInterval`
+- `immobileAtTimeIntervalInitialPlaceTransitionBased`
+- `immobileAtTimeIntervalSubPlaceTransitionBased`
 
-```scala
-  // ...
+`setOrdered` is explained in [setOrdered](#setordered)
 
-  import su.{cs}
+Let's concentrate on the laws.
 
-  import cs.{Set2}
+`selfPreInteraction` refers to the following, slightly adapted, excerpt from the book
+(it is taken for granted in the paper).
 
-  type PreThing = Composition2[Set, PreObject]
+*In fact ,the difference between pre-things and pre-interactions is one of language only, we may just as well call a*
+*pre-thing A(t) a pre-interaction i(A(t),A(t))*.
 
-  type PreThingsSet = Set[PreThing]
-
-  type PreInteraction = Set2[PreThing]
-
-  type PreInteractionsSet = Set[PreInteraction]
-
-  // ...
-```
-
-`PreThings` related domain types are defined.
-
-```scala
- import su.{MomentMorphism}
-
-  val pisa: Arbitrary[PreInteractionsSet] =
-    summon[Arbitrary[PreInteractionsSet]]
-
-  val mmΦptsf: Functor[
-    [_, _] =>> MomentMorphism,
-    Function,
-    [_] =>> PreThingsSet
-  ] =
-    summon[
-      Functor[
-        [_, _] =>> MomentMorphism,
-        Function,
-        [_] =>> PreThingsSet
-      ]
-    ]
-
-  val ptss2Τpis: Transformation[
-    [_, _] =>> MomentMorphism,
-    Function,
-    [_] =>> Set2[PreThingsSet],
-    [_] =>> PreInteractionsSet
-  ] = summon[
-    Transformation[
-      [_, _] =>> MomentMorphism,
-      Function,
-      [_] =>> Set2[PreThingsSet],
-      [_] =>> PreInteractionsSet
-    ]
-  ]
-
-  val ptsφs: Function[PreThingsSet, State] =
-    summon[Function[PreThingsSet, State]]
-  
-  // ...
-```
-
-`PreThings` related foundational delegates are defined.
-
-```scala
-  // ...
-
-  val apis: Set[PreInteraction] = pisa.arbitrary
-
-  val mmφptsf: Function[
-    MomentMorphism,
-    Function[PreThingsSet, PreThingsSet]
-  ] = mmΦptsf.φ
-
-  val ptss2φtpis: Function[
-    Set2[PreThingsSet],
-    PreInteractionsSet
-  ] = ptss2Τpis.τ
-
-  // ...
-```
-
-`PreThings` related foundational members using members of `PreThings` related foundational delegates are defined.
-
-```scala
-  import su.{mc, mauf}
-
-  given Sets[Set] = cs
-
-  given Category[Morphism] = mc
-
-  given ActionUponFunction[Morphism] = mauf
-```
-
-Foundational `given`s using `import`ed foundational delegates are defined.
-
-```scala
-  // ...
-
-  import su.{mt, mmΦsm}
-
-  import mt.{ma, mo}
-
-  given Arbitrary[Moment] = ma
-
-  given Ordered[Moment] = mo
-
-  // ...
-```
-
-`Time` related foundational `given`s are defined.
-
-```scala
-  given Functor[[_, _] =>> MomentMorphism, Morphism, [_] =>> State] = mmΦsm
-
-  // ...
-```
-
-`Universe` related foundational `given`s are defined.
-
-```scala
-  // ...
-
-  given mmΦptss2f: Functor[
-    [_, _] =>> MomentMorphism,
-    Function,
-    [_] =>> Set2[PreThingsSet]
-  ] = functionValuedFunctor2[
-    Set,
-    [_, _] =>> MomentMorphism,
-    [_] =>> PreThingsSet
-  ]
-
-  // ...
-```
-
-`PreThings` related foundational `given`s are defined.
-
-```scala
-  // ...
-
-  val mmφptss2f: Function[
-    MomentMorphism,
-    Function[
-      Set2[PreThingsSet],
-      Set2[PreThingsSet]
-    ]
-  ] = mmΦptss2f.φ
-
-  // ...
-```
-
-`PreThings` related foundational members using `PreThings` related foundational `given`s are defined
-
-```scala
-  // ...
-
-  val pisφpts: Function[PreInteractionsSet, PreThingsSet] =
-    pic =>
-      for {
-        pi <- pic
-      } yield {
-        composition2 apply pi
-      }
-
-  val ptsφpis: Function[PreThingsSet, PreInteractionsSet] =
-    pts =>
-      for {
-        pt <- pts
-      } yield {
-        decomposition2 apply pt
-      }
-
-  val mmφpisf: Function[
-    MomentMorphism,
-    Function[PreInteractionsSet, PreInteractionsSet]
-  ] = mm => ptsφpis `o` mmφptsf(mm) `o` pisφpts
-
-  // ...
-```
-
-Composed `PreThings` related foundational members using `PreThings` related foundational members using `PreThings`
-related foundational `given`s are defined.
-
-The laws of `PreThingsRealityLaws`, `PreThingsRealityLaws` are fully explained in
-[PreThingsRealityLaws](#prethingslaws).
-
-## Time Hybrids Domain: Laws
-
-### PreThingsLaws
-
-Back to [PreThings](#prethings)
-
-```scala
-  // ...
-
-   // laws
-
-  import specification.{Law}
-
-  import implementation.{composedFunctor}
-
-  trait PreThingsFunctorCompositionLaws[L[_]: Law]:
-
-    given stΦptcf: Functor[Morphism, Function, [_] =>> PreThingsSet]
-
-    val composition2: L[
-      Functor[
-        [_, _] =>> MomentMorphism,
-        Function,
-        [_] =>> PreThingsSet
-      ]
-    ] = {
-      mmΦptsf
-    } `=` {
-      composedFunctor[
-        [_, _] =>> MomentMorphism,
-        Morphism,
-        Function,
-        [_] =>> State,
-        [_] =>> PreThingsSet
-      ]
-    }
-
-    // ...
-```
-
-This law refers to the following excerpts from the paper.
-
-*Thus the total order of Time is just the total order of the states of the universe and we may think of U as a book*
-*with pages U(t) indexed by elements of T.*
-
-*The pages will be glued together by some maps f(t,t’) for t<t’ in T, where < is the order of T*
-
-*We let s(t,t’) denote a map from PS(t) to PS(t’) which may be viewed as a correspondence from S(t) to S(t’), this*
-*mathematical concept is just a map from subsets of S(t) to subsets of S(t’)*
-
-Although it is nowhere mentioned in the book or paper, this optional law relating *f(t,t’)* and *s(t,t’)* looks natural
-to me.
-
-```scala
-  // ...
-
-  import implementation.{functionTargetOrdered, setOrdered}
-
-  trait PreThingsLaws[L[_]: Law]:
-
-    val preInteractionAsPreThingComposition
-        : L[PreInteraction => PreInteraction] = {
-      decomposition2 `o` composition2
-    } `=` {
-      identity
-    }
-
-    val preThingAsPreInteractionDecomposition: L[PreThing => PreThing] = {
-      composition2 `o` decomposition2
-    } `=` {
-      identity
-    }
-
-    // ...
-```
-
-This law refers to the following, slightly adapted, excerpt from the book (it is taken for granted in the paper).
-
-*In fact ,the difference between pre-things and pre-interactions is one of language only, we may just as well call a
-pre-thing A(t) a pre-interaction i(A(t),A(t))*.
-
-```scala
-  // ...
-
-    val noPreThingFromNothing: MomentMorphism => L[PreThingsSet] =
-      mm =>
-        import cs.{set0}
-        {
-          mmφptsf(mm)(set0)
-        } `=` {
-          set0
-        }
-
-  // ...
-```
-
-This law refers to the following, slightly adapted, excerpt from the paper.
+`noPreThingsFromNoPreThings` refers to the following, slightly adapted, excerpt from the paper.
 
 *Moreover the correspondence acting on the empty set is always the empty set; thus no pre-things arise as the result of*
 *a correspondence of the empty set! No pre-thing comes from nothing!*
 
-```scala
-  // ...
-
-    val unionOfSingletonPreInteractions
-        : Set2[PreThingsSet] => L[PreInteractionsSet] =
-      ptss2 =>
-        import cs.{tuple2, set1, set2, union}
-        tuple2(ptss2) match
-          case (lpts, rpts) =>
-            {
-              union {
-                for {
-                  lpt <- lpts
-                  rpt <- rpts
-                } yield {
-                  ptss2φtpis(set2(set1(lpt), set1(rpt)))
-                }
-              }
-            } `=` {
-              ptss2φtpis(ptss2)
-            }
-
-  // ...
-```
-
-This law refers to the following excerpt from the paper, where [1] refers to the book.
+`unionOfSingletonPreInteractions` refers to the following excerpt from the paper, where [1] refers to the book.
 
 *The pre-interaction between A(t) and B(t) in S(t) is written as I(A,B)(t), in [1] I put I(A,B)(t) equal to*
 *v{ i(a(t),b(t)) for a(t) in A(t),b(t) in B(t) }.*
 
-```scala
-  // ...
-
-    val naturePreservingPreInteraction: MomentMorphism => L[Boolean] =
-      mm =>
-        {
-          { mmφpisf(mm) `o` ptss2φtpis } `<=` {
-            ptss2φtpis `o` mmφptss2f(mm)
-          }
-        }
-          `=` {
-            true
-          }
-
-  // ...
-```
-
-This law refers to the following excerpt from the paper (I changed < to <=).
+`preInteractionNaturePreserving` refers to the following excerpt from the paper (I changed < to <=).
 
 *However there is then a logical assumption, namely that s(t,t’)(I(A,B)(t)) <= I(A,B)(t’) for t<t’, meaning that the*
 *correspondences s(t,t') do not change the nature of the later realisation as an interaction. Hence the s(t,t’) respect*
 *the dichotomy between pre-interactions and other potentials we will call pre-objects, both together are pre-things.*
 
-This is. i.m.h.o., really the most fundamental law of the realm of pre-things.
+This is. i.m.h.o., the most fundamental law of pre-things.
 
-```scala
-  // ...
+It does not only state that the *s(t, t')* respect the dichotomy, but also that, at *t'* there may be
+pre-interations that are not of the form *s(t,t’)(I(A,B)(t))*. 
 
-  trait PreThingsPlacesLaws[L[_]: Law]:
-
-    val orderPreserving
-        : PreThingsSet => PreThingsSet => L[Boolean] =
-      lpts =>
-        rpts =>
-          import su.{svt}
-          import svt.{`<=`}
-          {
-            lpts `<=` rpts `=` true
-          } `=>` {
-            ptsφs(lpts) `<=` ptsφs(rpts) `=` true
-          }
-
-  // ...
-```
-
-This law refers to the following excerpt from the paper (already mentioned in the introduction).
+`orderPreserving` refers to the following excerpt from the paper (already mentioned in the introduction).
 
 *We can define a “place map”, p(t): PS(t)--->U(t) where some A(t) is taken to an element pA(t) of the nc-lattice L(t)*
 *giving the topology of U(t) such that p(t) respects the (inclusion) partial orders on PS(t) and U(t).*
 
-```scala
-  // ...
-
-    val supremumOfAllSingletonPlaces: PreThingsSet => L[State] =
-      pts =>
-        import cs.{set1}
-        import su.{svts}
-        {
-          svts {
-            for {
-              pt <- pts
-            } yield ptsφs(set1(pt))
-          }
-        } `=` {
-          ptsφs(pts)
-        }
-
-  // ...
-```
-
-This law refers to the following excerpt from the paper, where [2] refers to the 
+`supremumOfAllSingletonPlaces` refers to the following excerpt from the paper, where [2] refers to the 
 "Virtual topology and functor geometry book" of Fred
 
 *In [2], I took pA(t)=V{ p({a(t)}), a(t) in A(t) } – we then say p is basic - which is harmless and seems logical for*
 *the notion of “place” yet we do not use that here.*
 
-```scala
-  // ...
+`Law` is explained in [Law](#law).
 
-    val immobileAfter
-        : MomentMorphism => L[Function[PreThingsSet, State]] =
-      mm =>
-        import su.{mmφsm}
-        {
-          ptsφs `o` mmφptsf(mm)
-        } `=` {
-          mmφsm(mm) `a` ptsφs
-        }
+## Mathematical Foundations: Specifications
 
-    val immobileOnInterval: MomentMorphism => PreThingsSet => L[State] =
-      case (bm, em) =>
-        import cs.{Interval, interval, all}
-        import su.{mmφsm}
-        val mi: Interval[Moment] = interval apply ((bm, em))
-        pts =>
-          all apply {
-            for {
-              m <- mi
-            } yield {
-              {
-                (ptsφs `o` mmφptsf((bm, m)))(pts)
-              } `=` {
-                (mmφsm((bm, m)) `a` ptsφs)(pts)
-              }
-            }
-          }
-```
+### Law
 
-This law refers to the following, slightly adapted, excerpt from the paper.
+Back to [Ordered](#ordered)
 
-*A string of correspondences, over an interval I=[t,t’], starting with A(t) then yields places p(A(t”)) with t” in I.*
-*If f(t,t”)p(A(t))=p(A(t”)) for all t” in I, then we say the pre-thing A is immobile on I.*
+Back to [NcMeet](#ncmeet)
 
-`composedFunctor`, is fully explained in [composedFunctor](#composedfunctor).
+Back to [JoinComplete](#joincomplete)
 
-`functionTargetOrdered`, is fully explained in [functionCategory](#functionCategory).
+Back to [Join](#join)
 
-`setOrdered`, is fully explained in [functionValuedFunctor2](#functionValuedFunctor2).
+Back to [Category](#category)
+
+Back to [Composition](#composition)
+
+Back to [Functor](#functor)
 
 Back to [PreThings](#prethings)
-
-## Mathematical Foundations Domain: Specifications
-
-### Types
-
-Back to [TripleLaws](#triplelaws)
-
-Back to [CompositionNaturalTransformation](#compositionnaturaltransformation)
-
-Back to [UnitNaturalTransformation](#unitnaturaltransformation)
-
-```scala
-package types
-
-type `o` = [G[_], F[_]] =>> [T] =>> G[F[T]]
-
-type U = [T] =>> T
-```
-
-`` `o` `` defines unary type constructor composition.
-
-`U` defines the unary type constructor unit.
-
-Back to [UnitNaturalTransformation](#unitnaturaltransformation)
-
-Back to [CompositionNaturalTransformation](#compositionnaturaltransformation)
-
-Back to [TripleLaws](#triplelaws)
-
-### Arbitrary
-
-Back to [Time](#time)
 
 ```scala
 package specification
 
-trait Arbitrary[T]:
-
-  // ...
-```
-
-`Arbitrary` is a type class for parameter `T`.
-
-```scala
-  // ...
+trait Law[L[_]]:
 
   // declared
 
-  def arbitrary: T
+  extension [Z, Y](lly: L[Y]) def `=>`(rlz: L[Z]): L[Z]
+
+  extension [Z](l: Z) def `=`(r: Z): L[Z]
+
+  extension [Z](ll: L[Z]) def `&`(rl: L[Z]): L[Z]
+
+  extension [Z](ll: L[Z]) def `|`(rl: L[Z]): L[Z]
+
+  def all[Z]: Function[Set[L[Z]], L[Z]]
 ```
 
-`Arbitrary` features are declared:
+`Law` is a unary type constructor class for parameter `L`.
 
-`Arbitrary` does not come with laws.
+Laws are *conditional* *equational* laws with *conjunction*, *disjunction*, and *universal quantification*.
 
-Recall that we are building a DSL for reality and its foundations.
+Back to [PreThings](#prethings)
 
-The features above allow us to, programmatically,
+Back to [Functor](#functor)
 
-- write statements involving *arbitrary elements*.
+Back to [Composition](#composition)
 
-Note that `arbitrary` is declared as a `def`.
+Back to [Category](#category)
 
-Two `arbitrary` values are not necessarily equal.
+Back to [Join](#join)
 
-Back to [Time](#time)
+Back to [JoinComplete](#joincomplete)
+
+Back to [NcMeet](#ncmeet)
+
+Back to [Ordered](#ordered)
+
+### OneToOne
+
+Back to [Universe](#universe)
+
+```scala
+package specification
+
+trait OneToOne[Z, Y] extends Isomorphism[Function, Z, Y]:
+
+  val fromAll: Function[Set[Z], Set[Y]] =
+    zs =>
+      for {
+        z <- zs
+      } yield {
+        from(z)
+      }
+
+  val toAll: Function[Set[Y], Set[Z]] =
+    ys =>
+      for {
+        y <- ys
+      } yield {
+        to(y)
+      }
+```
+
+`Isomorphism` is explained in [Isomorphism](#isomorphism).
+
+Back to [Universe](#universe)
+
+### SetUtilities
+
+Back to [JoinComplete](#joincomplete)
+
+```scala
+package utilities.set
+
+def emptySet[Z]: Set[Z] = Set.empty
+
+def singleton[Z]: Z => Set[Z] = z => emptySet + z
+
+def tuple2ToSet[Z]: Tuple2[Z, Z] => Set[Z] =
+  (z0, z1) => singleton(z0) union singleton(z1)
+
+def choices[Z]: Set[Set[Z]] => Set[Set[Z]] =
+  zss =>
+    val zsl: List[Set[Z]] = zss.toList
+    zsl match
+      case Nil =>
+        singleton(emptySet)
+      case zs :: zsl =>
+        for {
+          z <- zs
+          zs <- choices(zsl.toSet).toList
+        } yield {
+          zs + z
+        }
+
+def U[Z]: Set[Set[Z]] => Set[Z] =
+  zss =>
+    for {
+      zs <- zss
+      z <- zs
+    } yield {
+      z
+    }
+
+def all : Set[Boolean] => Boolean =
+  _.foldRight(true)(_ && _)
+```
+
+Most utilities are straightforward.
+
+Maybe `choices` may need some explanation.
+
+Here is an example:
+
+```scala
+scala> choices(Set(Set(1, 2), Set(3, 4, 5), Set(6, 7))).foreach{println}
+Set(7, 3, 2)
+Set(7, 5, 1)
+Set(6, 4, 2)
+Set(7, 3, 1)
+Set(6, 4, 1)
+Set(7, 5, 2)
+Set(6, 3, 2)
+Set(6, 3, 1)
+Set(7, 4, 1)
+Set(6, 5, 1)
+Set(7, 4, 2)
+Set(6, 5, 2)
+```
+
+Back to [JoinComplete](#joincomplete)
+
+### CompositionType
+
+Back to [PreThings](#prethings)
+
+```scala
+package types
+
+import specification.{Limit}
+
+type Composition[Z] = Limit[[O] =>> CompositionEnum[Z, O]]
+```
+
+`Composition` is a limit of `CompositionEnum`.
+
+`Limit` is explained in [Limit](#limit).
+
+`CompositionEnum` is explained in [CompositionEnum](#Compositionenum).
+
+`Limit` is a fixed-point recursively fills the "hole" in `CompositionEnum`.
+
+**Warning**
+
+This is work in progress.
+
+Composition an important part of the mathematical foundation of the book of Fred.
+
+There is more to writesay about it than I do in this document.
+
+I declare and define concepts programmatically "by need".
+
+Back to [PreThings](#prethings)
+
+### CompositionUtilities
+
+Back to [PreThings](#prethings)
+
+```scala
+package utilities.composition
+
+import types.{CompositionEnum, Composition}
+
+import utilities.set.{U}
+
+import specification.{OneToOne, Limit, limit}
+
+import implementation.{functionCategory, compositionEnumFunctionFunctor}
+
+def compose[Z]: Set[Composition[Z]] => Composition[Z] =
+  zfcs => Limit apply CompositionEnum.Composed(zfcs)
+
+def decompose[Z]: Composition[Z] => Set[Composition[Z]] =
+  limit apply {
+    case CompositionEnum.Atomic(_) =>
+      sys.error("atomic component cannot be decomposed")
+    case CompositionEnum.Composed(zcss) => U(zcss)
+  }
+
+def compositionSetToCompositionOneToOne[Z]
+    : OneToOne[Set[Composition[Z]], Composition[Z]] =
+  new:
+    val from: Set[types.Composition[Z]] => types.Composition[Z] = compose
+    val to: types.Composition[Z] => Set[types.Composition[Z]] = decompose
+
+def composeAll[Z]: Set[Set[Composition[Z]]] => Set[Composition[Z]] =
+  compositionSetToCompositionOneToOne.fromAll
+
+def decomposeAll[Z]: Set[Composition[Z]] => Set[Set[Composition[Z]]] =
+  compositionSetToCompositionOneToOne.toAll
+```
+
+`compositionEnumFunctionFunctor` is explained in [compositionEnumFunctionFunctor](#compositionEnumFunctionFunctor).
+
+Back to [PreThings](#prethings)
 
 ### Ordered
 
 Back to [Time](#time)
 
+Back to [NcMeet](#ncmeet)
+
 Back to [VirtualTopology](#virtualtopology)
+
+Back to [Join](#join)
 
 ```scala
 package specification
 
-trait Ordered[T] extends Equality[T]:
-
-  // ...
-```
-
-`Ordered` is a type class for parameter `T`.
-
-`Equality` is fully explained in [Equality](#equality).
-
-```scala
-  // ...
+trait Ordered[Z]:
 
   // declared
 
-  extension (lt: T) def `<`(rt: T): Boolean
-
-  // ...
-```
-
-`Ordered` features are declared.
-
-```scala
-  // ...
+  extension (lz: Z) def <(rz: Z): Boolean
 
   // defined
 
-  extension (lt: T) def `<=`(rt: T): Boolean = lt `<` rt || lt `=` rt
+  extension (lz: Z) def <=(rz: Z): Boolean = lz < rz || lz == rz
 
-  // ...
+  // nested `trait`s
+
+  trait Interval extends Set[Z]
+
+  trait IntervalUtilities:
+
+    extension (b: Z) def to(e: Z): Interval
+
+    def begin: Function[Interval, Z]
+
+    def end: Function[Interval, Z]
+
+    val initialIntervals: Function[Interval, Set[Interval]] =
+      i =>
+        val b = begin(i)
+        for {
+          e <- i
+          if (b <= e && e <= end(i))
+        } yield {
+          b to e
+        }
+
+    val subIntervals: Function[Interval, Set[Interval]] =
+      i =>
+        for {
+          b <- i
+          e <- i
+          if (begin(i) <= b &&
+            b <= e &&
+            e <= end(i))
+        } yield {
+          b to e
+        }
+
+    // laws
+
+    trait IntervalUtilitiesLaws[L[_]: Law]:
+
+      val beginToEnd: Interval => L[Interval] = i =>
+        {
+          i
+        } `=` {
+          begin(i) to end(i)
+        }
+
+  // laws
+
+  trait OrderedLaws[L[_]: Law]:
+
+    val reflexive: Z => L[Boolean] = z =>
+      {
+        z <= z
+      } `=` {
+        true
+      }
+
+    val antiSymmetric: Z => Z => L[Boolean] = lz =>
+      rz =>
+        {
+          lz <= rz `=` true `&` rz <= lz `=` true
+        } `=>` {
+          lz == rz `=` true
+        }
+
+    val transitive: Z => Z => Z => L[Boolean] = lz =>
+      mz =>
+        rz =>
+          {
+            lz <= mz `=` true `&` mz <= rz `=` true
+          } `=>` {
+            lz <= rz `=` true
+          }
+
+  trait TotallyOrderedLaws[L[_]: Law]:
+
+    val stronglyConnected: Z => Z => L[Boolean] = lz =>
+      rz =>
+        {
+          lz <= rz `|` rz <= lz
+        } `=` {
+          true
+        }
 ```
 
-Extra `Ordered` features are defined.
+`Ordered` is a type class for parameter `Z`.
 
-Recall that we are building a DSL for reality and its foundations.
+See, for example, [Partially ordered sets](https://en.wikipedia.org/wiki/Partially_ordered_set).
 
-The features above allow us to, programmatically,
+`Law` is explained in [Law](#law).
 
-- state that *one element is less than another one*,
-- state that *one element is less than or equal to another one*.
+`Interval` is a type synonym for `Set[Z]`.
 
-The laws of `Ordered`, `OrderedLaws` resp. `TotallyOrderedLaws` are fully explained in [OrderedLaws](#orderedlaws),
-resp. [TotallyOrderedLaws](#totallyorderedlaws).
+`IntervalUtilities` comes with its own features and `IntervalUtilitiesLaws`.
 
-Back to [VirtualTopology](#virtualtopology).
+Back to [Join](#join)
+
+Back to [VirtualTopology](#virtualtopology)
+
+Back to [NcMeet](#ncmeet)
 
 Back to [Time](#time)
-
-### Equality
-
-Back to [Ordered](#ordered).
-
-```scala
-package specification
-
-trait Equality[T]:
-
-  // ...
-```
-
-`Equality` is a type class for parameter `T`.
-
-```scala
-  // ...
-
-  // declared
-
-  extension (lt: T) def `=`(rt: T): Boolean
-
-  // ...
-```
-
-`Equality` features are declared.
-
-Recall that we are building a DSL for reality and its foundations.
-
-The features above allow us to, programmatically,
-
-- state that *one element is equal to another one*.
-
-The laws of `Equality`, `EqualityLaws` are fully explained in [EqualityLaws](#equalitylaws).
-
-Back to [Ordered](#ordered).
 
 ### VirtualTopology
 
@@ -1276,1712 +1222,693 @@ Back to [Universe](#universe)
 ```scala
 package specification
 
-trait VirtualTopology[Set[_]: Sets, T]
-    extends Ordered[T],
-      Meet[T],
-      Join[T],
-      Supremum[Set, T]
+trait VirtualTopology[Z] extends Ordered[Z], JoinComplete[Z], NcMeet[Z]
 ```
 
-`VirtualTopology` is a type class for parameter `T`.
+`Ordered` is explained in [Ordered](#ordered)
 
-`Sets` is fully explained in [Sets](#sets).
+`JoinComplete` is explained in [JoinComplete](#joincomplete)
 
-`Ordered` is fully explained in [Ordered](#ordered).
+`NcMeet` is explained in [NcMeet](#ncmeet)
 
-`Meet` is fully explained in [Meet](#meet).
+**Warning**
 
-`Join` is fully explained in [Join](#join).
+This is work in progress.
 
-`Supremum` is fully explained in [Supremum](#supremum).
+Virtual topology is the most important part of the mathematical foundation of the book of Fred.
 
-Back to [Universe](#universe).
+I declare and define concepts programmatically "by need".
 
-### Meet
+Until now, for the time moments, universe places, and pre-things concepts and their laws, I only need `Ordered` and
+`JoinComplete`.
+
+Although I do not need `NcMeet` yet, I add it anyway to emphasize the relationship with traditional topologies.
+
+There is even more: the non-idempotency of the `NcMeet` operator is the most important reason why virtual topology is
+more general, hence more capable from a modeling point of view, than traditional pointless topologies.
+
+*Expect this to change a lot.*
+
+Back to [Universe](#universe)
+
+### JoinComplete
 
 Back to [VirtualTopology](#virtualtopology)
 
 ```scala
 package specification
 
-trait Meet[T: Ordered: Arbitrary]:
-
-  // ...
-```
-
-`Meet` is a type class for parameter `T`.
-
-```scala
-  // ...
+trait JoinComplete[Z] extends Join[Z]:
 
   // declared
 
-  extension (lt: T) def ∧(rt: T): T
+  val V: Function[Set[Z], Z]
 
-  // ...
+  // defined
+
+  import utilities.set.{tuple2ToSet}
+
+  extension (lz: Z) def ∨(rz: Z): Z = V(tuple2ToSet(lz, rz))
+
+  trait SupremumLaws[L[_]: Law]:
+
+    val law: Law[L] = summon[Law[L]]
+
+    import law.{all}
+
+    val smallestGreaterThanAll: Z => Set[Z] => L[Boolean] =
+      az =>
+        zs =>
+          {
+            all {
+              for {
+                z <- zs
+              } yield z <= V(zs) `=` true
+            }
+          } `&` {
+            all {
+              for {
+                z <- zs
+              } yield z <= az `=` true
+            }
+          } `=>` {
+            V(zs) <= az `=` true
+          }
 ```
-`Meet` features are declared.
 
-The laws of `Meet`, `MeetLaws` are fully explained in [MeetLaws](#meetlaws).
+`JoinComplete` is a type class for parameter `Z`.
+
+`Join` is explained in [Join](#join).
+
+`tuple2ToSet` is explained in [SetUtilities](#setutilities).
+
+See, for example, [Infimum and JoinComplete](https://en.wikipedia.org/wiki/Infimum_and_supremum).
+
+`Law` is explained in [Law](#law)
+
+Back to [VirtualTopology](#virtualtopology)
+
+### NcMeet
+
+Back to [VirtualTopology](#virtualtopology)
+
+```scala
+package specification
+
+trait NcMeet[Z] extends Ordered[Z]:
+
+  // declared
+
+  extension (lz: Z) def ∧(rz: Z): Z
+
+  trait NcMeetLaws[L[_]: Law]:
+
+    val greatestSmallerThanBoth: Z => Z => Z => L[Boolean] =
+      az =>
+        lz =>
+          rt =>
+            {
+              ((lz ∧ rt) <= lz) `=` true `&` ((lz ∧ rt) <= rt) `=` true
+            } `&` {
+              (az <= lz) `=` true `&` (az <= rt) `=` true
+            } `=>` {
+              az <= (lz ∧ rt) `=` true
+            }
+```
+
+`Ordered` is explained in [Ordered](#ordered).
+
+See, for example, [Join and Meet](https://en.wikipedia.org/wiki/Join_and_meet).
+
+`Law` is explained in [Law](#law)
 
 Back to [VirtualTopology](#virtualtopology)
 
 ### Join
 
-Back to [VirtualTopology](#virtualtopology)
+Back to [JoinComplete](#joincomplete)
 
 ```scala
 package specification
 
-trait Join[T: Ordered: Arbitrary]:
-
-  // ...
-```
-`Join` is a type class for parameter `T`.
-
-```scala
-  // ...
+trait Join[Z] extends Ordered[Z]:
 
   // declared
 
-  extension (lt: T) def ∨(rt: T): T
+  extension (lz: Z) def ∨(rz: Z): Z
 
-  // ...
+  trait JoinLaws[L[_]: Law]:
+
+    val smallestGreaterThanBoth: Z => Z => Z => L[Boolean] =
+      az =>
+        lz =>
+          rz =>
+            {
+              (lz <= (lz ∨ rz)) `=` true `&` (rz <= (lz ∨ rz)) `=` true
+            } `&` {
+              (lz <= az) `=` true `&` (rz <= az) `=` true
+            } `=>` {
+              (lz ∨ rz) <= az `=` true
+            }
 ```
 
-`Join` features are declared.
+`Ordered` is explained in [Ordered](#ordered).
 
-The laws of `Join`, `JoinLaws` are fully explained in [JoinLaws](#joinlaws).
+See, for example, [Join and Meet](https://en.wikipedia.org/wiki/Join_and_meet).
 
-Back to [VirtualTopology](#virtualtopology)
+`Law` is explained in [Law](#law)
 
-### Supremum
+Back to [JoinComplete](#joincomplete)
 
-Back to [VirtualTopology](#virtualtopology)
+### CompositionEnum
+
+Back to [type Composition](#compositiontype)
 
 ```scala
-package specification
+package types
 
-trait Supremum[Set[_]: Sets, T: Ordered: Arbitrary]:
+enum CompositionEnum[Z, O]:
+  case Atomic[Z, O](z: Z) extends CompositionEnum[Z, O]
+  case Composed[Z, O](ls: Set[O]) extends CompositionEnum[Z, O]
 ```
 
-`Supremum` is a type class for parameter `T`.
+`CompositionEnum` is an example of information-like compositionality.
 
-`Sets` is fully explained in [Sets](#sets).
+Parameter `O` denotes a "hole" in the `CompositionEnum` information.
 
-```scala
-  //
-
-  val sup: Function[Set[T], T]
-
-  // ...
-```
-
-`Supremum` features are declared.
-
-The laws of `Supremum`, `SupremumLaws` are fully explained in [SupremumLaws](#supremumlaws).
-
-Back to [VirtualTopology](#virtualtopology)
-
-### Sets
-
-Back to [Universe](#universe)
-
-Back to [VirtualTopology](#virtualtopology)
-
-Back to [Supremum](#supremum)
-
-```scala
-package specification
-
-trait Sets[UTC[_]] extends MonadPlus[UTC]:
-
-  // ...
-```
-
-`Sets` is a unary type constructor class for parameter `UTC`.
-
-`MonadPlus` is fully explained in [MonadPlus](#monadplus).
-
-```scala
-  // ...
-
-  // types
-
-  type Set0 = [Z] =>> Set[Z]
-
-  type Set1 = [Z] =>> Set[Z]
-
-  type Set2 = [Z] =>> Set[Z]
-
-  type Interval = [Z] =>> Set[Z]
-
-  // ...
-```
-
-`Sets` related types are defined.
-
-`Set` is just a convenient type synonym of `UTC`.
-
-```scala
-  // ...
-
-  // declared
-
-  extension [Z](lc: Set[Z]) def `=s=`(rc: Set[Z]): Boolean
-
-  extension [Z](lc: Set[Z]) def `<s<`(rc: Set[Z]): Boolean
-
-  def tuple2[Z]: Set2[Z] => Tuple2[Z, Z]
-
-  def interval[Z: Ordered]: Option[Tuple2[Z, Z]] => Set[Z]
-
-  def all[Z, L[_]: Law]: Set[L[Z]] => L[Z]
-
-  // ...  
-```
-
-`Sets` features are declared.
-
-```scala
-  // ...
-
-  // defined
-
-  def set0[Z]: Set0[Z] = ζ
-
-  def set1[Z]: Z => Set1[Z] = ν
-
-  extension [Z](ls: Set[Z]) def ∪(rs: Set[Z]): Set[Z] = ls `+` rs
-
-  def set2[Z]: Tuple2[Z, Z] => Set2[Z] = (l, r) => set1(l) ∪ set1(r)
-
-  def union[Z]: Set[Set[Z]] => Set[Z] = μ
-
-  extension [Z](ls: Set[Z])
-    def `<=s<=`(rs: Set[Z]): Boolean = ls `<s<` rs || ls `=s=` rs
-
-  // ...  
-```
-
-`Sets` members are defined.
-
-The laws of `Sets`, `SetsLaws`, are fully explained in [SetsLaws](#setslaws).
-
-Back to [Supremum](#supremum)
-
-Back to [VirtualTopology](#virtualtopology)
-
-Back to [Universe](#universe)
-
-### Functor
-
-Back to [Universe](#universe)
-
-Back to [ActionUpon](#actionupon)
-
-Back to [Triple](#triple)
-
-Back to [NaturalTransformation](#naturaltransformation)
-
-Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
-
-```scala
-package specification
-
-trait Functor[FBTC[_, _]: Category, TBTC[_, _]: Category, UTC[_]]:
-```
-
-`Functor` is a unary type constructor class for parameter `UTC`.
-
-`Functor` has two parameters `FBTC` and `TBTC` that are required to be `Category` binary type constructors.
-
-`Category` is fully explained in [Category](#category).
-
-```scala
-  // ...
-
-  // declared
-
-  def φ[Z, Y]: Function[FBTC[Z, Y], TBTC[UTC[Z], UTC[Y]]]
-```
-
-`Functor` features are declared.
-
-The laws of `Functor`, `FunctorLaws` are fully defined in [FunctorLaws](#functorlaws).
-
-Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
-
-Back to [NaturalTransformation](#naturaltransformation)
-
-Back to [Triple](#triple)
-
-Back to [ActionUpon](#actionupon)
-
-Back to [Universe](#universe)
-
-### MonadPlus
-
-Back to [Sets](#sets)
-
-```scala
-package specification
-
-trait MonadPlus[UTC[_]] extends Monad[UTC], Plus[UTC]:
-
-  // ...
-```
-
-`MonadPlus` is a unary type constructor class for `UTC`.
-
-`Monad` is fully explained in [Monad](#monad).
-
-`Plus` is fully explained in [Plus](#plus).
-
-The laws of `MonadPlus`, `MonadPlusLaws`, are fully explained in
-[MonadPlusLaws](#monadpluslaws).
-
-Back to [Sets](#sets)
-
-### Monad
-
-Back to [MonadPlus](#monadplus)
-
-```scala
-package specification
-
-trait Monad[UTC[_]] extends Triple[Function, UTC]:
-
-  // ...
-```
-
-`Monad` is a unary type constructor class for `UTC`.
-
-`Triple` is fully explained in [Triple](#triple).
-
-```scala
-  // ...
-
-  // defined
-
-  extension [Z, Y](utcz: UTC[Z])
-    def map(zφy: Function[Z, Y]): UTC[Y] = φ(zφy)(utcz)
-
-  extension [Z, Y](utcz: UTC[Z])
-    def flatMap(zφutcy: Function[Z, UTC[Y]]): UTC[Y] = μ(utcz map zφutcy)
-
-  // ...
-```
-
-`Monad` members are defined.
-
-`map` and `flatMap` support *powerful *`for`*-iteration notation*.
-
-See [flatmapthatshit](http://www.flatmapthatshit.com/).
-
-Back to [MonadPlus](#monadplus)
-
-### Plus
-
-Back to [MonadPlus](#monadplus)
-
-```scala
-package specification
-
-trait Plus[UTC[_]] extends UtcComposition[UTC], UtcUnit[UTC]:
-
-  // ...
-```
-
-`Plus` is a unary type constructor class for `UTC`.
-
-`UtcComposition` is fully explained in [UtcComposition](#utccomposition).
-
-`UtcUnit` is fully explained in [UtcUnit](#utcunit).
-
-The laws of `Plus`, `PlusLaws` are fully explained in [PlusLaws](#pluslaws).
-
-Back to [MonadPlus](#monadplus)
-
-### Triple
-
-Back to [Monad](#monad)
-
-```scala
-package specification
-
-trait Triple[BTC[_, _]: Category, UTC[_]]
-    extends Functor[BTC, BTC, UTC],
-      CompositionNaturalTransformation[BTC, UTC],
-      UnitNaturalTransformation[BTC, UTC]:
-
-  // ...
-```
-
-`Triple` is a unary type constructor class for `UTC`.
-
-`Triple` has a parameter `BTC` that is required to be a `Category` binary type constructor.
-
-`Category` is fully explained in [Category](#category).
-
-`Functor` is fully explained in [Functor](#functor).
-
-`CompositionNaturalTransformation` is fully explained in
-[CompositionNaturalTransformation](#compositionnaturaltransformation).
-
-`UnitNaturalTransformation` is fully explained in [UnitNaturalTransformation](#unitnaturaltransformation).
-
-```scala
-  // ...
-
-  // delegates
-
-  val c: Category[BTC] = summon[Category[BTC]]
-
-  // ...
-```
-
-`Triple` delegates are defined.
-
-The laws of `Triple`, `TripleLaws` are fully explained in [TripleLaws](#triplelaws).
-
-Back to [Monad](#monad)
-
-### UtcComposition
-
-Back to [Plus](#plus)
-
-```scala
-package specification
-
-trait UtcComposition[UTC[_]]:
-
-  // ...
-```
-
-`UtcComposition` is a unary type constructor class for `UTC`.
-
-```scala
-  // ...
-
-  // declared
-
-  extension [Z](lutc: UTC[Z]) def `+`(rutc: UTC[Z]): UTC[Z]
-
-  // ...
-```
-
-`UtcComposition` features are declared.
-
-The laws of `UtcComposition`, `UtcCompositionLaws` are fully explained in [UtcCompositionLaws](#utccompositionlaws).
-
-Back to [Plus](#plus)
-
-### UtcUnit
-
-Back to [Plus](#plus)
-
-```scala
-package specification
-
-trait UtcUnit[UTC[_]]:
-
-  // ...
-```
-
-`UtcUnit` is a unary type constructor class for `UTC`.
-
-```scala
-  // ...
-
-  // declared
-
-  def ζ[Z]: UTC[Z]
-```
-
-`UtcUnit` features are declared.
-
-Back to [Plus](#plus)
+Back to [type Composition](#compositiontype)
 
 ### Category
 
 Back to [Universe](#universe)
 
-Back to [Functor](#functor)
-
-Back to [ActionUpon](#actionupon)
-
-Back to [Triple](#triple)
-
-Back to [NaturalTransformation](#naturaltransformation)
-
-Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
-
 ```scala
 package specification
 
-trait Category[BTC[_, _]] extends BtcComposition[BTC], BtcUnit[BTC]:
-  // ...
-```
+import scala.collection.immutable.Seq
 
-`Category` is a binary type constructor class for parameter `BTC`.
-
-`BtcComposition` is fully explained in [BtcComposition](#btccomposition).
-
-`BtcUnit` is fully explained in [BtcUnit](#btcunit).
-
-`Category` *explicitly* denotes *the realm of all morphisms* of categories whose objects are sets that are implicitly
-denoted as types.
-
-The laws of `Category`, `CategoryLaws` are fully defined in [CategoryLaws](#categorylaws).
-
-Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
-
-Back to [NaturalTransformation](#naturaltransformation)
-
-Back to [Triple](#triple)
-
-Back to [ActionUpon](#actionupon)
-
-Back to [Functor](#functor)
-
-Back to [Universe](#universe)
-
-### BtcComposition
-
-Back to [Category](#category)
-
-```scala
-package specification
-
-trait BtcComposition[BTC[_, _]]:
-```
-
-`BtcComposition` is a binary type constructor class for parameter `BTC`.
-
-```scala
-  // declared
-
-  extension [Z, Y, X](yμx: BTC[Y, X]) def `o`(zμy: BTC[Z, Y]): BTC[Z, X]
-```
-
-`BtcComposition` features are declared.
-
-The laws of `BtcComposition`, `BtcCompositionLaws` are fully defined in [BtcCompositionLaws](#btccompositionlaws).
-
-Back to [Category](#category)
-
-### BtcUnit
-
-Back to [Category](#category)
-
-```scala
-package specification
-
-trait BtcUnit[BTC[_, _]]:
-
-  // ...
-
-```
-
-`BtcUnit` is a binary type constructor class for parameter `BTC`.
-
-```scala
-  // ...
-
-  // declared
-
-  def ι[Z]: BTC[Z, Z]
-
-```
-
-`BtcUnit` features are declared.
-
-Back to [Category](#category)
-
-### ActionUponFunction
-
-Back to [Universe](#universe)
-
-```scala
-package specification
-
-type ActionUponFunction = [BTC[_, _]] =>> ActionUpon[Function, BTC]
-```
-
-`ActionUpon` is fully explained in [ActionUpon](#actionupon).
-
-Back to [Universe](#universe)
-
-### ActionUpon
-
-Back to [ActionUponFunction](#actionuponfunction)
-
-Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
-
-```scala
-package specification
-
-trait ActionUpon[LBTC[_, _], RBTC[_, _]: Category]:
-
-  // ...
-```
-
-`ActionUpon` is a binary type constructor class for `LBTC`.
-
-`ActionUpon` has a parameter that is required to be a `Category`binary type constructor.
-
-`Category` is fully explained in [Category](#category).
-
-```scala
-  // ...
-
-  // declared
-
-  def actionFunctor[Z]: Functor[RBTC, Function, [Y] =>> LBTC[Z, Y]]
-
-  // ...
-```
-
-`ActionUpon` features are declared.
-
-```scala
-  // ...
+trait Category[Morphism[_, _]]
+    extends Composition[Morphism],
+      Identity[Morphism]:
 
   // defined
 
-  extension [Z, Y, X](lyμx: RBTC[Y, X])
-    def `a`(rzμy: LBTC[Z, Y]): LBTC[Z, X] = actionFunctor.φ(lyμx)(rzμy)
-
-  // ...
-```
-
-`ActionUpon` members are defined.
-
-`Functor` is fully explained in [Functor](#functor).
-
-Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation).
-
-Back to [ActionUponFunction](#actionuponfunction).
-
-### CompositionNaturalTransformation
-
-Back to [Triple](#triple)
-
-```scala
-package specification
-
-import types.{`o`}
-
-trait CompositionNaturalTransformation[
-    BTC[_, _]: Category,
-    UTC[_]: [_[_]] =>> Functor[BTC, BTC, UTC]
-]:
-
-  // ...
-```
-
-`` `o` `` is fully explained in [Types](#types).
-
-`CompositionNaturalTransformation` is a unary type constructor class for `UTC`.
-
-```scala
-  // ...
-
-  // declared
-
-  val compositionNaturalTransformation: NaturalTransformation[
-    BTC,
-    BTC,
-    UTC `o` UTC,
-    UTC
-  ]
-
-  // ...
-```
-
-`CompositionNaturalTransformation` features are declared.
-
-`NaturalTransformation` is fully explained in [NaturalTransformation](#naturaltransformation).
-
-```scala
-  // ...
-
-  // defined
-
-  def μ[Z]: BTC[(UTC `o` UTC)[Z], UTC[Z]] = compositionNaturalTransformation.τ
-
-```
-
-`CompositionNaturalTransformation` members are defined.
-
-Back to [Triple](#triple)
-
-### UnitNaturalTransformation
-
-Back to [Triple](#triple)
-
-```scala
-package specification
-
-import types.{U}
-
-trait UnitNaturalTransformation[
-    BTC[_, _]: Category,
-    UTC[_]: [_[_]] =>> Functor[BTC, BTC, UTC]
-]:
-```
-
-`U` is fully explained in [Types](#types).
-
-`UnitNaturalTransformation` is a unary type constructor class for `UTC`.
-
-```scala
-  // ...
-
-  // declared
-
-  val unitNaturalTransformation: NaturalTransformation[BTC, BTC, U, UTC]
-
-  // ...
-```
-
-`UnitNaturalTransformation` features are declared.
-
-`NaturalTransformation` is fully explained in [NaturalTransformation](#naturaltransformation).
-
-```scala
-  // ...
-
-  // defined
-
-  def ν[Z]: BTC[U[Z], UTC[Z]] = unitNaturalTransformation.τ
-```
-
-`UnitNaturalTransformation` members are defined.
-
-Back to [Triple](#triple)
-
-### NaturalTransformation
-
-Back to [CompositionNaturalTransformation](#compositionnaturaltransformation)
-
-Back to [UnitNaturalTransformation](#unitnaturaltransformation)
-
-```scala
-package specification
-
-trait NaturalTransformation[
-    FBTC[_, _],
-    TBTC[_, _]: Category,
-    FUTC[_]: [_[_]] =>> Functor[FBTC, TBTC, FUTC],
-    TUTC[_]: [_[_]] =>> Functor[FBTC, TBTC, TUTC]
-] extends Transformation[FBTC, TBTC, FUTC, TUTC]:
-
-  // ...
-```
-
-`NaturalTransformation` is a value class.
-
-`NaturalTransformation` has two parameters, `FBTC` and `TBTC` that are required to be `Category` binary type
-constructors.
-
-`NaturalTransformation` has two parameters, `FUTC` and `TUTC` that are required to be `Functor` unary type constructors.
-
-`Category` is fully explained in [Category](#category).
-
-`Functor` is fully explained in [Functor](#functor).
-
-`Transformation` is fully explained in [Transformation](#transformation).
-
-The laws of `NaturalTransformation`, `NaturalTransformationLaws` are fully defined in
-[NaturalTransformationLaws](#naturaltransformationlaws).
-
-Back to [UnitNaturalTransformation](#unitnaturaltransformation).
-
-Back to [CompositionNaturalTransformation](#compositionnaturaltransformation).
-
-### ActionUponNaturalTransformation
-
-```scala
-package specification
-
-trait ActionUponNaturalTransformation[
-    FBTC[_, _]: Category: [_[_, _]] =>> ActionUpon[FBTC, TBTC],
-    TBTC[_, _]: Category,
-    FUTC[_]: [_[_]] =>> Functor[TBTC, FBTC, FUTC],
-    TUTC[_]: [_[_]] =>> Functor[TBTC, TBTC, TUTC]
-] extends Transformation[TBTC, FBTC, FUTC, TUTC]:
-
-  // ...
-```
-
-`ActionUponNaturalTransformation` is a value class.
-
-`ActionUponNaturalTransformation` has a parameter, `FBTC` that is required to be `Category` binary type constructor and
-an `ActionUpon` binary type constructor.
-
-`ActionUponNaturalTransformation` has a parameter, `TBTC` that is required to be `Category` binary type constructor
-
-`NaturalTransformation` has two parameters, `FUTC` and `TUTC` that are required to be `Functor` unary type constructors.
-
-`Category` is fully explained in [Category](#category).
-
-`ActionUpon` is fully explained in [ActionUpon](#actionupon).
-
-`Functor` is fully explained in [Functor](#functor).
-
-`Transformation` is fully explained in [Transformation](#transformation).
-
-The laws of `ActedUpoNaturalTransformation`, `ActionUponNaturalTransformationLaws` are fully defined in
-[ActionUponNaturalTransformationLaws](#actionuponnaturaltransformationlaws).
-
-### Transformation
-
-Back to [PreThings](#prethings)
-
-Back to [NaturalTransformation](#naturaltransformation)
-
-Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
-
-```scala
-package specification
-
-trait Transformation[FBTC[_, _], TBTC[_, _], FUTC[_], TUTC[_]]:
-```
-
-`Transformation` is a value class.
-
-```scala
-  // declared
-
-  def τ[Z]: TBTC[FUTC[Z], TUTC[Z]]
-```
-
-`Transformation` features are declared.
-
-Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
-
-Back to [NaturalTransformation](#naturaltransformation)
-
-Back to [PreThings](#prethings)
-
-## Mathematical Foundations Domain: Laws
-
-### Law
-
-Back to [OrderedLaws](#orderedlaws)
-
-Back to [TotallyOrderedLaws](#totallyorderedlaws)
-
-Back to [EqualityLaws](#equalitylaws)
-
-```scala
-package specification
-
-trait Law[UTC[_]]:
-
-  // ...
-```
-
-`Law` is a unary type constructor class for parameter `UTC`.
-
-
-```scala
-  // ...
-
-  // declared
-
-  extension [Z, Y](lly: UTC[Y]) def `=>`(rlz: UTC[Z]): UTC[Z]
-
-  extension [Z](l: Z) def `=`(r: Z): UTC[Z]
-
-  extension [Z](ll: UTC[Z]) def `&`(rl: UTC[Z]): UTC[Z]
-
-  extension [Z](ll: UTC[Z]) def `|`(rl: UTC[Z]): UTC[Z]
-```
-
-`Law` features are declared.
-
-Laws are *conditional* *equational* laws with *conjunction* and *disjunction*.
-
-Back to [EqualityLaws](#equalitylaws)
-
-Back to [TotallyOrderedLaws](#totallyorderedlaws)
-
-Back to [OrderedLaws](#orderedlaws)
-
-### OrderedLaws
-
-Back to [Ordered](#ordered)
-
-```scala
-  // ...
-
-  // laws
-
-  trait OrderedLaws[L[_]: Law]:
-
-    val reflexive: T => L[Boolean] = t =>
-      {
-        t `<=` t
-      } `=` {
-        true
-      }
-
-    val antiSymmetric: T => T => L[Boolean] = lt =>
-      rt =>
-        {
-          lt `<=` rt `=` true `&` rt `<=` lt `=` true
-        } `=>` {
-          lt `=` rt `=` true
-        }
-
-    val transitive: T => T => T => L[Boolean] = lt =>
-      mm =>
-        rt =>
-          {
-            lt `<=` mm `=` true `&` mm `<=` rt `=` true
-          } `=>` {
-            lt `<=` rt `=` true
-          }
-```
-
-Hopefully the laws do not surprise you.
-
-Anyway, see, for example, [Partially ordered sets](https://en.wikipedia.org/wiki/Partially_ordered_set).
-
-`Law` is fully explained in [Law](#law).
-
-Back to [Ordered](#ordered)
-
-### TotallyOrderedLaws
-
-Back to [Ordered](#ordered)
-
-```scala
-  // ...
-
-  // laws
-
-  trait TotallyOrderedLaws[L[_]: Law]:
-
-    val stronglyConnected: T => T => L[Boolean] = lt =>
-      rt =>
-        {
-          lt `<=` rt `|` rt `<=` lt
-        } `=` {
-          true
-        }
-```
-
-Hopefully the laws do not surprise you.
-
-Anyway, see, for example, [Total order](https://en.wikipedia.org/wiki/Total_order) for more details.
-
-`Law` is fully explained in [Law](#law).
-
-Back to [Ordered](#ordered)
-
-### EqualityLaws
-
-Back to [Equality](#equality)
-
-```scala
-  // ...
-
-  // laws
-
-  trait EqualityLaws[L[_]: Law]:
-
-    val reflexive: T => L[Boolean] = t =>
-      {
-        t `=` t
-      } `=` {
-        true
-      }
-
-    val symmetric: T => T => L[Boolean] = lt =>
-      rt =>
-        {
-          lt `=` rt `=` true
-        } `=>` {
-          rt `=` lt `=` true
-        }
-
-    val transitive: T => T => T => L[Boolean] = lt =>
-      mm =>
-        rt =>
-          {
-            lt `=` mm `=` true `&` mm `=` rt `=` true
-          } `=>` {
-            lt `=` rt `=` true
-          }
-```
-
-Hopefully the laws do not surprise you.
-
-`Law` is fully explained in [Law](#law).
-
-Back to [Equality](#equality)
-
-### MeetLaws
-
-Back to [Meet](#meet)
-
-```scala
-  // ...
-
-  // laws
-
-  trait MeetLaws[L[_]: Law]:
-
-    val at = summon[Arbitrary[T]].arbitrary
-
-    val greatestSmallerThanBoth: T => T => L[Boolean] =
-      lt =>
-        rt =>
-          {
-            ((lt ∧ rt) `<=` lt) `=` true `&` ((lt ∧ rt) `<=` rt) `=` true
-          } `&` {
-            (at `<=` lt) `=` true `&` (at `<=` rt) `=` true
-          } `=>` {
-            at `<=` (lt ∧ rt) `=` true
-          }
-```
-
-Hopefully the laws do not surprise you.
-
-Anyway, see, for example, [Meet](https://en.wikipedia.org/wiki/Join_and_meet).
-
-Back to [Meet](#meet)
-
-### JoinLaws
-
-```scala
-  // ...
-
-  // laws
-
-  trait JoinLaws[L[_]: Law]:
-
-    val at = summon[Arbitrary[T]].arbitrary
-
-    val smallestGreaterThanBoth: T => T => L[Boolean] =
-      lt =>
-        rt =>
-          {
-            (lt `<=` (lt ∨ rt)) `=` true `&` (rt `<=` (lt ∨ rt)) `=` true
-          } `&` {
-            (lt `<=` at) `=` true `&` (rt `<=` at) `=` true
-          } `=>` {
-            (lt ∨ rt) `<=` at `=` true
-          }
-```
-
-Hopefully the laws do not surprise you.
-
-Anyway, see, for example, [Join](https://en.wikipedia.org/wiki/Join_and_meet).
-
-Back to [Join](#join)
-
-### SupremumLaws
-
-Back to [Supremum](#supremum)
-
-
-```scala
-  // ...
-
-  // laws
-
-  trait SupremumLaws[L[_]: Law]:
-
-    val sets: Sets[Set] = summon[Sets[Set]]
-
-    import sets.{map, all}
-
-    val at = summon[Arbitrary[T]].arbitrary
-
-    val smallestGreaterThanAll: Set[T] => L[Boolean] =
-      ts =>
-        {
-          all apply {
-            for {
-              t <- ts
-            } yield t `<=` sup(ts) `=` true
-          }
-        } `&` {
-          all apply {
-            for {
-              t <- ts
-            } yield t `<=` at `=` true
-          }
-        } `=>` {
-          sup(ts) `<=` at `=` true
-        }
-
-    given join: Join[T]
-
-    val joinAsSupremum: Tuple2[T, T] => L[T] =
-      val sets = summon[Sets[Set]]
-      import sets.{set2}
-      (lt, rt) =>
-        {
-          sup(set2(lt, rt))
-        } `=` {
-          lt ∨ rt
-        }
-```
-
-Hopefully the laws do not surprise you.
-
-Anyway, see, for example, [Supremum](https://en.wikipedia.org/wiki/Join_and_meet).
-
-Back to [Supremum](#supremum)
-
-### SetsLaws
-
-Back to [Sets](#sets)
-
-```scala
-
-  // ...
-
-  // laws
-
-  trait SetsLaws[L[_]: Law]:
-
-    trait Set2Related:
-
-      def unordered[Z]: Tuple2[Z, Z] => L[Set2[Z]] =
-        (l, r) =>
-          {
-            set2(l, r)
-          } `=` {
-            set2(r, l)
-          }
-
-      import implementation.{functionCategory}
-
-      def iso2[Z]: L[Function[Tuple2[Z, Z], Tuple2[Z, Z]]] = {
-        identity[Tuple2[Z, Z]]
-      } `=` {
-        tuple2 `o` set2
-      }
-
-      def osi2[Z]: L[Function[Set2[Z], Set2[Z]]] = {
-        identity[Set2[Z]]
-      } `=` {
-        set2 `o` tuple2
-      }
-
-    trait EqualityRelated:
-
-      def reflexive[Z]: Set[Z] => L[Boolean] = s =>
-        {
-          s `=s=` s
-        } `=` {
-          true
-        }
-
-      def symmetric[Z]: Set[Z] => Set[Z] => L[Boolean] =
-        l =>
-          r =>
-            {
-              l `=s=` r `=` true
-            } `=>` {
-              r `=s=` l `=` true
-            }
-
-      def transitive[Z]: Set[Z] => Set[Z] => Set[Z] => L[Boolean] =
-        l =>
-          m =>
-            r =>
-              {
-                { l `=s=` m `=` true } `&` { m `=s=` r `=` true }
-              } `=>` {
-                l `=s=` r `=` true
-              }
-
-    trait OrderedRelated:
-
-      def reflexive[Z]: Set[Z] => L[Boolean] = s =>
-        {
-          s `<=s<=` s
-        } `=` {
-          true
-        }
-
-      def antiSymmetric[Z]: Set[Z] => Set[Z] => L[Boolean] =
-        l =>
-          r =>
-            {
-              { l `<=s<=` r } `=` true `&` { r `<=s<=` l } `=` true
-            } `=>` {
-              l `=s=` r `=` true
-            }
-
-      def transitive[Z]: Set[Z] => Set[Z] => Set[Z] => L[Boolean] =
-        l =>
-          m =>
-            r =>
-              {
-                { l `<=s<=` m } `=` true `&` { m `<=s<=` r } `=` true
-              } `=>` {
-                { l `<=s<=` r } `=` true
-              }
-```
-
-Hopefully the laws do not surprise you.
-
-`Law` is fully explained in [Law](#law).
-
-Back to [Sets](#sets)
-
-### FunctorLaws
-
-Back to [Functor](#functor)
-
-```scala
-  // ...
-
-  // laws
-
-  trait FunctorLaws[L[_]: Law]:
-
-    def identity[Z]: L[TBTC[UTC[Z], UTC[Z]]] =
-      val fbtc = summon[Category[FBTC]]
-      val tbtc = summon[Category[TBTC]]
-      φ(fbtc.ι[Z]) `=` tbtc.ι[UTC[Z]]
-
-    def composition[Z, Y, X]
-        : FBTC[Z, Y] => FBTC[Y, X] => L[TBTC[UTC[Z], UTC[X]]] =
-      fzμy =>
-        fyμx =>
-          {
-            φ(fyμx `o` fzμy)
-          } `=` {
-            φ(fyμx) `o` φ(fzμy)
-          }
-```
-
-Hopefully the laws do not surprise you.
-
-Anyway, see, for example, [Functor](https://en.wikipedia.org/wiki/Functor).
-
-Back to [Functor](#functor)
-
-### MonadPlusLaws
-
-Back to [MonadPlus](#monadplus)
-
-```scala
-  // ...
-
-  // laws
-
-  trait MonadPlusLaws[L[_]: Law]:
-
-    def mappingOverZero[Z, Y]: Function[Z, Y] => L[UTC[Y]] =
-      zφy =>
-        {
-          for {
-            z <- ζ[Z]
-          } yield {
-            zφy(z)
-          }
-        } `=` {
-          ζ
-        }
-
-    def mappingOverPlus[Z, Y]: Function[Z, Y] => UTC[Z] => UTC[Z] => L[UTC[Y]] =
-      zφy =>
-        lutc =>
-          rutc =>
-            {
-              for {
-                z <- lutc `+` rutc
-              } yield {
-                zφy(z)
-              }
-            } `=` {
-              {
-                for {
-                  lz <- lutc
-                } yield {
-                  zφy(lz)
-                }
-              } `+` {
-                for {
-                  lz <- rutc
-                } yield {
-                  zφy(lz)
-                }
-              }
-            }
-
-    def flatMappingWithIdentityOverZero[Z]: L[UTC[Z]] = {
-      for {
-        utcz <- ζ[UTC[Z]]
-        z <- utcz
-      } yield {
-        identity(z)
-      }
-    } `=` {
-      ζ
-    }
-
-    def flatMappingWithPlus[Z]: UTC[UTC[Z]] => UTC[UTC[Z]] => L[UTC[UTC[Z]]] =
-      lutcutcz =>
-        rutcutcz =>
-          {
-            for {
-              lutcz <- lutcutcz
-              rutcz <- rutcutcz
-            } yield {
-              lutcz `+` rutcz
-            }
-          } `=` {
-            lutcutcz `+` rutcutcz
-          }
-```
-
-Hopefully the laws do not surprise you.
-
-Anyway, see, for example, [Monad](https://en.wikipedia.org/wiki/Monad_(functional_programming))
-
-Back to [MonadPlus](#monadplus)
-
-### PlusLaws
-
-Back to [Plus](#plus)
-
-```scala
-  // ...
-
-  // laws
-
-  trait PlusLaws[L[_]: Law]:
-
-    def leftZero[Z]: UTC[Z] => L[UTC[Z]] =
-      utc =>
-        {
-          ζ `+` utc
-        } `=` {
-          utc
-        }
-
-    def rightZero[Z]: UTC[Z] => L[UTC[Z]] =
-      utc =>
-        {
-          utc `+` ζ
-        } `=` {
-          utc
-        }
-```
-
-Hopefully the laws do not surprise you.
-
-Anyway, see, for example, [Monad](https://en.wikipedia.org/wiki/Monad_(functional_programming))
-
-Back to [Plus](#plus)
-
-### TripleLaws
-
-Back to [Triple](#triple)
-
-```scala
-  // ...
-
-  // laws
-
-  import specification.{Law}
-
-  trait TripleLaws[L[_]: Law]:
-
-    import types.{`o`}
-
-    import c.{ι}
-
-    def associativity[Z]: L[BTC[(UTC `o` UTC `o` UTC)[Z], UTC[Z]]] = {
-      μ `o` μ
-    } `=` {
-      μ `o` φ(μ)
-    }
-
-    def leftIdentity[Z]: L[BTC[UTC[Z], UTC[Z]]] = {
-      μ `o` ν
-    } `=` {
-      ι
-    }
-
-    def rightIdentity[Z]: L[BTC[UTC[Z], UTC[Z]]] = {
-      μ `o` φ(ν)
-    } `=` {
-      ι
-    }
-```
-
-`` `o` `` is fully explained in [Types](#types).
-
-Hopefully the requirements do not surprise you.
-
-Anyway, see, for example, [Monad (category theory)](https://en.wikipedia.org/wiki/Monad_(category_theory)) for more
-details.
-
-Back to [Triple](#triple)
-
-### UtcCompositionLaws
-
-Back to [UtcComposition](#utccomposition)
-
-```scala
-   // ...
-
-  // laws
-
-  trait UtcCompositionLaws[L[_]: Law]:
-
-    def associativity[Z]: UTC[Z] => UTC[Z] => UTC[Z] => L[UTC[Z]] =
-      lutc =>
-        mutc =>
-          rutc =>
-            {
-              (lutc `+` mutc) `+` rutc
-            } `=` {
-              lutc `+` (mutc `+` rutc)
-            }
-```
-
-Back to [UtcComposition](#utccomposition)
-
-### CategoryLaws
-
-Back to [Category](#category)
-
-```scala
-  // ...
+  def composeAll[Z]: Function[Seq[Transition[Z]], Transition[Z]] =
+    zτs => zτs composeAllWith ι
 
   // laws
 
   trait CategoryLaws[L[_]: Law]:
 
-    def leftIdentity[Z, Y]: BTC[Z, Y] => L[BTC[Z, Y]] = zμy =>
+    def leftIdentity[Z, Y]: Morphism[Z, Y] => L[Morphism[Z, Y]] = zμy =>
       {
-        ι `o` zμy
+        ι o zμy
       } `=` {
         zμy
       }
 
-    def rightIdentity[Z, Y]: BTC[Z, Y] => L[BTC[Z, Y]] = zμy =>
-      {
-        zμy `o` ι
-      } `=` {
-        zμy
-      }
+    def rightIdentity[Z, Y]: Morphism[Z, Y] => L[Morphism[Z, Y]] =
+      zμy =>
+        {
+          zμy o ι
+        } `=` {
+          zμy
+        }
 ```
 
-Hopefully the laws do not surprise you.
+`Category` is a binary type constructor class for parameter `Morphism`.
 
-Anyway, see, for example, [Category](https://en.wikipedia.org/wiki/Category).
+Sequences of transitions can all be composed. 
+
+`Composition` is explained in [Composition](#composition) 
+
+`Identity` is explained in [Identity](#identity)
+
+See, for example, [Category](https://en.wikipedia.org/wiki/Category).
+
+`Law` is explained in [Law](#law).
+
+Back to [Universe](#universe)
+
+### Action
+
+Back to [Universe](#universe)
+
+```scala
+package specification
+
+import scala.collection.immutable.Seq
+
+trait Action[ActorMorphism[_, _]: Category, Morphism[_, _]: Category]:
+
+  // declared
+
+  def actionFunctor[Z]: Functor[ActorMorphism, Function, [Y] =>> Morphism[Z, Y]]
+
+  // defined
+
+  extension [Z, Y, X](yμx: ActorMorphism[Y, X])
+    def a(zμy: Morphism[Z, Y]): Morphism[Z, X] =
+      actionFunctor.φ(yμx)(zμy)
+
+  type ActorTransition = [Z] =>> ActorMorphism[Z, Z]
+
+  extension [Z, Y, X](τys: Seq[ActorTransition[Y]])
+    def allActUpon(zμy: Morphism[Z, Y]): Morphism[Z, Y] =
+      τys.foldRight(zμy)(_ a _)
+```
+
+`Action` is a binary type constructor class for parameter `ActorMorphism` that is required to be a `Category` binary
+type constructor.
+
+`Action` has a parameter `Morphism` that is required to be a `Category` binary type constructor.
+
+`Category` is explained in [Category](#category).
+
+`actionFunctor[Z]`s come with functions `φ[Y, X]` from actor morphisms of type `ActorMorphism[Y, X]` to morphism
+functions of type `Function[Morphism[Z, X], Morphism[Z, Y]]`.
+
+In particular they come with functions `φ[Z, Z]` from actor transitions of type `ActorTransition[Y]` to morphism
+functions of type `Function[Morphism[Z, Y], Morphism[Z, Y]]`.
+
+Sequences of actor transitions can act upon a morphism. 
+
+`Functor` is explained in [Functor](#functor).
+
+Back to [Universe](#universe)
+
+### Composition
 
 Back to [Category](#category)
 
-### BtcCompositionLaws
-
-Back to [BtcComposition](#btccomposition)
-
 ```scala
-  // ...
+trait Composition[Morphism[_, _]]:
+
+  // declared
+
+  extension [Z, Y, X](yμx: Morphism[Y, X])
+    def o(zμy: Morphism[Z, Y]): Morphism[Z, X] 
+
+  // defined
+
+  type Transition = [Z] =>> Morphism[Z, Z]
+
+  type Transition = [Z] =>> Morphism[Z, Z]
+
+  extension [Z, Y, X](zτs: Seq[Transition[Z]])
+    def composeAllWith(zτ: Transition[Z]): Transition[Z] =
+      zτs.foldRight(zτ)(_ o _)   
 
   // laws
 
   trait CompositionLaws[L[_]: Law]:
 
     def associativity[Z, Y, X, W]
-        : BTC[X, W] => BTC[Y, X] => BTC[Z, Y] => L[BTC[Z, W]] =
-      xμw =>
+        : Morphism[Z, Y] => Morphism[Y, X] => Morphism[X, W] => L[
+          Morphism[Z, W]
+        ] =
+      zμy =>
         yμx =>
-          zμy =>
+          xμw =>
             {
-              (xμw `o` yμx) `o` zμy
+              (xμw o yμx) o zμy
             } `=` {
-              xμw `o` (yμx `o` zμy)
+              xμw o (yμx o zμy)
             }
 ```
 
-Hopefully the laws do not surprise you.
+`Composition` is a binary type constructor class for parameter `Morphism`.
 
-Anyway, see, for example, [Category](https://en.wikipedia.org/wiki/Category).
+Morphisms of type `Morphism[Z, Y]` denote morphisms from homogeneous sets `Z` to homogeneous sets `Y`.
 
-Back to [BtcComposition](#btccomposition)
+Morphisms of type `Morphism[Z, Y]` change the type of elements if `Z` and `Y` are different types. 
 
-### NaturalTransformationLaws
+Transitions of type `Transition[Z]`, do not change the type of elements.
 
-Back to [NaturalTransformation](#naturaltransformation)
+Sequences of transitions can all be composed with a transition.
+
+`Composition` is an example of functionality-like compositionality.
+
+`Law` is explained in [Law](#law).
+
+Back to [Category](#category)
+
+### Identity
+
+Back to [Category](#category)
 
 ```scala
+package specification
+
+trait Identity[Morphism[_, _]]:
+
+  // declared
+
+  def ι[Z]: Morphism[Z, Z]
+```
+
+`Identity` is a binary type constructor class for parameter `Morphism`.
+
+Back to [Category](#category)
+
+### Isomorphism
+
+Back to [OneToOne](#onetoone)
+
+```scala
+package specification
+
+trait Isomorphism[Morphism[_, _]: Category, Z, Y]:
+
+  val from: Morphism[Z, Y]
+
+  val to: Morphism[Y, Z]
+
   // laws
 
-  trait EqualityNaturalTransformationLaws[L[_]: Law](
-      transformation: Transformation[FBTC, TBTC, FUTC, TUTC]
-  ):
+  trait IsomorphismLaws[L[_]: Law]:
 
-    val futc = summon[Functor[FBTC, TBTC, FUTC]]
+    val category = summon[Category[Morphism]]
 
-    val tutc = summon[Functor[FBTC, TBTC, TUTC]]
+    import category.{ι}
 
-    def natural[Z, Y](using
-        equality: Equality[TBTC[FUTC[Z], TUTC[Y]]]
-    ): FBTC[Z, Y] => L[Boolean] =
-      fzφy =>
-        {
+    val fromLaw: L[Morphism[Z, Z]] = {
+      to o from
+    } `=` {
+      ι
+    }
+
+    val toLaw: L[Morphism[Y, Y]] = {
+      from o to
+    } `=` {
+      ι
+    }
+```
+
+Back to [OneToOne](#onetoone)
+
+### Functor
+
+Back to [Action](#action)
+
+Back to [PreThings](#prethings)
+
+```scala
+package specification
+
+trait Functor[
+    FromMorphism[_, _]: Category,
+    ToMorphism[_, _]: Category,
+    Morphed[_]
+]:
+
+  // declared
+
+  def φ[Z, Y]: Function[
+    FromMorphism[Z, Y],
+    ToMorphism[Morphed[Z], Morphed[Y]]
+  ]
+
+  // defined
+
+  type FromTransition = [Z] =>> FromMorphism[Z, Z]
+
+  type ToTransition = [Z] =>> ToMorphism[Z, Z]
+
+  // laws
+
+  trait FunctorLaws[L[_]: Law]:
+
+    def identity[Z]: L[ToMorphism[Morphed[Z], Morphed[Z]]] =
+      val fm = summon[Category[FromMorphism]]
+      val tm = summon[Category[ToMorphism]]
+      φ(fm.ι) `=` tm.ι
+
+    def composition[Z, Y, X]: FromMorphism[Z, Y] => FromMorphism[Y, X] => L[
+      ToMorphism[Morphed[Z], Morphed[X]]
+    ] =
+      fzμy =>
+        fyμx =>
           {
-            transformation.τ `o` futc.φ(fzφy)
+            φ(fyμx o fzμy)
           } `=` {
-            tutc.φ(fzφy) `o` transformation.τ
+            φ(fyμx) o φ(fzμy)
           }
-        } `=` {
-          true
-        }
-
-  trait OrderedNaturalTransformationLaws[L[_]: Law](
-      transformation: Transformation[FBTC, TBTC, FUTC, TUTC]
-  ):
-
-    val futc = summon[Functor[FBTC, TBTC, FUTC]]
-
-    val tutc = summon[Functor[FBTC, TBTC, TUTC]]
-
-    def natural[Z, Y](using
-        ordered: Ordered[TBTC[FUTC[Z], TUTC[Y]]]
-    ): FBTC[Z, Y] => L[Boolean] =
-      fzφy =>
-        {
-          {
-            transformation.τ `o` futc.φ(fzφy)
-          }
-        } `<=` {
-          {
-            tutc.φ(fzφy) `o` transformation.τ
-          }
-        } `=` {
-          true
-        }
 ```
 
-Hopefully the laws do not surprise you.
+`Functor` is a unary type constructor class for parameter `Morphed`.
 
-Anyway, see, for example, [Natural Transformation](https://en.wikipedia.org/wiki/Natural_transformation).
+`Functor` has two parameters `FromMorphism` and `ToMorphism` that are required to be `Category` binary type
+constructors.
 
-Back to [BtcComposition](#btccomposition)
+`Category` is explained in [Category](#category).
 
-Back to [NaturalTransformation](#naturaltransformation)
+Types `Morphed[Z]`, corresponding to types `Z`, come with functions `φ[Z, Y]` from morphisms of type
+`FromMorphism[Z, Y]` to morphisms of type `ToMorphism[Morphed[Z], Morphed[Y]]`.
 
-### ActionUponNaturalTransformationLaws
+In particular they come with functions `φ[Z, Z]` from transitions of type `FromTransition[Z]` to transitions of type
+`ToTransition[Morphed[Z]`.
 
-Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
+See, for example, [Functor](https://en.wikipedia.org/wiki/Functor).
+
+`Law` is explained in [Law](#law).
+
+Back to [PreThings](#prethings)
+
+Back to [Action](#action)
+
+### FunctorTransformation
+
+Back to [PreThings](#prethings)
 
 ```scala
-  // ...
+package specification
 
-  // laws
+trait FunctorTransformation[
+    FromMorphism[_, _]: Category,
+    ToMorphism[_, _]: Category,
+    FromMorphed[_]: [_[_]] =>> Functor[
+      FromMorphism,
+      ToMorphism,
+      FromMorphed
+    ],
+    ToMorphed[_]: [_[_]] =>> Functor[
+      FromMorphism,
+      ToMorphism,
+      ToMorphed
+    ]
+]:
 
-  trait ActionUponNaturalTransformationLaws[L[_]: Law](
-      transformation: NaturalTransformation[RBTC, LBTC, FUTC, TUTC]
-  ):
+  // declared
 
-    val futc = summon[Functor[RBTC, LBTC, FUTC]]
+  def φτ[Z]: ToMorphism[FromMorphed[Z], ToMorphed[Z]]
 
-    val tutc = summon[Functor[RBTC, RBTC, TUTC]]
+// laws
 
-    def natural[Z, Y]: RBTC[Z, Y] => L[LBTC[FUTC[Z], TUTC[Y]]] =
-      fzφy =>
+class FunctorTransformationLawsFor[
+    FromMorphism[_, _]: Category,
+    ToMorphism[_, _]: Category,
+    FromMorphed[_]: [_[_]] =>> Functor[
+      FromMorphism,
+      ToMorphism,
+      FromMorphed
+    ],
+    ToMorphed[_]: [_[_]] =>> Functor[
+      FromMorphism,
+      ToMorphism,
+      ToMorphed
+    ],
+    L[_]: Law
+](
+    t: FunctorTransformation[
+      FromMorphism,
+      ToMorphism,
+      FromMorphed,
+      ToMorphed
+    ]
+):
+
+  val f_fmΦtm = summon[Functor[FromMorphism, ToMorphism, FromMorphed]]
+
+  val t_fmΦtm = summon[Functor[FromMorphism, ToMorphism, ToMorphed]]
+
+  import t.{φτ}
+
+  def orderedNatural[
+      Z,
+      Y: [_] =>> Ordered[
+        ToMorphism[FromMorphed[Z], ToMorphed[Y]]
+      ]
+  ]: FromMorphism[Z, Y] => L[Boolean] =
+    fzμy =>
+      {
         {
-          transformation.τ `o` futc.φ(fzφy)
-        } `=` {
-          tutc.φ(fzφy) `a` transformation.τ
+          φτ o f_fmΦtm.φ(fzμy)
+        } <= {
+          t_fmΦtm.φ(fzμy) o φτ
         }
+      } `=` {
+        true
+      }
 ```
 
-Back to [ActionUponNaturalTransformation](#actionuponnaturaltransformation)
+`FunctorTransformation` is a value class.
+
+`orderedNatural` is a kind of natural transformation law with `==` replaced by `<=`.
+
+Back to [PreThings](#prethings)
+
+### ActorTransformation
+
+Back to [PreThings](#prethings)
+
+```scala
+package specification
+
+trait ActorTransformation[
+    ActorMorphism[_, _]: Category: [_[_, _]] =>> Action[
+      ActorMorphism,
+      UponMorphism
+    ],
+    UponMorphism[_, _]: Category,
+    UponMorphed[_]: [_[_]] =>> Functor[
+      ActorMorphism,
+      UponMorphism,
+      UponMorphed
+    ],
+    ActorMorphed[_]: [_[_]] =>> Functor[
+      ActorMorphism,
+      ActorMorphism,
+      ActorMorphed
+    ]
+]:
+
+  // declared
+
+  def ατ[Z]: UponMorphism[UponMorphed[Z], ActorMorphed[Z]]
+
+  // defined
+
+  val amΦum = summon[Functor[ActorMorphism, UponMorphism, UponMorphed]]
+
+  extension [Z, Y](
+      amΦam: Functor[ActorMorphism, ActorMorphism, ActorMorphed]
+  )
+    def isNaturalFor(zμy: ActorMorphism[Z, Y]): Boolean = {
+      ατ o amΦum.φ(zμy)
+    } == {
+      amΦam.φ(zμy) a ατ
+    }
+```
+
+`ActorTransformation` is a value class.
+
+`isNaturalFor` is defined using a kind of natural transformation law with a composition `o` replaced by an action `a`.
+
+Back to [PreThings](#prethings)
+
+### Limit
+
+Back to [type Composition](#compositiontype)
+
+```scala
+package specification
+
+import implementation.{functionCategory}
+
+case class Limit[
+    Morphed[_]: [_[_]] =>> Functor[Function, Function, Morphed]
+](clc: Morphed[Limit[Morphed]]) 
+
+def limit[
+    Morphed[_]: [_[_]] =>> Functor[Function, Function, Morphed],
+    Z
+]: (Morphed[Z] => Z) => (Limit[Morphed] => Z) =
+  val fΦf = summon[Functor[Function, Function, Morphed]]
+  zcφz => cl => (zcφz o fΦf.φ(limit apply zcφz))(cl.clc)
+```
+
+`functionCategory` is explained in 
+
+`Limit` denotes general information-like recursion.
+
+`limit` denotes general functionality-like recursion.
+
+Back to [type Composition](#compositiontype)
 
 ## Mathematical Foundations Domain: Implementations
-
-### functionValuedFunctor2
-
-Back to [PreThings](#prethings)
-
-```scala
-package implementation
-
-import specification.{Sets, Category, Functor}
-
-given functionValuedFunctor2[
-    Set[_]: Sets,
-    BTC[_, _]: Category,
-    UTC1[_]: [_[_]] =>> Functor[BTC, Function, UTC1]
-]: Functor[
-  BTC,
-  Function,
-  [Z] =>> Set[UTC1[Z]]
-] with
-
-  val sets: Sets[Set] = summon[Sets[Set]]
-
-  val btcToFunctionFunctor = summon[Functor[BTC, Function, UTC1]]
-
-  import types.{`o`}
-
-  import sets.{Set2, tuple2, set2}
-
-  type UTC2 = [Z] =>> (Set2 `o` UTC1)[Z]
-  def φ[Z, Y]: BTC[Z, Y] => Function[UTC2[Z], UTC2[Y]] =
-    zμy =>
-      val zφy = btcToFunctionFunctor.φ(zμy)
-      d =>
-        tuple2(d) match
-          case (l, r) => set2(zφy(l), zφy(r))
-```
-
-Back to [PreThings](#prethings)
-
-### orderedCategory
-
-Back to [PreThings](#prethings)
-
-```scala
-package implementation
-
-import specification.{Arbitrary, Ordered, Sets, Category}
-
-given orderedCategory[Set[_]: Sets, T: Arbitrary: Ordered]
-    : Category[[_, _] =>> Tuple2[T, T]] with
-
-  type BTC = [_, _] =>> Tuple2[T, T]
-
-  extension [Z, Y, X](yμx: BTC[Y, X])
-    def `o`(zμy: BTC[Z, Y]): BTC[Z, X] =
-      (yμx, zμy) match
-        case ((llt, lrt), (rlt, rrt)) =>
-          require(llt `<=` lrt && lrt == rlt && rlt `<=` rrt)
-          (llt, rrt)
-
-  def ι[Z]: BTC[Z, Z] =
-    val at = summon[Arbitrary[T]].arbitrary
-    (at, at)
-```
-
-Back to [PreThings](#prethings)
 
 ### functionCategory
 
 Back to [PreThings](#prethings)
 
+Back to [Limit](#limit)
+
 ```scala
 package implementation
 
-import specification.{Category, ActionUponFunction, Functor}
+import specification.{Category}
 
 given functionCategory: Category[Function] with
 
-  type BTC = [Z, Y] =>> Function[Z, Y]
+  type Morphism = [Z, Y] =>> Function[Z, Y]
 
-  extension [Z, Y, X](yμx: BTC[Y, X])
-    def `o`(zμy: BTC[Z, Y]): BTC[Z, X] = z => yμx(zμy(z))
+  extension [Z, Y, X](yμx: Morphism[Y, X])
+    def o(zμy: Morphism[Z, Y]): Morphism[Z, X] = z => yμx(zμy(z))
 
-  def ι[Z]: BTC[Z, Z] = z => z
+  def ι[Z]: Morphism[Z, Z] = z => z
+```
 
-given functionFunctionActionUpon: ActionUponFunction[Function] with
+Back to [Limit](#limit)
 
-  type BTC = [Z, Y] =>> Function[Z, Y]
+Back to [PreThings](#prethings)
 
-  def actionFunctor[Z]: Functor[BTC, Function, [Y] =>> Function[Z, Y]] =
-    new:
-      def φ[Y, X]: Function[
-        BTC[Y, X],
-        Function[Function[Z, Y], Function[Z, X]]
-      ] = yμx => zμy => yμx `o` zμy
+### setOrdered
+
+Back to [PreThings](#prethings)
+
+```scala
+package implementation
+
+import specification.{Ordered}
+
+given setOrdered[Z]: Ordered[Set[Z]] with
+
+  extension (lzs: Set[Z]) def `=`(rzs: Set[Z]): Boolean = lzs == rzs
+
+  extension (lzs: Set[Z]) def <(rzs: Set[Z]): Boolean = 
+    (lzs subsetOf rzs) && (lzs != rzs)
 ```
 
 Back to [PreThings](#prethings)
 
-### composedFunctor
+### compositionEnumFunctionFunctor
 
-Back to [PreThingsLaws](#prethingslaws)
-
-```scala
-package implementation
-
-import specification.{Category, Functor}
-
-import types.{`o`}
-
-given composedFunctor[
-    FBTC[_, _]: Category,
-    MBTC[_, _]: Category,
-    TBTC[_, _]: Category,
-    F2MUTC[_]: [_[_]] =>> Functor[FBTC, MBTC, F2MUTC],
-    M2TUTC[_]: [_[_]] =>> Functor[MBTC, TBTC, M2TUTC]
-]: Functor[FBTC, TBTC, M2TUTC `o` F2MUTC] with
-
-  type UTC = [Z] =>> (M2TUTC `o` F2MUTC)[Z]
-
-  def φ[Z, Y]: Function[FBTC[Z, Y], TBTC[UTC[Z], UTC[Y]]] =
-    summon[Functor[MBTC, TBTC, M2TUTC]].φ `o`
-      summon[Functor[FBTC, MBTC, F2MUTC]].φ
-```
-
-Back to [PreThingsLaws](#prethingslaws)
-
-### functionTargetOrdered
-
-Back to [PreThingsLaws](#prethingslaws)
+Back to [CompositionUtilities](#compositionutilities)
 
 ```scala
 package implementation
 
-import specification.{Arbitrary, Ordered}
+import types.{CompositionEnum}
 
-given functionTargetOrdered[Z: Arbitrary, Y: Ordered]: Ordered[Function[Z, Y]]
-with
+import specification.{Functor}
 
-  val az: Z = summon[Arbitrary[Z]].arbitrary
-
-  val ordered: Ordered[Y] = summon[Ordered[Y]]
-
-  import ordered.{`=` => `=t=`, `<` => `<t<`}
-
-  type T = Function[Z, Y]
-
-  extension (lt: T) def `=`(rt: T): Boolean = lt(az) `=t=` rt(az)
-
-  extension (lt: T) def `<`(rt: T): Boolean = lt(az) `<t<` rt(az)
+given compositionEnumFunctionFunctor[X]
+    : Functor[Function, Function, [O] =>> CompositionEnum[X, O]] with
+  def φ[Z, Y]: Function[Z, Y] => Function[
+    CompositionEnum[X, Z],
+    CompositionEnum[X, Y]
+  ] = zφy =>
+    case CompositionEnum.Atomic[X, Z](x) =>
+      CompositionEnum.Atomic[X, Y](x)
+    case CompositionEnum.Composed[X, Z](zs) =>
+      CompositionEnum.Composed[X, Y](
+        for {
+          z <- zs
+        } yield {
+          zφy(z)
+        }
+      )
 ```
 
-Back to [PreThingsLaws](#prethingslaws)
-
-### setOrdered
-
-Back to [PreThingsLaws](#prethingslaws)
-
-```scala
-package implementation
-
-import specification.{Sets, Ordered}
-
-given setOrdered[Z, Set[_]: Sets]: Ordered[Set[Z]] with
-
-  val sets: Sets[Set] = summon[Sets[Set]]
-
-  import sets.{`=s=`, `<s<`}
-
-  type T = [Z] =>> Set[Z]
-
-  extension (lt: T[Z]) def `=`(rt: T[Z]): Boolean = lt `=s=` rt
-
-  extension (lt: T[Z]) def `<`(rt: T[Z]): Boolean = lt `<s<` rt
-```
-
-Back to [PreThingsLaws](#prethingslaws)
+Back to [CompositionUtilities](#compositionutilities)

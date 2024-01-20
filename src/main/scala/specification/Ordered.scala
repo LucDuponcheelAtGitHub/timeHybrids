@@ -1,51 +1,94 @@
 package specification
 
-trait Ordered[T] extends Equality[T]:
+trait Ordered[Z]:
 
   // declared
 
-  extension (lt: T) def `<`(rt: T): Boolean
+  extension (lz: Z) def <(rz: Z): Boolean
 
   // defined
 
-  extension (lt: T) def `<=`(rt: T): Boolean = lt `<` rt || lt `=` rt
+  extension (lz: Z) def <=(rz: Z): Boolean = lz < rz || lz == rz
+
+  // nested `trait`s
+
+  type Interval = Set[Z]
+
+  trait IntervalUtilities:
+
+    extension (b: Z) def to(e: Z): Interval
+
+    def begin: Function[Interval, Z]
+
+    def end: Function[Interval, Z]
+
+    val initialIntervals: Function[Interval, Set[Interval]] =
+      i =>
+        val b = begin(i)
+        for {
+          e <- i
+          if (b <= e && e <= end(i))
+        } yield {
+          b to e
+        }
+
+    val subIntervals: Function[Interval, Set[Interval]] =
+      i =>
+        for {
+          b <- i
+          e <- i
+          if (begin(i) <= b &&
+            b <= e &&
+            e <= end(i))
+        } yield {
+          b to e
+        }
+
+    // laws
+
+    trait IntervalUtilitiesLaws[L[_]: Law]:
+
+      val beginToEnd: Interval => L[Interval] = i =>
+        {
+          i
+        } `=` {
+          begin(i) to end(i)
+        }
 
   // laws
 
   trait OrderedLaws[L[_]: Law]:
 
-    val reflexive: T => L[Boolean] = t =>
+    val reflexive: Z => L[Boolean] = z =>
       {
-        t `<=` t
+        z <= z
       } `=` {
         true
       }
 
-    val antiSymmetric: T => T => L[Boolean] = lt =>
-      rt =>
+    val antiSymmetric: Z => Z => L[Boolean] = lz =>
+      rz =>
         {
-          lt `<=` rt `=` true `&` rt `<=` lt `=` true
+          lz <= rz `=` true `&` rz <= lz `=` true
         } `=>` {
-          lt `=` rt `=` true
+          lz == rz `=` true
         }
 
-    val transitive: T => T => T => L[Boolean] = lt =>
-      mt =>
-        rt =>
+    val transitive: Z => Z => Z => L[Boolean] = lz =>
+      mz =>
+        rz =>
           {
-            lt `<=` mt `=` true `&` mt `<=` rt `=` true
+            lz <= mz `=` true `&` mz <= rz `=` true
           } `=>` {
-            lt `<=` rt `=` true
+            lz <= rz `=` true
           }
-
-  // laws
 
   trait TotallyOrderedLaws[L[_]: Law]:
 
-    val stronglyConnected: T => T => L[Boolean] = lt =>
-      rt =>
+    val stronglyConnected: Z => Z => L[Boolean] = lz =>
+      rz =>
         {
-          lt `<=` rt `|` rt `<=` lt
+          lz <= rz `|` rz <= lz
         } `=` {
           true
         }
