@@ -30,7 +30,7 @@ trait ActorTransformation[
       amΦam: Functor[ActorMorphism, ActorMorphism, ActorMorphed]
   )
     def isNaturalFor(zμy: ActorMorphism[Z, Y]): Boolean = {
-      ατ o amΦum.φ(zμy)
+      ατ `o` amΦum.φ(zμy)
     } == {
-      amΦam.φ(zμy) a ατ
+      amΦam.φ(zμy) `a` ατ
     }

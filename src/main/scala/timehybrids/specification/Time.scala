@@ -5,7 +5,7 @@ import specification.{Ordered}
 trait Time[Moment]:
 
   given momentOrdered: Ordered[Moment]
-  
+
   val momentOrderedVal = momentOrdered
 
   type MomentInterval = momentOrderedVal.Interval
@@ -13,4 +13,3 @@ trait Time[Moment]:
   type MomentIntervalUtilities = momentOrderedVal.IntervalUtilities
 
   val momentIntervalUtilities: MomentIntervalUtilities
-

@@ -15,13 +15,13 @@ trait Isomorphism[Morphism[_, _]: Category, Z, Y]:
     import category.{ι}
 
     val fromLaw: L[Morphism[Z, Z]] = {
-      to o from
+      to `o` from
     } `=` {
       ι
     }
 
     val toLaw: L[Morphism[Y, Y]] = {
-      from o to
+      from `o` to
     } `=` {
       ι
     }

@@ -18,7 +18,7 @@ import specification.{
 
 import implementation.{functionCategory}
 
-trait PreThings[Morphism[_, _], Moment, Place, PreObject]:
+trait PreThings[Moment, Place, PreObject, Morphism[_, _]]:
 
   given placeUniverse: Universe[Moment, Place, Morphism]
 
@@ -85,8 +85,8 @@ trait PreThings[Morphism[_, _], Moment, Place, PreObject]:
           : Function[Set[PreInteraction], Set[PreThing]] = composeAll
       val preThingSetToPreInteractionFunction
           : Function[Set[PreThing], Set[PreInteraction]] = decomposeAll
-      preThingSetToPreInteractionFunction o
-        preThingSetFunctor.φ(pt) o
+      preThingSetToPreInteractionFunction `o`
+        preThingSetFunctor.φ(pt) `o`
         preInteractionToPreThingSetFunction
 
   val preThingSetSetFunctor: Functor[
@@ -113,19 +113,19 @@ trait PreThings[Morphism[_, _], Moment, Place, PreObject]:
     ): Boolean =
 
       {
-        ατ o preThingSetFunctor.φ(placeTransition)
+        ατ `o` preThingSetFunctor.φ(placeTransition)
       } == {
-        placeTransitionFunctor.φ(placeTransition) a ατ
+        placeTransitionFunctor.φ(placeTransition) `a` ατ
       }
 
-      placeTransitionFunctor isNaturalFor placeTransition
+      placeTransitionFunctor `isNaturalFor` placeTransition
 
   val isImmobileAfterPlaceTransition: Transition[Place] => Boolean =
     val identityPlaceTransition: Transition[Place] = morphismCategory.ι
     val constantIdentityPlaceTransitionFunctor =
       new Functor[Morphism, Morphism, [_] =>> Place]:
         def φ[Z, Y] = _ => identityPlaceTransition
-    constantIdentityPlaceTransitionFunctor isMovementAfterPlaceTransition _
+    constantIdentityPlaceTransitionFunctor `isMovementAfterPlaceTransition` _
 
   val isImmobileAtPlaceTransitionInitialPlaceTransitionBased
       : Transition[Place] => Boolean =
@@ -158,19 +158,19 @@ trait PreThings[Morphism[_, _], Moment, Place, PreObject]:
     def isMovementAfterMomentInterval[Z, Y](
         momentInterval: MomentInterval
     ): Boolean =
-      placeTransitionFunctor isMovementAfterPlaceTransition
+      placeTransitionFunctor `isMovementAfterPlaceTransition`
         momentIntervalToPlaceTransitionFunction(momentInterval)
 
   val immobileAfterTimeInterval: MomentInterval => Boolean =
-    isImmobileAfterPlaceTransition o momentIntervalToPlaceTransitionFunction
+    isImmobileAfterPlaceTransition `o` momentIntervalToPlaceTransitionFunction
 
   val immobileAtTimeIntervalInitialPlaceTransitionBased
       : MomentInterval => Boolean =
-    isImmobileAtPlaceTransitionInitialPlaceTransitionBased o
+    isImmobileAtPlaceTransitionInitialPlaceTransitionBased `o`
       momentIntervalToPlaceTransitionFunction
 
   val immobileAtTimeIntervalSubPlaceTransitionBased: MomentInterval => Boolean =
-    isImmobileAtPlaceTransitionSubPlaceTransitionBased o
+    isImmobileAtPlaceTransitionSubPlaceTransitionBased `o`
       momentIntervalToPlaceTransitionFunction
 
   // laws
@@ -188,13 +188,18 @@ trait PreThings[Morphism[_, _], Moment, Place, PreObject]:
         val preThing = compose(preThingSet)
         preInteraction `=` singleton(preThing)
 
-    val noPreThingsFromNoPreThings: Transition[Place] => L[Set[PreThing]] =
+    val noPreThingsFromNoPreThingsPlaceTransitionBased
+        : Transition[Place] => L[Set[PreThing]] =
       placeTransition =>
         {
           φ(placeTransition)(emptySet)
         } `=` {
           emptySet
         }
+
+    val noPreThingsFromNoPreThingsMomentIntervalBased
+        : MomentInterval => L[Set[PreThing]] =
+      noPreThingsFromNoPreThingsPlaceTransitionBased `o` momentIntervalToPlaceTransitionFunction
 
     val unionOfSingletonPreInteractions
         : Set[Set[PreThing]] => L[Set[PreInteraction]] =
@@ -226,7 +231,7 @@ trait PreThings[Morphism[_, _], Moment, Place, PreObject]:
 
     import transformationLaws.{orderedNatural}
 
-    val preInteractionNaturePreserving
+    val preInteractionNaturePreservingPlaceTransitionBased
         : Set[PreInteraction] => Transition[Place] => L[Boolean] =
       preInteractionSet =>
 
@@ -250,15 +255,23 @@ trait PreThings[Morphism[_, _], Moment, Place, PreObject]:
           import preThingSetSetFunctor.φ
           {
             {
-              φτ o φ(placeTransition)
+              φτ `o` φ(placeTransition)
             } <= {
-              φ(placeTransition) o φτ
+              φ(placeTransition) `o` φτ
             }
           } `=` {
             true
           }
 
         orderedNatural apply placeTransition
+
+    val preInteractionNaturePreservingMomentIntervalBased
+        : Set[PreInteraction] => MomentInterval => L[Boolean] =
+      preInteractionSet =>
+        momentInterval =>
+          preInteractionNaturePreservingPlaceTransitionBased(preInteractionSet)(
+            momentIntervalToPlaceTransitionFunction(momentInterval)
+          )
 
     val orderPreserving: Set[PreThing] => Set[PreThing] => L[Boolean] =
       leftPreThingSet =>

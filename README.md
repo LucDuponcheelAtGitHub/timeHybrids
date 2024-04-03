@@ -32,7 +32,7 @@ This document, especially its introduction, is a highly opinionated one.
 
 Many sentences start with "I think of", emphasizing the fact that I may be wrong.
 
-I hope that my opinion about the book is more or less compatible with the opinion of Fred.
+I hope that my opinion about the content of the book is more or less compatible with the opinion of Fred.
 
 ### Specification and Implementations
 
@@ -41,6 +41,8 @@ A *specification* consists of *declarations* of *features*.
 Declarations come with *laws*.
 
 Together, features and laws are called *requirements*.
+
+A specification may also consist of *definitions* that are defined in terms of declarations and definitions.
 
 *Implementations* of a specification consist of *definitions* of declared features.
 
@@ -61,16 +63,16 @@ Frankly, if you would never have seen a pipe before, would you be able to make a
 
 ### Generic Theory
 
-I think of a *generic theory* as a *theory consisting of specifications of theories*,
-a *framework theory of theories* or *template theory of theories*, where *theories fit into as implementations*.
+I think of a *generic theory* as a *theory consisting of a specification of theories*, where
+*theories are implementations of*, a *framework theory of theories* or *template theory of theories*, where
+*theories fit into as implementations*.
 
 ### Generic Theory of Reality
 
 The *Time Hybrids* book describes a *Generic Theory of Reality*.
-
-Hence I think of a generic theory of reality as a *theory consisting of specifications of theories of reality*,
-a *framework theory of theories of reality* or *template theory of theories of reality*, where
-*theories of reality fit into as implementations*.
+Hence I think of a generic theory of reality as a *theory consisting of a specification of theories of reality*, where
+*theories of reality are implementations of*, a *framework theory of theories of reality* or
+*template theory of theories of reality*, where *theories of reality fit into as implementations*.
 
 ### Quantum Theory and Relativity Theory
 
@@ -112,7 +114,7 @@ I think of *compositionality* as an important aspect of reality.
 
 *Compositionality* is about *components*.
 
-Components can, starting from various *atomic components* be *composed* to *composed components* in various ways.
+Components can, starting from various *atomic components*, be *composed* to *composed components* in various ways.
 
 Compositionality comes in different flavors.
 
@@ -122,8 +124,8 @@ Compositionality comes in different flavors.
 ### Category Theory
 
 I think of *category theory* as a *generic theory of mathematics*, a
-*theory consisting of specifications of theories of mathematics*, a *framework theory of theories of mathematics* or
-*template theory of theories of mathematics*, where *theories of mathematics fit into as implementations*.
+*theory consisting of a specification of theories of mathematics*, a *framework theory of theories of mathematics* or
+*template theory of theories of mathematics*.
 
 Of course, a far as the book is concerned, the *theories of mathematics* involved are theories that are relevant for
 modeling reality.
@@ -136,7 +138,7 @@ You could argue that using an abstract theory results in a steep learning curve.
 
 But here is the thing: *abstraction* is about *simplification* and *simplicity is the ultimate sophistication*.
 
-When I was a first year mathematics student, professor Gevers, my professor mechanics, said
+When I was a first year mathematics student, professor Gevers, my professor Analytic Mechanics, said
 
 - I am going to proceed slower in order to have covered more material at the end of the year.
 
@@ -148,8 +150,6 @@ eventually speeding up learning.
 ### Compositionality and Category Theory
 
 Category theory is about *collections of objects* and *sets of morphisms*.
-
-Collections are not necessarily sets.
 
 Every morphism is one from a *source object* to a *target object*.
 
@@ -181,9 +181,9 @@ It is code that, i.m.h.o, is very suitable for learning purposes.
 The DSL is both one the *domain of the book*, *reality*, being part of *physisc*, and one for the its *foundations*,
 being part of *mathematics*.
 
-For the domain of the book, it uses verbose notation that, more or less, corresponds to the one used in physics.
+For the domain of the book, it uses notation that, more or less, corresponds to the one used in physics.
 
-For its foundations, it uses verbose notation that, more or less, corresponds to the one used in mathematics.
+For its foundations, it uses notation that, more or less, corresponds to the one used in mathematics.
 
 In what follows `Scala` is not explicitly mentioned any more.
 
@@ -193,7 +193,7 @@ In what follows `Scala` is not explicitly mentioned any more.
 
 - *value classes*,
 
-and,
+or,
 
 - *type classes*,
 - *unary type constructor classes*,
@@ -221,14 +221,14 @@ and,
 ### Implicitly denoting homogeneous sets
 
 Types `Z` *implicitly* denote *homogeneous sets* and *values* `z` of a type `Z` *implicitly* denote
-*elements of the same type*.
+*elements of homogeneous sets*.
 
 ### Explicitly denoting homogeneous sets
 
 The unary type constructor `Set`, constructs types `Set[Z]` for every type `Z`.
 
 Types `Set[Z]` *explicitly* denote *homogeneous sets* and *values* `zs` of a type `Set[Z]` *explicitly* denote
-*elements of the same type*.
+*elements of homogeneous sets*.
 
 ### Programmatic naming conventions
 
@@ -243,11 +243,11 @@ Lets consider, for a moment, the analogy between *physics* and *computer science
 to understand what *reality* is all about, and the goal of computer science is to understand what *software* is all
 about.
 
-Agreed, understanding reality is so much more difficult than understanding software: software is something we invented
+Agreed, understanding reality is more difficult than understanding software: software is something we invented
 ourselves, while reality is, afaik, still one great mystery.
 
 It is now generally agreed upon that computer science benefits from category theory as a partially unifying theory of
-software theories into which *effectfree software theory* and *effectful software theory* fit as implementations.
+software theories into which both *effectfree software theory* and *effectful software theory* fit as implementations.
 
 Maybe, one day, it will be generally agreed upon that physics benefits from category theory as a partially unifying
 theory of physics theories into which *quantum theory* and *relativity theory* fit as implementations.
@@ -255,23 +255,23 @@ theory of physics theories into which *quantum theory* and *relativity theory* f
 By the way, in a previous life, I was one of the researchers working on category theory as a partially unifying theory
 of effectfree software theory and effectful software theory using *monads*. I did most of my work as a
 "late at night hobby". I also worked two years at the University of Utrecht together with Erik Meijer, Graham Hutton and
-Doaitse Swierstra. I mainly wrote and teached courses, but I also did some research. Our group looked at monads as
+Doaitse Swierstra. I mainly wrote and teached courses, but I also did some research. Our team studied monads as
 *computations* that are *computed*. Computations are generalizations of *expression* that are *evaluated*. Computations
 and expressions are *operational* components. Moreover, monads and expressions are *open*, pointful components.
 
-Nowadays I look at *morphism* as *programs* that are run. Morphisms are generalizations of *functions*. Morphism and
-functions are *denotational* components. Moreover, morphism and functions are *closed*, pointfree components. You can
-look at my talk about *Program Description based Programming* on 
+Nowadays I study *morphism* as *programs* that are *run*. Morphisms are generalizations of *functions* that are
+*applied*. Morphism and functions are *denotational* components. Moreover, morphism and functions are *closed*,
+pointfree components. You can look at my talk about *Program Description based Programming* on
 [flatMap, 8-9 May 2019, Oslo Norway](https://2019.flatmap.no/). I am refactoring the work presented in Olso, upgrading
-from `Scala2` to `Scala3`, and changing the paradigm name to *Program Specification based Programming* for reasons
+from `Scala 2` to `Scala 3`, and changing the paradigm name to *Program Specification based Programming* for reasons
 explained above.
 
-In other words, I have been doig and I still am doing foundational work on software theories that is similar to the
+In other words, I have been doing and I still am doing foundational work on software theories that is similar to the
 foundational work Fred is doing on physics theories.
 
 ### Time Hybrids Domain
 
-In what follows I will quote some sentences of a paper of Fred related to a presentation in Almeria on his book.
+In what follows I will quote some sentences of a paper of Fred related to a presentation he gave in Almeria on his book.
 
 *We introduce a generic model for space-time where time is just a totally ordered set ordering the states of the*
 *universe at moments where over (not in) each state we define potentials, or pre-things, which are going to evolve via*
@@ -292,10 +292,10 @@ In what follows I will quote some sentences of a paper of Fred related to a pres
 *the set and two operations, ∧ and ∨, being meet and join, generalizing the intersection and union of topological sets*
 *of points.*
 
-*We can define a “place map”, p(t): PS(t)--->U(t) where some A(t) is taken to an element pA(t) of the non-commutative*
-*lattice L(t) giving the topology of U(t) such that p(t) respects the partial orders on PS(t) and U(t).*
+*We can define a “place map”, p(t): PS(t) --> U(t) where some A(t) of PS(t) is taken to an element pA(t) of the*
+*non-commutative lattice L(t) giving the topology of U(t) such that p(t) respects the partial orders on PS(t) and U(t).*
 
-This document is work in progress. 
+This document is work in progress.
 
 For now, let's concentrate on the following concepts:
 
@@ -306,14 +306,14 @@ For now, let's concentrate on the following concepts:
 Let's explain some notation:
 
 - Time moments are denoted as *t*.
-- Universe places at time moment *t* are denoted as *U(t)*.
-- The collection of all sets of pre-things at time moment *t* is denoted as *PS(t)*.
+- Universe places at time moments *t* are denoted as *U(t)*.
+- The collections of all sets of pre-things at time moments *t* are denoted as *PS(t)*.
   - mathematically this collection is not a set
   - programmatically this collection is a constructive set
-- Sets of pre-things are denoted as *A(t)*.
-- The place map *p(t)* maps *A(t)* to *pA(t)*.
+- Sets of pre-things at time moments *t* are denoted as *A(t)*.
+- The place map *p(t)* maps sets of pre-things *A(t)* to places *pA(t)*.
 - The *non-commutative lattice* on *U(t)* is denoted as *L(t)*.
-- The *non-commutative tupology* defined by *L(t)* is denoted as *X(t)*. 
+- The *non-commutative topology* defined by *L(t)* is denoted as *X(t)*. 
 
 In what follows we gradually denote the concepts involved using programmatic notation.
 
@@ -493,7 +493,7 @@ defined by place transitions, hence the one to one.
 
 `OneToOne` is explained in [OneToOne](#onetoone).
 
-Back to [PreThings](#prethings) 
+Back to [PreThings](#prethings)
 
 ### PreThings
 
@@ -680,13 +680,16 @@ trait PreThings[Moment, Place, PreObject, Morphism[_, _]]:
         val preThing = compose(preThingSet)
         preInteraction `=` singleton(preThing)
 
-    val noPreThingsFromNoPreThings: Transition[Place] => L[Set[PreThing]] =
+    val noPreThingsFromNoPreThingsPlaceTransitionBased: Transition[Place] => L[Set[PreThing]] =
       placeTransition =>
         {
           φ(placeTransition)(emptySet)
         } `=` {
           emptySet
         }
+
+    val noPreThingsFromNoPreThingsMomentIntervalBased: MomentInterval => L[Set[PreThing]] =
+      noPreThingsFromNoPreThingsPlaceTransitionBased `o` momentIntervalToPlaceTransitionFunction
 
     val unionOfSingletonPreInteractions
         : Set[Set[PreThing]] => L[Set[PreInteraction]] =
@@ -716,7 +719,7 @@ trait PreThings[Moment, Place, PreObject, Morphism[_, _]]:
 
     import transformationLaws.{orderedNatural}
 
-    val preInteractionNaturePreserving
+    val preInteractionNaturePreservingPlaceTransitionBased
         : Set[PreInteraction] => Transition[Place] => L[Boolean] =
       preInteractionSet =>
 
@@ -749,6 +752,14 @@ trait PreThings[Moment, Place, PreObject, Morphism[_, _]]:
           }
 
         orderedNatural apply placeTransition
+
+    val preInteractionNaturePreservingMomentIntervalBased
+        : Set[PreInteraction] => MomentInterval => L[Boolean] =
+      preInteractionSet =>
+        momentInterval =>
+          preInteractionNaturePreservingPlaceTransitionBased(preInteractionSet)(
+            momentIntervalToPlaceTransitionFunction(momentInterval)
+          )
 
     val orderPreserving: Set[PreThing] => Set[PreThing] => L[Boolean] =
       leftPreThingSet =>
@@ -829,7 +840,7 @@ Let's concentrate on the laws.
 *In fact ,the difference between pre-things and pre-interactions is one of language only, we may just as well call a*
 *pre-thing A(t) a pre-interaction i(A(t),A(t))*.
 
-`noPreThingsFromNoPreThings` refers to the following, slightly adapted, excerpt from the paper.
+`noPreThingsFromNoPreThingsPlaceTransitionBased` refers to the following, slightly adapted, excerpt from the paper.
 
 *Moreover the correspondence acting on the empty set is always the empty set; thus no pre-things arise as the result of*
 *a correspondence of the empty set! No pre-thing comes from nothing!*
@@ -839,7 +850,7 @@ Let's concentrate on the laws.
 *The pre-interaction between A(t) and B(t) in S(t) is written as I(A,B)(t), in [1] I put I(A,B)(t) equal to*
 *v{ i(a(t),b(t)) for a(t) in A(t),b(t) in B(t) }.*
 
-`preInteractionNaturePreserving` refers to the following excerpt from the paper (I changed < to <=).
+`preInteractionNaturePreservingPlaceTransitionBased` refers to the following excerpt from the paper (I changed < to <=).
 
 *However there is then a logical assumption, namely that s(t,t’)(I(A,B)(t)) <= I(A,B)(t’) for t<t’, meaning that the*
 *correspondences s(t,t') do not change the nature of the later realisation as an interaction. Hence the s(t,t’) respect*

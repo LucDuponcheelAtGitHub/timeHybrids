@@ -9,10 +9,10 @@ import specification.{OneToOne, Limit, limit}
 import implementation.{functionCategory, compositionEnumFunctionFunctor}
 
 def compose[Z]: Set[Composition[Z]] => Composition[Z] =
-  zfcs => Limit apply CompositionEnum.Composed(zfcs)
+  zfcs => Limit `apply` CompositionEnum.Composed(zfcs)
 
 def decompose[Z]: Composition[Z] => Set[Composition[Z]] =
-  limit apply {
+  limit `apply` {
     case CompositionEnum.Atomic(_) =>
       sys.error("atomic component cannot be decomposed")
     case CompositionEnum.Composed(zcss) => U(zcss)

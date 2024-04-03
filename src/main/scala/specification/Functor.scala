@@ -34,7 +34,7 @@ trait Functor[
       fzμy =>
         fyμx =>
           {
-            φ(fyμx o fzμy)
+            φ(fyμx `o` fzμy)
           } `=` {
-            φ(fyμx) o φ(fzμy)
+            φ(fyμx) `o` φ(fzμy)
           }

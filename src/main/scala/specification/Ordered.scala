@@ -29,7 +29,7 @@ trait Ordered[Z]:
           e <- i
           if (b <= e && e <= end(i))
         } yield {
-          b to e
+          b `to` e
         }
 
     val subIntervals: Function[Interval, Set[Interval]] =
@@ -41,7 +41,7 @@ trait Ordered[Z]:
             b <= e &&
             e <= end(i))
         } yield {
-          b to e
+          b `to` e
         }
 
     // laws
@@ -52,7 +52,7 @@ trait Ordered[Z]:
         {
           i
         } `=` {
-          begin(i) to end(i)
+          begin(i) `to` end(i)
         }
 
   // laws

@@ -18,4 +18,4 @@ trait Action[ActorMorphism[_, _]: Category, Morphism[_, _]: Category]:
 
   extension [Z, Y, X](τys: Seq[ActorTransition[Y]])
     def allActUpon(zμy: Morphism[Z, Y]): Morphism[Z, Y] =
-      τys.foldRight(zμy)(_ a _)
+      τys.foldRight(zμy)(_ `a` _)

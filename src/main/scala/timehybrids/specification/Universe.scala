@@ -29,11 +29,10 @@ trait Universe[Moment, Place, Morphism[_, _]]:
 
   given placeVirtualTopology: VirtualTopology[Place]
 
-  given placeTransitionToMomentIntervalOneToOne
-      : OneToOne[
-        Transition[Place],
-        MomentInterval
-      ]
+  given placeTransitionToMomentIntervalOneToOne: OneToOne[
+    Transition[Place],
+    MomentInterval
+  ]
 
   val momentIntervalToPlaceTransitionFunction
       : Function[MomentInterval, Transition[Place]] =
@@ -67,8 +66,7 @@ trait Universe[Moment, Place, Morphism[_, _]]:
 
   // not used
 
-  given placeTransitionCategory
-      : Category[[_, _] =>> Transition[Place]] =
+  given placeTransitionCategory: Category[[_, _] =>> Transition[Place]] =
     new:
       extension [Z, Y, X](leftPlaceTransition: Transition[Place])
         def o(rightPlaceTransition: Transition[Place]): Transition[Place] =
@@ -82,7 +80,7 @@ trait Universe[Moment, Place, Morphism[_, _]]:
           momentIntervalFromPlaceTransitionFunction(
             momentIntervalToPlaceTransitionFunction(
               leftMomentInterval
-            ) o momentIntervalToPlaceTransitionFunction(rightMomentInterval)
+            ) `o` momentIntervalToPlaceTransitionFunction(rightMomentInterval)
           )
 
       def ι[Z]: MomentInterval =

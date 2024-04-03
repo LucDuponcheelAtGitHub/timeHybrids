@@ -59,9 +59,9 @@ class FunctorTransformationLawsFor[
     fzμy =>
       {
         {
-          φτ o f_fmΦtm.φ(fzμy)
+          φτ `o` f_fmΦtm.φ(fzμy)
         } <= {
-          t_fmΦtm.φ(fzμy) o φτ
+          t_fmΦtm.φ(fzμy) `o` φτ
         }
       } `=` {
         true

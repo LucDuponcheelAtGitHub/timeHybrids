@@ -13,7 +13,7 @@ trait Composition[Morphism[_, _]]:
 
   extension [Z, Y, X](zτs: Seq[Transition[Z]])
     def composeAllWith(zτ: Transition[Z]): Transition[Z] =
-      zτs.foldRight(zτ)(_ o _)
+      zτs.foldRight(zτ)(_ `o` _)
 
   // laws
 
@@ -27,7 +27,7 @@ trait Composition[Morphism[_, _]]:
         yμx =>
           xμw =>
             {
-              (xμw o yμx) o zμy
+              (xμw `o` yμx) `o` zμy
             } `=` {
-              xμw o (yμx o zμy)
+              xμw `o` (yμx `o` zμy)
             }

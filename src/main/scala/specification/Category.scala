@@ -9,7 +9,7 @@ trait Category[Morphism[_, _]]
   // defined
 
   def composeAll[Z]: Function[Seq[Transition[Z]], Transition[Z]] =
-    zτs => zτs composeAllWith ι
+    zτs => zτs `composeAllWith` ι
 
   // laws
 
@@ -17,7 +17,7 @@ trait Category[Morphism[_, _]]
 
     def leftIdentity[Z, Y]: Morphism[Z, Y] => L[Morphism[Z, Y]] = zμy =>
       {
-        ι o zμy
+        ι`o` zμy
       } `=` {
         zμy
       }
@@ -25,7 +25,7 @@ trait Category[Morphism[_, _]]
     def rightIdentity[Z, Y]: Morphism[Z, Y] => L[Morphism[Z, Y]] =
       zμy =>
         {
-          zμy o ι
+          zμy `o` ι
         } `=` {
           zμy
         }

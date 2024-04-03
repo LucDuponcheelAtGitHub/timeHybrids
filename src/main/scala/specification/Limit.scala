@@ -11,4 +11,4 @@ def limit[
     Z
 ]: (Correspondence[Z] => Z) => (Limit[Correspondence] => Z) =
   val fΦf = summon[Functor[Function, Function, Correspondence]]
-  zcφz => cl => (zcφz o fΦf.φ(limit apply zcφz))(cl.clc)
+  zcφz => cl => (zcφz `o` fΦf.φ(limit `apply` zcφz))(cl.clc)
